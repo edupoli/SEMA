@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="semaModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="secretaria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="255" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
+          <Property Name="login" Type="varchar" MaxLength="255" />
+          <Property Name="senha" Type="varchar" MaxLength="255" />
+          <Property Name="perfil" Type="varchar" MaxLength="255" />
+          <Property Name="secretariaID" Type="int" Nullable="false" />
+          <Property Name="img" Type="varchar" MaxLength="255" />
+          <Property Name="cargo" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="secretaria1">
+          <End Role="secretaria" Type="Self.secretaria" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="secretaria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="secretariaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="semaModelStoreContainer">
+          <EntitySet Name="secretaria" EntityType="Self.secretaria" Schema="sema" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="sema" store:Type="Tables" />
+          <AssociationSet Name="secretaria1" Association="Self.secretaria1">
+            <End Role="secretaria" EntitySet="secretaria" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="semaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="secretaria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="usuarios" Relationship="Self.secretaria1" FromRole="secretaria" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="login" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="senha" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="perfil" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="secretariaID" Type="Int32" Nullable="false" />
+          <Property Name="img" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="cargo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="secretaria" Relationship="Self.secretaria1" FromRole="usuario" ToRole="secretaria" />
+        </EntityType>
+        <Association Name="secretaria1">
+          <End Role="secretaria" Type="Self.secretaria" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="secretaria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="secretariaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="semaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="secretarias" EntityType="Self.secretaria" />
+          <EntitySet Name="usuarios" EntityType="Self.usuario" />
+          <AssociationSet Name="secretaria1" Association="Self.secretaria1">
+            <End Role="secretaria" EntitySet="secretarias" />
+            <End Role="usuario" EntitySet="usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="semaModelStoreContainer" CdmEntityContainer="semaEntities">
+          <EntitySetMapping Name="secretarias">
+            <EntityTypeMapping TypeName="semaModel.secretaria">
+              <MappingFragment StoreEntitySet="secretaria">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuarios">
+            <EntityTypeMapping TypeName="semaModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="senha" ColumnName="senha" />
+                <ScalarProperty Name="perfil" ColumnName="perfil" />
+                <ScalarProperty Name="secretariaID" ColumnName="secretariaID" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="cargo" ColumnName="cargo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

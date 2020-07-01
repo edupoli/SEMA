@@ -1,72 +1,180 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="SEMA.SiteMaster" %>
-
 <!DOCTYPE html>
-
-<html lang="en">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - Meu aplicativo ASP.NET</title>
-
-    <asp:PlaceHolder runat="server">
-        <%: Scripts.Render("~/bundles/modernizr") %>
-    </asp:PlaceHolder>
-
-    <webopt:bundlereference runat="server" path="~/Content/css" />
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>SEMA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="bower_components/fontawesome-pro/css/all.min.css"/>
+  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="dist/css/AdminLTE.css">
+  <link rel="stylesheet" href="dist/css/skins/skin-green-light.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/morris.js/morris.css">
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif!important;
+        }
+        label {
+            font-weight: normal !important;
+        }
+    </style>
+    <style>
+          #toast-container > div {
+              -moz-box-shadow: 0 0 12px #000000;
+              -webkit-box-shadow: 0 0 12px #000000;
+              box-shadow: 0 0 12px #000000;
+              opacity: 1;
+              -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+              filter: alpha(opacity=100);
+              cursor: pointer;
+            }
+      </style>
+  <asp:PlaceHolder runat="server">
+    <%: Scripts.Render("~/bundles/modernizr") %>
+  </asp:PlaceHolder>
 </head>
-<body>
-    <form runat="server">
-        <asp:ScriptManager runat="server">
-            <Scripts>
-                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
-                <%--Framework Scripts--%>
-                <asp:ScriptReference Name="MsAjaxBundle" />
-                <asp:ScriptReference Name="jquery" />
-                <asp:ScriptReference Name="bootstrap" />
-                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
-                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
-                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
-                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
-                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
-                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
-                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
-                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
-                <asp:ScriptReference Name="WebFormsBundle" />
-                <%--Site Scripts--%>
-            </Scripts>
-        </asp:ScriptManager>
-
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" runat="server" href="~/">Nome do aplicativo</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Página inicial</a></li>
-                        <li><a runat="server" href="~/About">Sobre</a></li>
-                        <li><a runat="server" href="~/Contact">Contato</a></li>
+<body class="hold-transition skin-green-light sidebar-mini">
+  <form runat="server">
+    <div class="wrapper">
+      <header class="main-header">
+        <a href="home.aspx" class="logo">
+          <span class="logo-mini">
+            <img src="imagens/arvore.png" alt="" />
+          </span>
+          <span class="logo-lg"><img src="imagens/arvore.png" alt="" /></span>
+        </a>
+          <nav class="navbar navbar-static-top" role="navigation">
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu"><i class="fas fa-bars"></i></a>
+              <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                  <!-- Messages: style can be found in dropdown.less--> 
+                  <!-- /.messages-menu -->
+                  <!-- Notifications Menu -->
+                  <!-- Tasks Menu -->                  
+                  <!-- User Account Menu -->
+                  <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <!-- The user image in the navbar-->
+                      <asp:Image runat="server" ID="imgUser1" CssClass="user-image img-circle elevation-2" alt="User Image"/>
+                      <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                      <span class="hidden-xs"><asp:Label  runat="server" ID="lblNome" /></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <!-- The user image in the menu -->
+                      <li class="user-header">
+                        <asp:Image  runat="server" ID="imgUser" CssClass="img-circle elevation-2" alt="User Image" />
+                        <p>
+                          <asp:Label  runat="server" ID="lblCargo" />
+                          <small>Membro desde abril 2020</small>
+                        </p>
+                      </li>
+                        <!-- Menu Body -->
+                        <li class="user-body">
+                          <!-- /.row -->
+                        </li>
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                          <div class="pull-left">
+                            <asp:Button Text="Profile" runat="server" ID="btnProfile" CssClass="btn btn-outline-primary" OnClick="btnProfile_Click" />
+                          </div>
+                          <div class="pull-right">
+                            <asp:Button Text="Logout" runat="server" ID="btnLogout" CssClass="btn btn-outline-primary float-right" OnClick="btnLogout_Click"/>
+                          </div>
+                        </li>
                     </ul>
-                </div>
-            </div>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </header>
+    
+    <style>
+        .img-thumbnail{        
+        width: 150px; 
+        // or you could use percentage values for responsive layout
+        // width : 100%;
+        height: 100px;
+        overflow: auto;
+        border: 0;
+    }
+    </style>
+    
+    <aside class="main-sidebar">
+      <section class="sidebar">
+        <div class="user-panel">
+          <div class="">
+              <a href="home.aspx">
+            <img src="imagens/logo.png" class="img-thumbnail" style='background-color: transparent' alt="SEMA">
+              </a>
+          </div>
         </div>
-        <div class="container body-content">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server">
-            </asp:ContentPlaceHolder>
-            <hr />
-            <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Meu aplicativo ASP.NET</p>
-            </footer>
-        </div>
+          <!-- Sidebar Menu -->
+          <ul class="sidebar-menu" data-widget="tree">
+            <li class="treeview">
+              <a href="#"><i class="fas fa-users"></i> <span>Usuários</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+                <ul class="treeview-menu">
+                  <li><a href="Usuarios.aspx">Consultar</a></li>
+                  <li><a href="AddUsuarios.aspx">Adicionar</a></li>
+                </ul>
+            </li>
+              <li class="treeview">
+              <a href="#"><i class="fas fa-building"></i> <span>Secretarias</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+                <ul class="treeview-menu">
+                  <li><a href="Secretarias.aspx">Consultar</a></li>
+                  <li><a href="AddSecretarias.aspx">Adicionar</a></li>
+                </ul>
+            </li>
+          </ul>
+        </section>
+      </aside>
+      
 
-    </form>
+      <!-- jQuery 3 -->
+      <script src="bower_components/jquery/dist/jquery.min.js"></script>
+      <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+      <!-- Bootstrap 3.3.7 -->
+      <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+      <!-- AdminLTE App -->
+      <script src="dist/js/adminlte.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+      <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+      <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+      <script src="bower_components/morris.js/morris.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+      <!-- CK Editor -->
+      <script src="bower_components/ckeditor/ckeditor.js"></script>
+      <script src="plugins/input-mask/jquery.inputmask.js"></script>
+      <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+      <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+
+      <div class="">
+        <asp:ContentPlaceHolder id="MainContent" runat="server">
+            
+        </asp:ContentPlaceHolder>
+      </div>
+    </div>
+      <!-- Main Footer -->
+      <footer class="main-footer text-sm">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+          <b>Versão</b> 1.0
+        </div>
+          <!-- Default to the left -->
+          <strong style="font-family: Arial, Helvetica, sans-serif;" class="text-sm">Copyright &copy; 2020 Sercomtel Contact Center.</strong> All rights reserved.
+      </footer>
+  </form>
 </body>
 </html>
