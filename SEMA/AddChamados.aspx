@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddChamados.aspx.cs" Inherits="SEMA.AddChamados" %>
+<%@ Register Assembly="CKEditor.NET" Namespace="CKEditor.NET" TagPrefix="CKEditor" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <div class="wrapper">
@@ -18,8 +19,6 @@
             <div class="box-tools">
               <asp:Button Text="Salvar" CssClass="btn btn-sm btn-primary" runat="server" ID="btnSalvar" OnClick="btnSalvar_Click" />
               <asp:Button Text="Voltar" CssClass="btn btn-sm btn-secondary" runat="server" ID="btnVoltar" OnClick="btnVoltar_Click" />
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i></button>
-              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fas fa-window-close"></i></button>
             </div>
           </div>
           <!-- /.box-header -->
@@ -104,8 +103,10 @@
               <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                        <textarea id="editor1" name="editor1" >
-                        </textarea>
+                
+                        <CKEditor:CKEditorControl ID="descricao" runat="server">
+</CKEditor:CKEditorControl>
+
                     </div>
                 </div>
             </div>
@@ -115,11 +116,7 @@
      </section>
     </div>
   </div>
-<script>
-  $(function () {
-    CKEDITOR.replace('editor1')
-  })
-</script>
+
     <script type="text/javascript">
         function sucesso() {
             toastr.options = {

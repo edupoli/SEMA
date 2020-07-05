@@ -22,6 +22,7 @@
         label {
             font-weight: normal !important;
         }
+
     </style>
     <style>
           #toast-container > div {
@@ -137,6 +138,18 @@
                   <li><a href="AddSecretarias.aspx">Adicionar</a></li>
                 </ul>
             </li>
+              <li class="treeview">
+              <a href="#"><i class="fal fa-bullhorn"></i> <span>Chamados</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+                <ul class="treeview-menu">
+                  <li><a href="Secretarias.aspx">Consultar</a></li>
+                  <li><a href="AddChamados.aspx">Adicionar</a></li>
+                  <li><a href="RespChamado.aspx">Responder</a></li>
+                </ul>
+            </li>
           </ul>
         </section>
       </aside>
@@ -167,7 +180,7 @@
       </div>
     </div>
       <!-- Main Footer -->
-      <footer class="main-footer text-sm">
+      <footer class="main-footer text-sm navbar-fixed-bottom">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
           <b>Versão</b> 1.0
