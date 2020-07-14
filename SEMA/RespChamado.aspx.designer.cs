@@ -193,15 +193,6 @@ namespace SEMA {
         protected global::System.Web.UI.WebControls.DropDownList resp_cboxAssunto;
         
         /// <summary>
-        /// Controle resp_UpdatePanel1.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel resp_UpdatePanel1;
-        
-        /// <summary>
         /// Controle resp_cboxTopico.
         /// </summary>
         /// <remarks>
@@ -209,15 +200,6 @@ namespace SEMA {
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList resp_cboxTopico;
-        
-        /// <summary>
-        /// Controle resp_UpdatePanel2.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel resp_UpdatePanel2;
         
         /// <summary>
         /// Controle resp_cboxStatus.

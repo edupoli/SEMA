@@ -136,26 +136,26 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>Nome</label>
-                        <asp:TextBox runat="server" ID="resp_nome" CssClass="form-control"  />
+                        <asp:TextBox runat="server" ID="resp_nome" CssClass="form-control" ReadOnly="true"  />
                     </div>
                   </div>
                 <!-- /.form-group -->
                 <div class="col-md-2">
                     <div class="form-group">
                       <label>E-Mail</label>
-                        <asp:TextBox runat="server" ID="resp_email" CssClass="form-control"  />
+                        <asp:TextBox runat="server" ID="resp_email" CssClass="form-control" ReadOnly="true" />
                     </div>
                 </div>
                <div class="col-md-2">
                     <div class="form-group">
                       <label>Telefone</label>
-                        <asp:TextBox runat="server" ID="resp_telefone" CssClass="form-control"  />
+                        <asp:TextBox runat="server" ID="resp_telefone" CssClass="form-control" ReadOnly="true" />
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                       <label>CPF</label>
-                        <asp:TextBox runat="server" ID="resp_cpf" CssClass="form-control" data-inputmask='"mask": "999.999.999-99"' data-mask />
+                        <asp:TextBox runat="server" ID="resp_cpf" CssClass="form-control" data-inputmask='"mask": "999.999.999-99"' data-mask  ReadOnly="true"/>
                     </div>
                 </div>
                 <!-- /.form-group -->
@@ -164,34 +164,21 @@
                 <div class="col-md-4">
                 <div class="form-group">
                   <label>Assunto</label>
-                    <asp:DropDownList runat="server" ID="resp_cboxAssunto" CssClass="form-control" >
+                    <asp:DropDownList runat="server" ID="resp_cboxAssunto" CssClass="form-control" Enabled="false" >
                     </asp:DropDownList>
                 </div>
                 </div>
-                  <asp:UpdatePanel ID="resp_UpdatePanel1" runat="server" UpdateMode="Conditional">
-                      <Triggers>
-                          <asp:AsyncPostBackTrigger ControlID="resp_cboxAssunto" EventName="SelectedIndexChanged" />
-                      </Triggers>
-                      <ContentTemplate>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                  <label>Tópico</label>
-                                    <asp:DropDownList runat="server" ID="resp_cboxTopico" CssClass="form-control" >
-                                    <asp:ListItem Text="Selecione"  Value="Selecione"/>
-                                    </asp:DropDownList>
-                                </div>
-                            </div>
-                      </ContentTemplate>
-                  </asp:UpdatePanel>
-                  <asp:UpdatePanel ID="resp_UpdatePanel2" runat="server" UpdateMode="Conditional">
-                      <Triggers>
-                          <asp:AsyncPostBackTrigger ControlID="resp_cboxStatus" EventName="SelectedIndexChanged" />
-                      </Triggers>
-                      <ContentTemplate>
+                  <div class="col-md-6">
+                     <div class="form-group">
+                       <label>Tópico</label>
+                          <asp:DropDownList runat="server" ID="resp_cboxTopico" CssClass="form-control" Enabled="false">
+                          </asp:DropDownList>
+                     </div>
+                  </div>
                   <div class="col-md-2">
                     <div class="form-group">
                       <label>Status</label>
-                        <asp:DropDownList runat="server" CssClass="form-control" ID="resp_cboxStatus" >
+                        <asp:DropDownList runat="server" CssClass="form-control" ID="resp_cboxStatus" Enabled="false">
                             <asp:ListItem Text="Aberto" Value="Aberto"  />
                             <asp:ListItem Text="Em Atendimento" Value="Em Atendimento" />
                             <asp:ListItem Text="Finalizado" Value="Finalizado" />
@@ -199,14 +186,12 @@
                         </asp:DropDownList>
                     </div>
                 </div>
-                    </ContentTemplate>
-                </asp:UpdatePanel>
             </div>
               <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
                 
-                        <CKEditor:CKEditorControl ID="resp_descricao" runat="server"></CKEditor:CKEditorControl>
+                        <CKEditor:CKEditorControl ID="resp_descricao" runat="server" ReadOnly="true"></CKEditor:CKEditorControl>
 
                     </div>
                 </div>

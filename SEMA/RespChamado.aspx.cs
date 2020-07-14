@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -14,11 +16,31 @@ namespace SEMA
         string image;
         public string ImgPath;
         string prevPage;
+        int chamadoID;
+        string e_mail;
+        string numProtocolo;
+        string nome;
         protected void Page_Load(object sender, EventArgs e)
         {
             lblCaminhoImg.Visible = false;
             prevPage = Request.UrlReferrer.ToString();
             getStatusColor();
+            chamadoID = Convert.ToInt32(Request.QueryString["chamadoID"]);
+            GetChamados(chamadoID);
+            e_mail = resp_email.Text;
+
+            if (Session["logado"] != null)
+            {
+                if (Session["perfil"].ToString() != "Administrador")
+                {
+                    Response.Redirect("login.aspx");
+                }
+
+            }
+            else
+            {
+                Response.Redirect("login.aspx");
+            }
 
             if (!IsPostBack)
             {
@@ -205,15 +227,140 @@ namespace SEMA
                 }
             }
         }
+        public void GetChamados(int cod)
+        {
+            semaEntities ctx = new semaEntities();
+            var resultado = (from a in ctx.chamadoes
+                             join b in ctx.assuntoes on a.assunto equals b.id
+                             join c in ctx.topicos on a.topico equals c.id
+                             where a.id == cod
+                             select new
+                             {
+                                 a.id,
+                                 a.protocolo,
+                                 a.nome,
+                                 a.cpf,
+                                 a.email,
+                                 a.telefone,
+                                 a.descricao,
+                                 assunto = b.descricao,
+                                 topico = c.descricao,
+                                 a.status,
+                                 a.img,
+                                 a.resposta,
+                                 
+                             });
+            foreach (var item in resultado)
+            {
+                resp_txtProtocolo.Text = item.protocolo;
+                resp_nome.Text = item.nome;
+                resp_email.Text = item.email;
+                resp_cpf.Text = item.cpf;
+                resp_telefone.Text = item.telefone;
+                resp_cboxAssunto.Items.Add(new ListItem(item.assunto, item.assunto));
+                resp_cboxTopico.Items.Add(new ListItem(item.topico, item.topico));
+                resp_cboxStatus.Items.Add(new ListItem(item.status, item.status));
+                resp_descricao.Text = item.descricao;
+            }
+        }
+
+
+        
 
         protected void btnSalvar_Click(object sender, EventArgs e)
         {
+            if (cboxUsuario.SelectedIndex == 0)
+            {
+                mensagem = "Deve Selecionar o usuario Responsavel pelo atendimento do chamado";
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+                cboxUsuario.Focus();
+            }
+            else
+            
+                if (cboxStatus.SelectedIndex == 0)
+                {
+                    mensagem = "Favor atualizar o Status do Chamado";
+                    ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+                    cboxStatus.Focus();
+                }
+            
+            else
+	        
+                if (resp_descricao.Text == "")
+                {
+                    mensagem = "Favor preencher a descrição da resposta do chamado";
+                    ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+                    resp_descricao.Focus();
+                }
+
+            else
+            {
+                try
+                {
+                    semaEntities ctx = new semaEntities();
+                    chamado cha = ctx.chamadoes.First(p => p.id == chamadoID);
+                    cha.usuario_responsavel = int.Parse(cboxUsuario.SelectedValue);
+                    cha.status = cboxStatus.SelectedValue;
+                    cha.resposta = descricao.Text;
+                    cha.img = lblCaminhoImg.Text;
+                    ctx.SaveChanges();
+                    mensagem = "Gravado com Sucesso!";
+                    if (resp_email.Text !="")
+                    {
+                        Email();
+                    }
+                    ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
+
+
+                }
+                catch (Exception ex)
+                {
+                    mensagem = "Ocorreu o Seguinte erro ao tentar gravar " + ex.Message;
+                    ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+                }
+            }
+        }
+        private void Email()
+        {
+            try
+            {
+                string assunto = "Resposta ao Protocolo Nº " + resp_txtProtocolo.Text + " Secretaria do Meio Ambiente Londrina-PR";
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress(e_mail, "Secretaria do Meio Ambiente Londrina-PR");
+                mailMessage.To.Add(e_mail.ToLower());
+                mailMessage.Subject = assunto;
+                mailMessage.IsBodyHtml = true;
+                mailMessage.Body =
+                mailMessage.Body = "<html><body><img src='https://i.ibb.co/L89Y9Yt/SEMA.png' /><br><br>" + "<b>Olá " + resp_nome.Text + "</b><br><br>" +
+                            "Em Resposta a sua solicitação na qual foi registrada com protocolo Nº " + numProtocolo + "<br>" +
+                           "<br>Sua Mensagem: <br>" + resp_descricao.Text + "<br><br>" +
+                           "Segue abaixo Resposta:<br>" + descricao.Text + "<br><br><br>" +
+                           "Caso ainda tenha dúvidas referente a esse protocolo, por favor <b><a href='http://10.0.2.135/faleconosco/faleconosco?idfaleconosco=" + chamadoID + "'>CLIQUE AQUI</a></b> para nos perguntar<br>" +
+                           "Obrigado por entrar em contato.<br>" +
+                           "A SEMA está a sua disposição, você também pode obter informações e serviços no site <a href='http://www1.londrina.pr.gov.br/index.php?option=com_content&view=frontpageplus&Itemid=163'> da Prefeitura </a>.<br>" +
+                           "Nosso horário de atendimento presencial é das 12h às 18h de segunda a sexta - feira.<br></body><html>";
+
+                mailMessage.Priority = MailPriority.High;
+
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                smtpClient.EnableSsl = true;
+                smtpClient.Credentials = new NetworkCredential("sercomtelcontatcenter@gmail.com", "qtrlutilrbkfgwsf");
+                smtpClient.Send(mailMessage);
+                mensagem = "Email enviado com sucesso!";
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
+                
+            }
+            catch (Exception ex)
+            {
+                mensagem = "Erro ao enviar o Email: " + ex.Message;
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+            }
 
         }
 
         protected void btnVoltar_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect(prevPage);
         }
 
         protected void cboxStatus_SelectedIndexChanged(object sender, EventArgs e)
@@ -221,19 +368,9 @@ namespace SEMA
             getStatusColor();
         }
 
-        protected void btnSalvar_resp_Click(object sender, EventArgs e)
-        {
-
-        }
-
         protected void btnVoltar_resp_Click(object sender, EventArgs e)
         {
-
-        }
-
-        protected void btnUpload_Click(object sender, EventArgs e)
-        {
-
+            Response.Redirect(prevPage);
         }
 
         

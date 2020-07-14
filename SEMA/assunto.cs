@@ -16,12 +16,14 @@ namespace SEMA
     {
         public assunto()
         {
+            this.chamadoes = new HashSet<chamado>();
             this.topicos = new HashSet<topico>();
         }
     
         public int id { get; set; }
         public string descricao { get; set; }
     
+        public virtual ICollection<chamado> chamadoes { get; set; }
         public virtual ICollection<topico> topicos { get; set; }
     }
 }

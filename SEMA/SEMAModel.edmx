@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="semaModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="semaModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="assunto">
           <Key>
             <PropertyRef Name="id" />
@@ -22,9 +22,12 @@
           <Property Name="email" Type="varchar" MaxLength="255" />
           <Property Name="telefone" Type="varchar" MaxLength="255" />
           <Property Name="cpf" Type="varchar" MaxLength="45" />
-          <Property Name="assunto" Type="varchar" MaxLength="255" />
-          <Property Name="topico" Type="varchar" MaxLength="255" />
+          <Property Name="assunto" Type="int" />
+          <Property Name="topico" Type="int" />
           <Property Name="descricao" Type="longtext" />
+          <Property Name="resposta" Type="longtext" />
+          <Property Name="usuario_responsavel" Type="int" />
+          <Property Name="img" Type="varchar" MaxLength="45" />
           <Property Name="status" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="secretaria">
@@ -56,6 +59,30 @@
           <Property Name="img" Type="varchar" MaxLength="255" />
           <Property Name="cargo" Type="varchar" MaxLength="255" />
         </EntityType>
+        <Association Name="assunto1">
+          <End Role="assunto" Type="Self.assunto" Multiplicity="0..1" />
+          <End Role="chamado" Type="Self.chamado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="assunto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="chamado">
+              <PropertyRef Name="assunto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="responsavel">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="chamado" Type="Self.chamado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="chamado">
+              <PropertyRef Name="usuario_responsavel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="secretaria1">
           <End Role="secretaria" Type="Self.secretaria" Multiplicity="1" />
           <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
@@ -65,6 +92,18 @@
             </Principal>
             <Dependent Role="usuario">
               <PropertyRef Name="secretariaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="topico">
+          <End Role="topicos" Type="Self.topicos" Multiplicity="0..1" />
+          <End Role="chamado" Type="Self.chamado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="topicos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="chamado">
+              <PropertyRef Name="topico" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -86,19 +125,62 @@
           <EntitySet Name="secretaria" EntityType="Self.secretaria" Schema="sema" store:Type="Tables" />
           <EntitySet Name="topicos" EntityType="Self.topicos" Schema="sema" store:Type="Tables" />
           <EntitySet Name="usuario" EntityType="Self.usuario" Schema="sema" store:Type="Tables" />
+          <AssociationSet Name="assunto1" Association="Self.assunto1">
+            <End Role="assunto" EntitySet="assunto" />
+            <End Role="chamado" EntitySet="chamado" />
+          </AssociationSet>
+          <AssociationSet Name="responsavel" Association="Self.responsavel">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="chamado" EntitySet="chamado" />
+          </AssociationSet>
           <AssociationSet Name="secretaria1" Association="Self.secretaria1">
             <End Role="secretaria" EntitySet="secretaria" />
             <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="topico" Association="Self.topico">
+            <End Role="topicos" EntitySet="topicos" />
+            <End Role="chamado" EntitySet="chamado" />
           </AssociationSet>
           <AssociationSet Name="topicos1" Association="Self.topicos1">
             <End Role="assunto" EntitySet="assunto" />
             <End Role="topicos" EntitySet="topicos" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="semaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="assunto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descricao" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="chamadoes" Relationship="Self.assunto1" FromRole="assunto" ToRole="chamado" />
+          <NavigationProperty Name="topicos" Relationship="Self.topicos1" FromRole="assunto" ToRole="topicos" />
+        </EntityType>
+        <EntityType Name="chamado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="protocolo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="telefone" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="cpf" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="assunto" Type="Int32" />
+          <Property Name="topico" Type="Int32" />
+          <Property Name="descricao" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="resposta" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_responsavel" Type="Int32" />
+          <Property Name="img" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="assunto1" Relationship="Self.assunto1" FromRole="chamado" ToRole="assunto" />
+          <NavigationProperty Name="usuario" Relationship="Self.responsavel" FromRole="chamado" ToRole="usuario" />
+          <NavigationProperty Name="topico1" Relationship="Self.topico1" FromRole="chamado" ToRole="topicos" />
+        </EntityType>
         <EntityType Name="secretaria">
           <Key>
             <PropertyRef Name="id" />
@@ -106,6 +188,16 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="usuarios" Relationship="Self.secretaria1" FromRole="secretaria" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="topico">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descricao" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="assuntoID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="assunto" Relationship="Self.topicos1" FromRole="topicos" ToRole="assunto" />
+          <NavigationProperty Name="chamadoes" Relationship="Self.topico1" FromRole="topicos" ToRole="chamado" />
         </EntityType>
         <EntityType Name="usuario">
           <Key>
@@ -120,8 +212,57 @@
           <Property Name="secretariaID" Type="Int32" Nullable="false" />
           <Property Name="img" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="cargo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="chamadoes" Relationship="Self.responsavel" FromRole="usuario" ToRole="chamado" />
           <NavigationProperty Name="secretaria" Relationship="Self.secretaria1" FromRole="usuario" ToRole="secretaria" />
         </EntityType>
+        <Association Name="assunto1">
+          <End Role="assunto" Type="Self.assunto" Multiplicity="0..1" />
+          <End Role="chamado" Type="Self.chamado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="assunto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="chamado">
+              <PropertyRef Name="assunto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="topicos1">
+          <End Role="assunto" Type="Self.assunto" Multiplicity="1" />
+          <End Role="topicos" Type="Self.topico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="assunto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="topicos">
+              <PropertyRef Name="assuntoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="responsavel">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="chamado" Type="Self.chamado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="chamado">
+              <PropertyRef Name="usuario_responsavel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="topico1">
+          <End Role="topicos" Type="Self.topico" Multiplicity="0..1" />
+          <End Role="chamado" Type="Self.chamado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="topicos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="chamado">
+              <PropertyRef Name="topico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="secretaria1">
           <End Role="secretaria" Type="Self.secretaria" Multiplicity="1" />
           <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
@@ -135,75 +276,79 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="semaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="assuntoes" EntityType="Self.assunto" />
+          <EntitySet Name="chamadoes" EntityType="Self.chamado" />
           <EntitySet Name="secretarias" EntityType="Self.secretaria" />
+          <EntitySet Name="topicos" EntityType="Self.topico" />
           <EntitySet Name="usuarios" EntityType="Self.usuario" />
+          <AssociationSet Name="assunto1" Association="Self.assunto1">
+            <End Role="assunto" EntitySet="assuntoes" />
+            <End Role="chamado" EntitySet="chamadoes" />
+          </AssociationSet>
+          <AssociationSet Name="topicos1" Association="Self.topicos1">
+            <End Role="assunto" EntitySet="assuntoes" />
+            <End Role="topicos" EntitySet="topicos" />
+          </AssociationSet>
+          <AssociationSet Name="responsavel" Association="Self.responsavel">
+            <End Role="usuario" EntitySet="usuarios" />
+            <End Role="chamado" EntitySet="chamadoes" />
+          </AssociationSet>
+          <AssociationSet Name="topico" Association="Self.topico1">
+            <End Role="topicos" EntitySet="topicos" />
+            <End Role="chamado" EntitySet="chamadoes" />
+          </AssociationSet>
           <AssociationSet Name="secretaria1" Association="Self.secretaria1">
             <End Role="secretaria" EntitySet="secretarias" />
             <End Role="usuario" EntitySet="usuarios" />
           </AssociationSet>
-          <EntitySet Name="assuntoes" EntityType="semaModel.assunto" />
-          <EntitySet Name="chamadoes" EntityType="semaModel.chamado" />
-          <EntitySet Name="topicos" EntityType="semaModel.topico" />
-          <AssociationSet Name="topicos1" Association="semaModel.topicos1">
-            <End Role="assunto" EntitySet="assuntoes" />
-            <End Role="topico" EntitySet="topicos" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="assunto">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="descricao" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="topicos" Relationship="semaModel.topicos1" FromRole="assunto" ToRole="topico" />
-        </EntityType>
-        <EntityType Name="chamado">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="protocolo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="telefone" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="cpf" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="assunto" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="topico" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="descricao" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
-          <Property Name="status" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="topico">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="descricao" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="assuntoID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="assunto" Relationship="semaModel.topicos1" FromRole="topico" ToRole="assunto" />
-        </EntityType>
-        <Association Name="topicos1">
-          <End Type="semaModel.assunto" Role="assunto" Multiplicity="1" />
-          <End Type="semaModel.topico" Role="topico" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="assunto">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="topico">
-              <PropertyRef Name="assuntoID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="semaModelStoreContainer" CdmEntityContainer="semaEntities">
+          <EntitySetMapping Name="assuntoes">
+            <EntityTypeMapping TypeName="semaModel.assunto">
+              <MappingFragment StoreEntitySet="assunto">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="chamadoes">
+            <EntityTypeMapping TypeName="semaModel.chamado">
+              <MappingFragment StoreEntitySet="chamado">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="protocolo" ColumnName="protocolo" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="telefone" ColumnName="telefone" />
+                <ScalarProperty Name="cpf" ColumnName="cpf" />
+                <ScalarProperty Name="assunto" ColumnName="assunto" />
+                <ScalarProperty Name="topico" ColumnName="topico" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="resposta" ColumnName="resposta" />
+                <ScalarProperty Name="usuario_responsavel" ColumnName="usuario_responsavel" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="secretarias">
             <EntityTypeMapping TypeName="semaModel.secretaria">
               <MappingFragment StoreEntitySet="secretaria">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nome" ColumnName="nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="topicos">
+            <EntityTypeMapping TypeName="semaModel.topico">
+              <MappingFragment StoreEntitySet="topicos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="assuntoID" ColumnName="assuntoID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -219,39 +364,6 @@
                 <ScalarProperty Name="secretariaID" ColumnName="secretariaID" />
                 <ScalarProperty Name="img" ColumnName="img" />
                 <ScalarProperty Name="cargo" ColumnName="cargo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="assuntoes">
-            <EntityTypeMapping TypeName="semaModel.assunto">
-              <MappingFragment StoreEntitySet="assunto">
-                <ScalarProperty Name="descricao" ColumnName="descricao" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="chamadoes">
-            <EntityTypeMapping TypeName="semaModel.chamado">
-              <MappingFragment StoreEntitySet="chamado">
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="descricao" ColumnName="descricao" />
-                <ScalarProperty Name="topico" ColumnName="topico" />
-                <ScalarProperty Name="assunto" ColumnName="assunto" />
-                <ScalarProperty Name="cpf" ColumnName="cpf" />
-                <ScalarProperty Name="telefone" ColumnName="telefone" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="nome" ColumnName="nome" />
-                <ScalarProperty Name="protocolo" ColumnName="protocolo" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="topicos">
-            <EntityTypeMapping TypeName="semaModel.topico">
-              <MappingFragment StoreEntitySet="topicos">
-                <ScalarProperty Name="assuntoID" ColumnName="assuntoID" />
-                <ScalarProperty Name="descricao" ColumnName="descricao" />
-                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -25,10 +25,10 @@ namespace SEMA
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<secretaria> secretarias { get; set; }
-        public DbSet<usuario> usuarios { get; set; }
         public DbSet<assunto> assuntoes { get; set; }
         public DbSet<chamado> chamadoes { get; set; }
+        public DbSet<secretaria> secretarias { get; set; }
         public DbSet<topico> topicos { get; set; }
+        public DbSet<usuario> usuarios { get; set; }
     }
 }

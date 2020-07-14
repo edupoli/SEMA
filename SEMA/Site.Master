@@ -145,9 +145,9 @@
                 </span>
               </a>
                 <ul class="treeview-menu">
-                  <li><a href="Secretarias.aspx">Consultar</a></li>
+                  <li><a href="Chamados.aspx">Consultar</a></li>
                   <li><a href="AddChamados.aspx">Adicionar</a></li>
-                  <li><a href="RespChamado.aspx">Responder</a></li>
+                  <li><a href="NovosChamados.aspx">Responder</a></li>
                 </ul>
             </li>
           </ul>

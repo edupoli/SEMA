@@ -131,8 +131,8 @@ namespace SEMA
                     ch.telefone = telefone.Text;
                     ch.email = email.Text;
                     ch.cpf = cpf.Text;
-                    ch.assunto = cboxAssunto.SelectedValue;
-                    ch.topico = cboxTopico.SelectedValue;
+                    ch.assunto = int.Parse(cboxAssunto.SelectedValue);
+                    ch.topico = int.Parse(cboxTopico.SelectedValue);
                     ch.descricao = descricao.Text;
                     ch.status = cboxStatus.SelectedValue;
                     ctx.chamadoes.Add(ch);

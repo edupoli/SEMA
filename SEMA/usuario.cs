@@ -14,6 +14,11 @@ namespace SEMA
     
     public partial class usuario
     {
+        public usuario()
+        {
+            this.chamadoes = new HashSet<chamado>();
+        }
+    
         public int id { get; set; }
         public string nome { get; set; }
         public string email { get; set; }
@@ -24,6 +29,7 @@ namespace SEMA
         public string img { get; set; }
         public string cargo { get; set; }
     
+        public virtual ICollection<chamado> chamadoes { get; set; }
         public virtual secretaria secretaria { get; set; }
     }
 }
