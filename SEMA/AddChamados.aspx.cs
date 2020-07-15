@@ -17,10 +17,13 @@ namespace SEMA
         string e_mail;
         string valido;
         string numProtocolo;
+        DateTime data = DateTime.Now;
+        int LastID;
 
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            LastID = 0;
             numProtocolo = string.Format("{0:00000000000000}", GerarProtocolo());
             e_mail = email.Text;
             if (!Page.IsPostBack)
@@ -133,10 +136,16 @@ namespace SEMA
                     ch.cpf = cpf.Text;
                     ch.assunto = int.Parse(cboxAssunto.SelectedValue);
                     ch.topico = int.Parse(cboxTopico.SelectedValue);
-                    ch.descricao = descricao.Text;
+                    //ch.descricao = descricao.Text;
                     ch.status = cboxStatus.SelectedValue;
                     ctx.chamadoes.Add(ch);
                     ctx.SaveChanges();
+                    LastID =ch.id;
+                    if (LastID !=0)
+                    {
+                        pushMensage();
+                    }
+                    
                     mensagem = "Adicionado com sucesso !";
                     if (email.Text != "")
                     {
@@ -152,6 +161,24 @@ namespace SEMA
                 }
             }
 
+        }
+        private void pushMensage()
+        {
+            try
+            {
+                semaEntities ctx = new semaEntities();
+                historico his = new historico();
+                his.chamadoID = LastID;
+                his.mensagem = "<p>Enviada em: " + data + "</p></br>" + descricao.Text;
+                his.sequencia = 0;
+                ctx.historicoes.Add(his);
+                ctx.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                mensagem = "Ocorreu o seguinte erro ao tentar gravar o texto: " + ex.Message;
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+            }
         }
 
         protected void btnVoltar_Click(object sender, EventArgs e)

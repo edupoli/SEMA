@@ -3,10 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <%@ Register Assembly="CKEditor.NET" Namespace="CKEditor.NET" TagPrefix="CKEditor" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-
-    
-
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>  
     <style>
         .nav-tabs>li.active>a {
             background-color: #478978 !important;
@@ -16,7 +13,7 @@
     <div class="wrapper">
   <div class="content-wrapper">
     <section class="content-header">
-      <h1>Responder Novo Chamado</h1>
+      <h1>Responder Chamado</h1>
         <br />
       <ol class="breadcrumb">
         <li><a href="home.aspx"><i class="fas fa-home"></i> Home</a></li>
@@ -27,12 +24,12 @@
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_1" data-toggle="tab">Resposta ao Chamado</a></li>
               <li><a href="#tab_2" data-toggle="tab">Informações do Chamado</a></li>
+                <li><a href="#tab_3" data-toggle="tab">Histórico de Mensagens</a></li>
               <li class="pull-right"><a href="#" class="text-muted"><i class="far fa-bullhorn"></i></a></li>
             </ul>
             <div class="tab-content">
-      <div class="tab-pane active" id="tab_1">
-                
-                    <section class="content">
+      <div class="tab-pane active" id="tab_1">          
+      <section class="content">
       <div class="container-fluid">
         <div class="box box-default">
           <div class="box-header with-border" >
@@ -91,7 +88,7 @@
       </div>
     </div>
 
-<asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
     <Triggers>
         <asp:AsyncPostBackTrigger ControlID="Image1" />
     </Triggers>
@@ -107,13 +104,10 @@
         </div>
     </ContentTemplate>
 </asp:UpdatePanel>
-
-
      </section>
-
-              </div>
+       </div>
               <!-- /.tab-pane -->
-              <div class="tab-pane" id="tab_2">
+    <div class="tab-pane" id="tab_2">
                 
     <section class="content">
       <div class="container-fluid">
@@ -187,28 +181,94 @@
                     </div>
                 </div>
             </div>
-              <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
-                
-                        <CKEditor:CKEditorControl ID="resp_descricao" runat="server" ReadOnly="true"></CKEditor:CKEditorControl>
-
-                    </div>
-                </div>
-            </div>
         </div>
-      </div>
+      </div>        
     </div>
-     </section>
+   </section>                 
+ </div>
+     <!-- /.tab-pane -->
+                <style>          
+                    /* Chat containers */
+                    .container1 {
+                      border: 2px solid #dedede;
+                      background-color: #f1f1f1;
+                      border-radius: 5px;
+                      padding: 5px;
+                      margin: 10px auto!important;
+                      width:80%!important;
+ 
+                    }
 
-              </div>
-              <!-- /.tab-pane -->
-              
-              <!-- /.tab-pane -->
-            </div>
-            <!-- /.tab-content -->
-          </div>
-          <!-- nav-tabs-custom -->
+                    /* Darker chat container */
+                    .darker {
+                      border-color: #ccc;
+                      background-color: #ddd;
+                    }
+
+                    /* Clear floats */
+                    .container1::after {
+                      content: "";
+                      clear: both;
+                      display: table;
+                    }
+
+                    /* Style images */
+                    .container1 img {
+                      float: left;
+                      max-width: 60px;
+                      width: 100%;
+                      margin-right: 20px;
+                      border-radius: 50%;
+                    }
+
+                    /* Style the right image */
+                    .container1 img.right {
+                      float: right;
+                      margin-left: 20px;
+                      margin-right:0;
+                    }
+
+                    /* Style time text */
+                    .time-right {
+                      float: right;
+                      color: #aaa;
+                    }
+
+                    /* Style time text */
+                    .time-left {
+                      float: left;
+                      color: #999;
+                    }
+                </style>                 
+                <div class="tab-pane" id="tab_3">
+<div class="container1">
+  <img src="/dist/img/cidadao.jpg" alt="Avatar">
+  <p>Hello. How are you today?</p>
+  <span class="time-right">11:00</span>
+</div>
+
+<div class="container1 darker">
+  <img src="/dist/img/sema.jpg" alt="Avatar" class="right">
+  <p>Hey! I'm fine. Thanks for asking!</p>
+  <span class="time-left">11:01</span>
+</div>
+
+<div class="container1">
+  <img src="/dist/img/cidadao.jpg" alt="Avatar">
+  <p>Sweet! So, what do you wanna do today?</p>
+  <span class="time-right">11:02</span>
+</div>
+
+<div class="container1 darker">
+  <img src="/dist/img/sema.jpg" alt="Avatar" class="right">
+  <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
+  <span class="time-left">11:05</span>
+</div>
+
+
+                </div>
+    </div>
+    </div>
       </div>
     </div>
 

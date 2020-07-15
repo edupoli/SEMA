@@ -209,14 +209,5 @@ namespace SEMA {
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList resp_cboxStatus;
-        
-        /// <summary>
-        /// Controle resp_descricao.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::CKEditor.NET.CKEditorControl resp_descricao;
     }
 }

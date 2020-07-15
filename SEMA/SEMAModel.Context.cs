@@ -30,5 +30,6 @@ namespace SEMA
         public DbSet<secretaria> secretarias { get; set; }
         public DbSet<topico> topicos { get; set; }
         public DbSet<usuario> usuarios { get; set; }
+        public DbSet<historico> historicoes { get; set; }
     }
 }

@@ -18,8 +18,10 @@ namespace SEMA
         string prevPage;
         int chamadoID;
         string e_mail;
+        DateTime data = DateTime.Now;
         string numProtocolo;
         string nome;
+        int seq = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             lblCaminhoImg.Visible = false;
@@ -260,7 +262,7 @@ namespace SEMA
                 resp_cboxAssunto.Items.Add(new ListItem(item.assunto, item.assunto));
                 resp_cboxTopico.Items.Add(new ListItem(item.topico, item.topico));
                 resp_cboxStatus.Items.Add(new ListItem(item.status, item.status));
-                resp_descricao.Text = item.descricao;
+                //resp_descricao.Text = item.descricao;
             }
         }
 
@@ -286,11 +288,11 @@ namespace SEMA
             
             else
 	        
-                if (resp_descricao.Text == "")
+                if (descricao.Text == "")
                 {
                     mensagem = "Favor preencher a descrição da resposta do chamado";
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
-                    resp_descricao.Focus();
+                    //resp_descricao.Focus();
                 }
 
             else
@@ -301,9 +303,11 @@ namespace SEMA
                     chamado cha = ctx.chamadoes.First(p => p.id == chamadoID);
                     cha.usuario_responsavel = int.Parse(cboxUsuario.SelectedValue);
                     cha.status = cboxStatus.SelectedValue;
-                    cha.resposta = descricao.Text;
+                    //cha.resposta = descricao.Text;
                     cha.img = lblCaminhoImg.Text;
                     ctx.SaveChanges();
+                    pushMensage();
+                    gravaHistorico();
                     mensagem = "Gravado com Sucesso!";
                     if (resp_email.Text !="")
                     {
@@ -320,6 +324,53 @@ namespace SEMA
                 }
             }
         }
+        // pega o valor do sequencia da ultima mensagem na tabela historico
+        private void pushMensage()
+        {
+
+            try
+            {
+                semaEntities ctx = new semaEntities();
+                var resultado = (from t in ctx.historicoes
+                                 where t.chamadoID == chamadoID
+                                 orderby t.sequencia descending
+                                 select new
+                                 {
+                                     t.sequencia,
+                                     t.mensagem,
+                                 }).Take(1);
+                foreach (var item in resultado)
+                {
+                    seq = item.sequencia.Value;
+                }
+            }
+            catch (Exception ex)
+            {
+                mensagem = "Ocorreu o seguinte erro ao tentar consultar ultima mensagem: " + ex.Message;
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+            }
+        }
+        // grava a mensagem na tabela historico
+        private void gravaHistorico()
+        {
+            try
+            {
+                seq = seq + 1;
+                semaEntities ctx = new semaEntities();
+                historico his = new historico();
+                his.chamadoID = chamadoID;
+                his.mensagem = "<p>Enviada em: " + data + "</p></br>" + descricao.Text;
+                his.sequencia = seq;
+                ctx.historicoes.Add(his);
+                ctx.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                mensagem = "Ocorreu o seguinte erro ao gravar mensagem: " + ex.Message;
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+            }
+        }
+
         private void Email()
         {
             try
@@ -333,7 +384,7 @@ namespace SEMA
                 mailMessage.Body =
                 mailMessage.Body = "<html><body><img src='https://i.ibb.co/L89Y9Yt/SEMA.png' /><br><br>" + "<b>Olá " + resp_nome.Text + "</b><br><br>" +
                             "Em Resposta a sua solicitação na qual foi registrada com protocolo Nº " + numProtocolo + "<br>" +
-                           "<br>Sua Mensagem: <br>" + resp_descricao.Text + "<br><br>" +
+                           "<br>Sua Mensagem: <br>" + //resp_descricao.Text + "<br><br>" +
                            "Segue abaixo Resposta:<br>" + descricao.Text + "<br><br><br>" +
                            "Caso ainda tenha dúvidas referente a esse protocolo, por favor <b><a href='http://10.0.2.135/faleconosco/faleconosco?idfaleconosco=" + chamadoID + "'>CLIQUE AQUI</a></b> para nos perguntar<br>" +
                            "Obrigado por entrar em contato.<br>" +

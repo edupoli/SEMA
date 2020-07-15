@@ -14,6 +14,11 @@ namespace SEMA
     
     public partial class chamado
     {
+        public chamado()
+        {
+            this.historicoes = new HashSet<historico>();
+        }
+    
         public int id { get; set; }
         public string protocolo { get; set; }
         public string nome { get; set; }
@@ -31,5 +36,6 @@ namespace SEMA
         public virtual assunto assunto1 { get; set; }
         public virtual usuario usuario { get; set; }
         public virtual topico topico1 { get; set; }
+        public virtual ICollection<historico> historicoes { get; set; }
     }
 }
