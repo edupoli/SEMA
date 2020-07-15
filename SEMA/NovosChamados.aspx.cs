@@ -31,7 +31,7 @@ namespace SEMA
             MySqlDataAdapter da = new MySqlDataAdapter();
             sql = "SELECT chamado.id, chamado.protocolo,chamado.nome, chamado.email," +
                 "chamado.cpf,chamado.telefone,assunto.descricao as assunto," +
-                "topicos.descricao as topico,chamado.resposta, chamado.img,chamado.status" +
+                "topicos.descricao as topico, chamado.img,chamado.status" +
                  " FROM chamado " +
                  "inner join assunto on chamado.assunto = assunto.id " +
                  "inner join topicos on chamado.topico = topicos.id " +

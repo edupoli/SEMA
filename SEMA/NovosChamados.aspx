@@ -42,7 +42,7 @@
                                       <asp:BoundField DataField="assunto" HeaderText="Assunto" />
                                       <asp:BoundField DataField="status" HeaderText="Status" />
             
-                                <asp:TemplateField HeaderText="Ações">
+                                <asp:TemplateField HeaderText="Ações" ItemStyle-Wrap="false">
                                     <ItemTemplate>
                                         <asp:LinkButton class="btn badge-secondary" Text="" data-toggle="tooltip" title="Visualizar" data-placement="auto" ID="btnVisualizar" runat="server" CommandArgument='<%# Eval("id") %>' OnClick="btnVisualizar_Click" ><i class="far fa-eye"></i></asp:LinkButton>
                                         <asp:LinkButton class="btn badge-info" Text="" data-toggle="tooltip" title="Responder Chamado" data-placement="auto" ID="btnResponder" runat="server" CommandArgument='<%# Eval("id") %>' OnClick="btnResponder_Click" ><i class="fas fa-edit"></i></asp:LinkButton>

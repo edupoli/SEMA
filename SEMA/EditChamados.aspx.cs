@@ -3,29 +3,24 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace SEMA
 {
-    public partial class AddChamados : System.Web.UI.Page
+    public partial class EditChamados : System.Web.UI.Page
     {
         public string mensagem = string.Empty;
-        string e_mail;
         string valido;
         string numProtocolo;
         DateTime data = DateTime.Now;
-        int LastID;
-
+        int chamadoID;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            LastID = 0;
-            numProtocolo = string.Format("{0:00000000000000}", GerarProtocolo());
-            e_mail = email.Text;
+            chamadoID = Convert.ToInt32(Request.QueryString["chamadoID"]);
+            
             if (!Page.IsPostBack)
             {
                 string conecLocal = "SERVER=10.0.2.9;UID=ura;PWD=ask123;Allow User Variables=True;Pooling=False";
@@ -42,24 +37,9 @@ namespace SEMA
 
                 getStatusColor();
             }
-            GerarProtocolo();
+            GetChamados(chamadoID);
         }
-        public Int64 GerarProtocolo()
-        {
-            try
-            {
-                DateTime data = new DateTime();
-                data = DateTime.Today;
-                string s = data.ToString().Replace("/", "").Replace(":", "").Replace(" ", "");
-                return Convert.ToInt64(s);
-            }
-            catch (Exception ex)
-            {
-                mensagem = "Ocorreu o Seguinte erro: " + ex.Message;
-                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
-                throw;
-            }
-        }
+        
 
         private void getStatusColor()
         {
@@ -91,6 +71,43 @@ namespace SEMA
                 }
             }
         }
+        public void GetChamados(int cod)
+        {
+            semaEntities ctx = new semaEntities();
+            var resultado = (from a in ctx.chamadoes
+                             join b in ctx.assuntoes on a.assunto equals b.id
+                             join c in ctx.topicos on a.topico equals c.id
+                             join d in ctx.historicoes on a.id equals d.chamadoID
+                             where a.id == cod
+                             select new
+                             {
+                                 a.id,
+                                 a.protocolo,
+                                 a.nome,
+                                 a.cpf,
+                                 a.email,
+                                 a.telefone,
+                                 assunto = b.descricao,
+                                 topico = c.descricao,
+                                 a.status,
+                                 a.img,
+                                 d.mensagem
+                                 
+
+                             });
+            foreach (var item in resultado)
+            {
+                txtProtocolo.Text = item.protocolo;
+                nome.Text = item.nome;
+                email.Text = item.email;
+                cpf.Text = item.cpf;
+                telefone.Text = item.telefone;
+                cboxAssunto.SelectedValue = item.assunto;
+                cboxTopico.SelectedValue = item.topico;
+                cboxStatus.SelectedValue = item.status;
+                descricao.Text = item.mensagem;
+            }
+        }
 
         protected void btnSalvar_Click(object sender, EventArgs e)
         {
@@ -102,28 +119,28 @@ namespace SEMA
                 descricao.Focus();
             }
             else
-            
+
                 if ((cpf.Text != "") && (ValidaCPF.IsCpf(cpf.Text) == false))
-                {
-                    valido = "nao";
-                    mensagem = "O CPF informado é inválido !";
-                    ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
-                }
-                else
+            {
+                valido = "nao";
+                mensagem = "O CPF informado é inválido !";
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+            }
+            else
 
                     if ((email.Text != "") && (ValidaEmail.ValidarEmail(email.Text) == false))
-                    {
-                        valido = "nao";
-                        mensagem = "O e-mail digitado esta incorreto !";
-                        ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
-                        email.Focus();
-                    }
-                    else
-                        {
-                            valido = "sim";
-                        }
+            {
+                valido = "nao";
+                mensagem = "O e-mail digitado esta incorreto !";
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+                email.Focus();
+            }
+            else
+            {
+                valido = "sim";
+            }
 
-            if (valido =="sim")
+            if (valido == "sim")
             {
                 try
                 {
@@ -137,126 +154,17 @@ namespace SEMA
                     ch.img = "user-800x600.png";
                     ch.assunto = int.Parse(cboxAssunto.SelectedValue);
                     ch.topico = int.Parse(cboxTopico.SelectedValue);
-                    //ch.descricao = descricao.Text;
                     ch.status = cboxStatus.SelectedValue;
-                    ctx.chamadoes.Add(ch);
                     ctx.SaveChanges();
-                    LastID =ch.id;
-                    if (LastID !=0)
-                    {
-                        pushMensage();
-                    }
-                    
-                    mensagem = "Adicionado com sucesso !";
-                    if (email.Text != "")
-                    {
-                        Email();
-                    }
+                    mensagem = "Alterado com sucesso !";
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
                 }
                 catch (Exception ex)
                 {
                     mensagem = "Ocorreu o seguinte erro: " + ex.Message;
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
-                   
+
                 }
-            }
-
-        }
-        private void pushMensage()
-        {
-            try
-            {
-                semaEntities ctx = new semaEntities();
-                historico his = new historico();
-                his.chamadoID = LastID;
-                his.mensagem = "<p>Enviada em: " + data + "</p></br>" + descricao.Text;
-                his.sequencia = 0;
-                his.data = data;
-                ctx.historicoes.Add(his);
-                ctx.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                mensagem = "Ocorreu o seguinte erro ao tentar gravar o texto: " + ex.Message;
-                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
-            }
-        }
-
-        protected void btnVoltar_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void btnUpload_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void cboxAssunto_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cboxAssunto.SelectedValue=="Selecione")
-            {
-                cboxTopico.Items.Clear();
-            }
-            else
-            {
-                string conecLocal = "SERVER=10.0.2.9;UID=ura;PWD=ask123;Allow User Variables=True;Pooling=False";
-                MySqlConnection con = new MySqlConnection(conecLocal);
-                con.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from sema.topicos where assuntoID=" + cboxAssunto.SelectedValue + " order by descricao asc", con);
-                MySqlDataAdapter da = new MySqlDataAdapter();
-                DataTable dt = new DataTable();
-                da.SelectCommand = cmd;
-                da.Fill(dt);
-                cboxTopico.Items.Clear();
-                cboxTopico.DataSource = dt;
-                cboxTopico.DataBind();
-            }
-        }
-
-        protected void cboxStatus_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            getStatusColor();
-        }
-
-        private void Email()
-        {
-            try
-            {
-                string assunto = "Protocolo Nº " + numProtocolo + " Secretaria do Meio Ambiente Londrina-PR";
-                MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress(e_mail, "Secretaria do Meio Ambiente Londrina-PR");
-                mailMessage.To.Add(e_mail.ToLower());
-                mailMessage.Subject = assunto;
-                mailMessage.IsBodyHtml = true;
-                mailMessage.Body = "<img src='https://i.ibb.co/L89Y9Yt/SEMA.png' /><br>RECEBEMOS A SUA SOLICITAÇÃO E EM BREVE SERÁ RESPONDIDA." + "<br>" +
-                       "Protocolo: " + numProtocolo + "<br>" + "Nome: " + nome.Text + "<br>" +
-                       " CPF: " + cpf.Text + "<br>" +
-                       " Telefone para Contato: " + telefone.Text + "<br>" +
-                       " Assunto: " + cboxAssunto.SelectedItem + "<br>" + cboxTopico.SelectedItem +"<br>"+
-                       " Sua Mensagem:<br> " + descricao.Text + "<br><br>" +
-                       " <strong>SECRETARIA MUNICIPAL DO AMBIENTE</strong><br>" +
-                       " <strong>Localização:</strong> Rua da Natureza, 155 Jardim Piza" +
-                       " <strong>CEP:</strong> 86041-050 Londrina-Paraná" +
-                       " <strong>Telefone:</strong> Geral(43) 3372-4750  ou(43) 3372-4751" +
-                       " <strong>E-mail:</strong> sema@londrina.pr.gov.br" +
-                       " <strong>Horário de Atendimento:</strong> de segunda a sexta-feira, das 12h às 18h<br><br>" +
-
-                       "*** E-mail automático, não há necessidade de respondê-lo. ***";
-
-                mailMessage.Priority = MailPriority.High;
-
-                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-                smtpClient.EnableSsl = true;
-                smtpClient.Credentials = new NetworkCredential("sercomtelcontatcenter@gmail.com", "qtrlutilrbkfgwsf");
-                smtpClient.Send(mailMessage);
-                ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
-            }
-            catch (Exception ex)
-            {
-                mensagem = "Erro ao enviar e-mail: " + ex.Message;
-                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
             }
         }
 
@@ -325,6 +233,36 @@ namespace SEMA
             }
         }
 
+        protected void btnVoltar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("home.aspx");
+        }
+
+        protected void cboxAssunto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboxAssunto.SelectedValue == "Selecione")
+            {
+                cboxTopico.Items.Clear();
+            }
+            else
+            {
+                string conecLocal = "SERVER=10.0.2.9;UID=ura;PWD=ask123;Allow User Variables=True;Pooling=False";
+                MySqlConnection con = new MySqlConnection(conecLocal);
+                con.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from sema.topicos where assuntoID=" + cboxAssunto.SelectedValue + " order by descricao asc", con);
+                MySqlDataAdapter da = new MySqlDataAdapter();
+                DataTable dt = new DataTable();
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                cboxTopico.Items.Clear();
+                cboxTopico.DataSource = dt;
+                cboxTopico.DataBind();
+            }
+        }
+
+        protected void cboxStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            getStatusColor();
+        }
     }
-    
 }

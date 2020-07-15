@@ -12,12 +12,12 @@ namespace SEMA
     public partial class Chamados : System.Web.UI.Page
     {
         public string mensagem = string.Empty;
-        string chamadoID;
+        int chamadoID;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             Timer1.Enabled = true;
-            Timer1.Interval = 10000;
+            Timer1.Interval = 1000000;
             if (!Page.IsPostBack)
             {
                 Listar();
@@ -35,7 +35,7 @@ namespace SEMA
             MySqlDataAdapter da = new MySqlDataAdapter();
             sql = "SELECT chamado.id, chamado.protocolo,chamado.nome, chamado.email," +
                 "chamado.cpf,chamado.telefone,assunto.descricao as assunto," +
-                "topicos.descricao as topico,chamado.resposta, chamado.img,chamado.status" +
+                "topicos.descricao as topico,chamado.img,chamado.status" +
                  " FROM chamado " +
                  "inner join assunto on chamado.assunto = assunto.id " +
                  "inner join topicos on chamado.topico = topicos.id";
@@ -63,12 +63,12 @@ namespace SEMA
                                  a.cpf,
                                  a.email,
                                  a.telefone,
-                                 a.descricao,
+                                 
                                  assunto = b.descricao,
                                  topico = c.descricao,
                                  a.status,
                                  a.img,
-                                 a.resposta,
+                                 
                                  responsavel = d.nome,
                              });
             GridView1.DataSource = resultado.ToList();
@@ -82,7 +82,15 @@ namespace SEMA
 
         protected void btnEditar_Click(object sender, EventArgs e)
         {
-
+            if (Session["perfil"].ToString() != "Administrador")
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
+            }
+            else
+            {
+                chamadoID = int.Parse((sender as LinkButton).CommandArgument);
+                Response.Redirect("EditChamados.aspx?chamadoID=" + chamadoID);
+            }
         }
 
         protected void btnExcluir_Click(object sender, EventArgs e)

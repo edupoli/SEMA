@@ -8,7 +8,31 @@
         .nav-tabs>li.active>a {
             background-color: #478978 !important;
             color: #ffffff !important;
+
         }
+         .modal-static-backdrop {
+	        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+	        filter: alpha(opacity=50);
+	        --moz-opacity:0.5;
+	        --khtml-opacity: 0.5;
+	        opacity: 0.5;
+	        background:#000;
+	        height:100%;
+	        left:0;
+	        position:fixed;
+	        top:0;
+	        width:100%;
+	        z-index:2000;
+        }
+
+        .modal-static {
+	        bottom: auto;
+	        display:block !important;
+	        position:absolute;
+	        z-index:2001;
+        }
+
+
     </style>
     <div class="wrapper">
   <div class="content-wrapper">
@@ -78,7 +102,7 @@
                       <div class="col-md-4" style="height:306px;">
                     <div class="form-group">
                         <asp:Label Text="" runat="server" ID="lblCaminhoImg" />
-                        <asp:ImageButton runat="server" ID="Image1" Width="294.33px" Height="280px" data-toggle="modal" data-target="#modal-default"  />
+                        <asp:ImageButton runat="server" ID="Image1" Width="294.33px" Height="280px"  OnClick="Image1_Click" />
                         <asp:FileUpload runat="server" ID="img" ToolTip="Selecione uma Imagem" CssClass="btn btn-secondary" ClientIDMode="Static" onchange="this.form.submit()"    />
                         <asp:Label runat="server" id="StatusLabel" text="" ForeColor="Red" />
                     </div>
@@ -93,16 +117,24 @@
         <asp:AsyncPostBackTrigger ControlID="Image1" />
     </Triggers>
     <ContentTemplate>
-        <div id="modal-default" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <asp:Image runat="server" ID="imgSel" CssClass="img-responsive"/>
-                </div>
-            </div>
-          </div>
-        </div>
-    </ContentTemplate>
+        <asp:PlaceHolder ID="ModalPlaceHolder" runat="server" Visible="false">
+	<div class="modal-static-backdrop"></div>
+	<div class="modal modal-static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<asp:LinkButton ID="btnModalCloseHeader" runat="server" CssClass="close" OnClick="btnModalCloseHeader_Click" ><span aria-hidden="true">×</span></asp:LinkButton>
+					
+				</div>
+				<div class="modal-body">
+					<asp:Image runat="server" ID="imgSel" CssClass="img-responsive"/>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</asp:PlaceHolder>
+        </ContentTemplate>
 </asp:UpdatePanel>
      </section>
        </div>
@@ -241,31 +273,7 @@
                     }
                 </style>                 
                 <div class="tab-pane" id="tab_3">
-<div class="container1">
-  <img src="/dist/img/cidadao.jpg" alt="Avatar">
-  <p>Hello. How are you today?</p>
-  <span class="time-right">11:00</span>
-</div>
-
-<div class="container1 darker">
-  <img src="/dist/img/sema.jpg" alt="Avatar" class="right">
-  <p>Hey! I'm fine. Thanks for asking!</p>
-  <span class="time-left">11:01</span>
-</div>
-
-<div class="container1">
-  <img src="/dist/img/cidadao.jpg" alt="Avatar">
-  <p>Sweet! So, what do you wanna do today?</p>
-  <span class="time-right">11:02</span>
-</div>
-
-<div class="container1 darker">
-  <img src="/dist/img/sema.jpg" alt="Avatar" class="right">
-  <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
-  <span class="time-left">11:05</span>
-</div>
-
-
+                    <asp:Literal ID="historicoMsg" runat="server" />
                 </div>
     </div>
     </div>

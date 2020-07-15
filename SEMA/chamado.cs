@@ -27,15 +27,13 @@ namespace SEMA
         public string cpf { get; set; }
         public Nullable<int> assunto { get; set; }
         public Nullable<int> topico { get; set; }
-        public string descricao { get; set; }
-        public string resposta { get; set; }
         public Nullable<int> usuario_responsavel { get; set; }
         public string img { get; set; }
         public string status { get; set; }
     
         public virtual assunto assunto1 { get; set; }
+        public virtual ICollection<historico> historicoes { get; set; }
         public virtual usuario usuario { get; set; }
         public virtual topico topico1 { get; set; }
-        public virtual ICollection<historico> historicoes { get; set; }
     }
 }

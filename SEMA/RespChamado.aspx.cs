@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -19,7 +20,7 @@ namespace SEMA
         int chamadoID;
         string e_mail;
         DateTime data = DateTime.Now;
-        string numProtocolo;
+        string historico;
         string nome;
         int seq = 0;
         protected void Page_Load(object sender, EventArgs e)
@@ -29,6 +30,8 @@ namespace SEMA
             getStatusColor();
             chamadoID = Convert.ToInt32(Request.QueryString["chamadoID"]);
             GetChamados(chamadoID);
+            historicoMsg.Text= getHistorico(chamadoID);
+
             e_mail = resp_email.Text;
 
             if (Session["logado"] != null)
@@ -156,6 +159,7 @@ namespace SEMA
                 }
             }
             else
+            if(lblCaminhoImg.Text == "user-800x600.png")
             {
                 ImgPath = "dist/img/chamados/user-800x600.png";
                 Image1.ImageUrl = ImgPath;
@@ -244,12 +248,10 @@ namespace SEMA
                                  a.cpf,
                                  a.email,
                                  a.telefone,
-                                 a.descricao,
                                  assunto = b.descricao,
                                  topico = c.descricao,
                                  a.status,
                                  a.img,
-                                 a.resposta,
                                  
                              });
             foreach (var item in resultado)
@@ -262,11 +264,45 @@ namespace SEMA
                 resp_cboxAssunto.Items.Add(new ListItem(item.assunto, item.assunto));
                 resp_cboxTopico.Items.Add(new ListItem(item.topico, item.topico));
                 resp_cboxStatus.Items.Add(new ListItem(item.status, item.status));
-                //resp_descricao.Text = item.descricao;
+                Image1.ImageUrl = "dist/img/chamados/" + item.img;
+                imgSel.ImageUrl = "dist/img/chamados/" + item.img;
+                lblCaminhoImg.Text = item.img;
+
             }
         }
 
-
+        private string getHistorico(int cod)
+        {
+            StringBuilder sb = new StringBuilder();
+            semaEntities ctx = new semaEntities();
+            var resultado = (from a in ctx.historicoes
+                             where a.chamadoID == cod
+                             orderby a.sequencia ascending
+                             select new
+                             {
+                                 a.data,
+                                 a.mensagem,
+                                 a.sequencia,
+                             });
+            foreach (var item in resultado)
+            {
+                
+                if (item.sequencia %2 ==0)
+                {
+                    sb.Append("<div class='container1'><img src ='/dist/img/cidadao.jpg' alt='Avatar'>");
+                    sb.Append(item.mensagem);
+                    sb.Append("<span class='time-right'>"+ item.data +"</span></div>");
+                }
+                if (item.sequencia %2 != 0)
+                {
+                    sb.Append("<div class='container1 darker'><img src ='/dist/img/sema.jpg' alt='Avatar' class='right'>");
+                    sb.Append(item.mensagem);
+                    sb.Append("<span class='time-left'>" + item.data + "</span></div>");
+                }
+                historico = historico + item.mensagem;
+            }
+            return sb.ToString();
+        }
         
 
         protected void btnSalvar_Click(object sender, EventArgs e)
@@ -292,7 +328,7 @@ namespace SEMA
                 {
                     mensagem = "Favor preencher a descrição da resposta do chamado";
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
-                    //resp_descricao.Focus();
+                    descricao.Focus();
                 }
 
             else
@@ -359,8 +395,9 @@ namespace SEMA
                 semaEntities ctx = new semaEntities();
                 historico his = new historico();
                 his.chamadoID = chamadoID;
-                his.mensagem = "<p>Enviada em: " + data + "</p></br>" + descricao.Text;
+                his.mensagem = "<p>Enviada em: "+ data + "</p></br>" + descricao.Text;
                 his.sequencia = seq;
+                his.data = data;
                 ctx.historicoes.Add(his);
                 ctx.SaveChanges();
             }
@@ -383,10 +420,10 @@ namespace SEMA
                 mailMessage.IsBodyHtml = true;
                 mailMessage.Body =
                 mailMessage.Body = "<html><body><img src='https://i.ibb.co/L89Y9Yt/SEMA.png' /><br><br>" + "<b>Olá " + resp_nome.Text + "</b><br><br>" +
-                            "Em Resposta a sua solicitação na qual foi registrada com protocolo Nº " + numProtocolo + "<br>" +
-                           "<br>Sua Mensagem: <br>" + //resp_descricao.Text + "<br><br>" +
+                            "Em Resposta a sua solicitação na qual foi registrada com protocolo Nº " + resp_txtProtocolo.Text + "<br>" +
+                           //"<br>Sua Mensagem: <br>" + //resp_descricao.Text + "<br><br>" +
                            "Segue abaixo Resposta:<br>" + descricao.Text + "<br><br><br>" +
-                           "Caso ainda tenha dúvidas referente a esse protocolo, por favor <b><a href='http://10.0.2.135/faleconosco/faleconosco?idfaleconosco=" + chamadoID + "'>CLIQUE AQUI</a></b> para nos perguntar<br>" +
+                           "Caso ainda tenha dúvidas referente a esse protocolo, por favor <b><a href='http://10.0.2.15/sema/cidadao?chamadoID=" + chamadoID + "'>CLIQUE AQUI</a></b> para nos perguntar<br>" +
                            "Obrigado por entrar em contato.<br>" +
                            "A SEMA está a sua disposição, você também pode obter informações e serviços no site <a href='http://www1.londrina.pr.gov.br/index.php?option=com_content&view=frontpageplus&Itemid=163'> da Prefeitura </a>.<br>" +
                            "Nosso horário de atendimento presencial é das 12h às 18h de segunda a sexta - feira.<br></body><html>";
@@ -424,6 +461,15 @@ namespace SEMA
             Response.Redirect(prevPage);
         }
 
-        
+        protected void Image1_Click(object sender, ImageClickEventArgs e)
+        {
+            ModalPlaceHolder.Visible = true;
+            ScriptManager.RegisterStartupScript(UpdatePanel1, UpdatePanel1.GetType(), "UpdatePanel1StartupScript", "setTimeout('window.scrollTo(0,0)', 0);", true);
+        }
+
+        protected void btnModalCloseHeader_Click(object sender, EventArgs e)
+        {
+            ModalPlaceHolder.Visible = false;
+        }
     }
 }

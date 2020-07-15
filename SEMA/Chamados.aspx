@@ -25,7 +25,7 @@
             <div class="box-header with-border">
               <h3 class="box-title">Chamados Cadastrados</h3>
             </div>
-              <asp:Timer ID="Timer1" OnTick="Timer1_Tick" runat="server" Interval="10000"></asp:Timer>
+              <asp:Timer ID="Timer1" OnTick="Timer1_Tick" runat="server" Interval="1000000"></asp:Timer>
             <!-- /.box-header -->
               <div class="box-body">
               <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
@@ -42,7 +42,7 @@
                                       <asp:BoundField DataField="assunto" HeaderText="Assunto" />
                                       <asp:BoundField DataField="status" HeaderText="Status" />
             
-                                <asp:TemplateField HeaderText="Ações">
+                                <asp:TemplateField HeaderText="Ações" ItemStyle-Wrap="false">
                                     <ItemTemplate>
                                         <asp:LinkButton class="btn badge-secondary" Text="" data-toggle="tooltip" title="Visualizar" data-placement="auto" ID="btnVisualizar" runat="server" CommandArgument='<%# Eval("id") %>' OnClick="btnVisualizar_Click" ><i class="far fa-eye"></i></asp:LinkButton>
                                         <asp:LinkButton class="btn badge-info" Text="" data-toggle="tooltip" title="Editar" data-placement="auto" ID="btnEditar" runat="server" CommandArgument='<%# Eval("id") %>' OnClick="btnEditar_Click" ><i class="fas fa-edit"></i></asp:LinkButton>

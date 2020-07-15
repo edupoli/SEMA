@@ -117,7 +117,7 @@
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu" data-widget="tree">
             <li class="treeview">
-              <a href="#"><i class="fas fa-users"></i> <span>Usuários</span>
+              <a href="#"><i class="far fa-users"></i> <span>Usuários</span>
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
@@ -128,7 +128,7 @@
                 </ul>
             </li>
               <li class="treeview">
-              <a href="#"><i class="fas fa-building"></i> <span>Secretarias</span>
+              <a href="#"><i class="fal fa-building"></i> <span>Secretarias</span>
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>

@@ -231,12 +231,14 @@
     <Content Include="AddSecretarias.aspx" />
     <Content Include="AddUsuarios.aspx" />
     <Content Include="Chamados.aspx" />
+    <Content Include="cidadao.aspx" />
     <Content Include="ckeditor.net.dll" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="EditChamados.aspx" />
     <Content Include="EditSecretarias.aspx" />
     <Content Include="EditUsuarios.aspx" />
     <Content Include="favicon.ico" />
@@ -690,7 +692,21 @@
     <Compile Include="Chamados.aspx.designer.cs">
       <DependentUpon>Chamados.aspx</DependentUpon>
     </Compile>
+    <Compile Include="cidadao.aspx.cs">
+      <DependentUpon>cidadao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="cidadao.aspx.designer.cs">
+      <DependentUpon>cidadao.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Criptografia.cs" />
+    <Compile Include="EditChamados.aspx.cs">
+      <DependentUpon>EditChamados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditChamados.aspx.designer.cs">
+      <DependentUpon>EditChamados.aspx</DependentUpon>
+    </Compile>
     <Compile Include="EditSecretarias.aspx.cs">
       <DependentUpon>EditSecretarias.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
