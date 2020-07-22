@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="home.aspx.cs" Inherits="SEMA.home" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -17,11 +18,19 @@
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
+
+          <asp:Timer ID="Timer1" OnTick="Timer1_Tick" runat="server" Interval="10000"></asp:Timer>
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                  <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="Timer1" />
+                      </Triggers>
+                      <ContentTemplate>
+
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>150</h3>
+              <h3><asp:Label ID="qtaAbertos" runat="server" /></h3>
 
               <p>Novos Chamados</p>
             </div>
@@ -36,7 +45,7 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>53<sup style="font-size: 20px"></sup></h3>
+              <h3><asp:Label ID="qtaFinalizados" runat="server" /><sup style="font-size: 20px"></sup></h3>
 
               <p>Finalizados</p>
             </div>
@@ -51,7 +60,7 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>44</h3>
+              <h3><asp:Label ID="qtaAtendimentos" runat="server" /></h3>
 
               <p>Atendimentos</p>
             </div>
@@ -66,7 +75,7 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>65</h3>
+              <h3><asp:Label ID="qtaPendentes" runat="server" /></h3>
 
               <p>Chamados Pendentes</p>
             </div>
@@ -78,6 +87,8 @@
         </div>
         <!-- ./col -->
       </div>
+</ContentTemplate>
+</asp:UpdatePanel>
       <!-- /.row -->
       <!-- Main row -->
       <div class="row">
@@ -100,6 +111,9 @@
             <!-- /.box-body -->
           </div>
         </div>
+          <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+                  
+                      <ContentTemplate>
           <div class="col-md-6">
           <div class="box box-danger">
             <div class="box-header with-border">
@@ -118,9 +132,12 @@
           </div>
           </div>
         <!-- right col -->
+                          </ContentTemplate>
+              </asp:UpdatePanel>
       </div>
-      <!-- /.row (main row) -->
 
+      <!-- /.row (main row) -->
+</div>
     </section>
     <!-- /.content -->
   </div>
@@ -157,39 +174,46 @@
         }
     });
     </script>
-  <script>
-    var ctx = document.getElementById("pieChart").getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels  : ['Abertos', 'Em Atendimento', 'Pendentes', 'Finalizados'],
-            datasets: [{
-                label: 'Abertos',
-                data: <%=Newtonsoft.Json.JsonConvert.SerializeObject(DataChamados)%>,
-                backgroundColor: ['#00c0ef','#f39c12','#f56954','#00a65a']
-            }]
-        },
-        options: {
-            segmentShowStroke    : true,
-          //String - The colour of each segment stroke
-          segmentStrokeColor   : '#fff',
-          //Number - The width of each segment stroke
-          segmentStrokeWidth   : 2,
-          //Number - The percentage of the chart that we cut out of the middle
-          percentageInnerCutout: 50, // This is 0 for Pie charts
-          //Number - Amount of animation steps
-          animationSteps       : 100,
-          //String - Animation easing effect
-          animationEasing      : 'easeOutBounce',
-          //Boolean - Whether we animate the rotation of the Doughnut
-          animateRotate        : true,
-          //Boolean - Whether we animate scaling the Doughnut from the centre
-          animateScale         : false,
-          //Boolean - whether to make the chart responsive to window resizing
-          responsive           : true,
-          // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-          maintainAspectRatio  : true,
-        }
-    });
+
+
+
+  <script type="text/javascript">
+      function graficoDonuts() {
+          var ctx = document.getElementById("pieChart").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels  : ['Abertos', 'Em Atendimento', 'Finalizados','Pendentes'],
+                    datasets: [{
+                        label: 'Abertos',
+                        data: <%=Newtonsoft.Json.JsonConvert.SerializeObject(DataChamados)%>,
+                        backgroundColor: ['#00c0ef','#f39c12','#00a65a','#f56954']
+                    }]
+                },
+                options: {
+                    segmentShowStroke    : true,
+                  //String - The colour of each segment stroke
+                  segmentStrokeColor   : '#fff',
+                  //Number - The width of each segment stroke
+                  segmentStrokeWidth   : 2,
+                  //Number - The percentage of the chart that we cut out of the middle
+                  percentageInnerCutout: 50, // This is 0 for Pie charts
+                  //Number - Amount of animation steps
+                  animationSteps       : 100,
+                  //String - Animation easing effect
+                  animationEasing      : 'easeOutBounce',
+                  //Boolean - Whether we animate the rotation of the Doughnut
+                  animateRotate        : true,
+                  //Boolean - Whether we animate scaling the Doughnut from the centre
+                  animateScale         : false,
+                  //Boolean - whether to make the chart responsive to window resizing
+                  responsive           : true,
+                  // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                  maintainAspectRatio  : true,
+                }
+                
+            });
+      }
+    
     </script>
 </asp:Content>

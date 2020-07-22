@@ -36,8 +36,9 @@ namespace SEMA
                 txtProtocolo.Text = numProtocolo;
 
                 getStatusColor();
+                GetChamados(chamadoID);
             }
-            GetChamados(chamadoID);
+            
         }
         
 
@@ -87,8 +88,8 @@ namespace SEMA
                                  a.cpf,
                                  a.email,
                                  a.telefone,
-                                 assunto = b.descricao,
-                                 topico = c.descricao,
+                                 a.assunto,
+                                 a.topico,
                                  a.status,
                                  a.img,
                                  d.mensagem
@@ -102,8 +103,9 @@ namespace SEMA
                 email.Text = item.email;
                 cpf.Text = item.cpf;
                 telefone.Text = item.telefone;
-                cboxAssunto.SelectedValue = item.assunto;
-                cboxTopico.SelectedValue = item.topico;
+                cboxAssunto.SelectedValue = Convert.ToString(item.assunto);
+                getTopicos();
+                cboxTopico.SelectedValue = Convert.ToString(item.topico);
                 cboxStatus.SelectedValue = item.status;
                 descricao.Text = item.mensagem;
             }
@@ -145,7 +147,7 @@ namespace SEMA
                 try
                 {
                     semaEntities ctx = new semaEntities();
-                    chamado ch = new chamado();
+                    chamado ch = ctx.chamadoes.First(p => p.id == chamadoID);
                     ch.protocolo = txtProtocolo.Text;
                     ch.nome = nome.Text;
                     ch.telefone = telefone.Text;
@@ -238,7 +240,7 @@ namespace SEMA
             Response.Redirect("home.aspx");
         }
 
-        protected void cboxAssunto_SelectedIndexChanged(object sender, EventArgs e)
+        private void getTopicos()
         {
             if (cboxAssunto.SelectedValue == "Selecione")
             {
@@ -258,6 +260,11 @@ namespace SEMA
                 cboxTopico.DataSource = dt;
                 cboxTopico.DataBind();
             }
+        }
+
+        protected void cboxAssunto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            getTopicos();
         }
 
         protected void cboxStatus_SelectedIndexChanged(object sender, EventArgs e)

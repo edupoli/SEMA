@@ -646,6 +646,7 @@
     </Content>
     <Content Include="Site.Master" />
     <Content Include="Usuarios.aspx" />
+    <Content Include="ViewChamados.aspx" />
     <Content Include="ViewSecretarias.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="ViewUsuarios.aspx" />
@@ -808,6 +809,13 @@
     </Compile>
     <Compile Include="Usuarios.aspx.designer.cs">
       <DependentUpon>Usuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewChamados.aspx.cs">
+      <DependentUpon>ViewChamados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewChamados.aspx.designer.cs">
+      <DependentUpon>ViewChamados.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSecretarias.aspx.cs">
       <DependentUpon>ViewSecretarias.aspx</DependentUpon>

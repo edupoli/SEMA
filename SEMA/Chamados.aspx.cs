@@ -38,7 +38,8 @@ namespace SEMA
                 "topicos.descricao as topico,chamado.img,chamado.status" +
                  " FROM chamado " +
                  "inner join assunto on chamado.assunto = assunto.id " +
-                 "inner join topicos on chamado.topico = topicos.id";
+                 "inner join topicos on chamado.topico = topicos.id " +
+                 "where chamado.status <> 'Aberto' and chamado.status <> 'Retorno Cidadao'";
  
             cmd = new MySqlCommand(sql, con);
             da.SelectCommand = cmd;
@@ -77,7 +78,8 @@ namespace SEMA
 
         protected void btnVisualizar_Click(object sender, EventArgs e)
         {
-
+            chamadoID = int.Parse((sender as LinkButton).CommandArgument);
+            Response.Redirect("ViewChamados.aspx?chamadoID=" + chamadoID);
         }
 
         protected void btnEditar_Click(object sender, EventArgs e)
@@ -95,7 +97,29 @@ namespace SEMA
 
         protected void btnExcluir_Click(object sender, EventArgs e)
         {
-
+            if (Session["perfil"].ToString() != "Administrador")
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
+            }
+            else
+            {
+                try
+                {
+                    chamadoID = int.Parse((sender as LinkButton).CommandArgument);
+                    semaEntities ctx = new semaEntities();
+                    chamado cha = ctx.chamadoes.First(p => p.id == chamadoID);
+                    ctx.chamadoes.Remove(cha);
+                    ctx.SaveChanges();
+                    GetChamados();
+                    mensagem = "Deletado com Sucesso !";
+                    ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
+                }
+                catch (Exception ex)
+                {
+                    mensagem = "Ocorreu o seguinte erro ao tentar deletar: " + ex.Message;
+                    ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+                }
+            }
         }
 
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)

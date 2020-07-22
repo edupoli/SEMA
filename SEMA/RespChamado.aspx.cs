@@ -29,9 +29,6 @@ namespace SEMA
             prevPage = Request.UrlReferrer.ToString();
             getStatusColor();
             chamadoID = Convert.ToInt32(Request.QueryString["chamadoID"]);
-            GetChamados(chamadoID);
-            historicoMsg.Text= getHistorico(chamadoID);
-
             e_mail = resp_email.Text;
 
             if (Session["logado"] != null)
@@ -50,6 +47,8 @@ namespace SEMA
             if (!IsPostBack)
             {
                 PreencherCbox();
+                GetChamados(chamadoID);
+                historicoMsg.Text = getHistorico(chamadoID);
             } 
 
             if (IsPostBack && img.PostedFile != null)
@@ -252,6 +251,7 @@ namespace SEMA
                                  topico = c.descricao,
                                  a.status,
                                  a.img,
+                                 a.usuario_responsavel,
                                  
                              });
             foreach (var item in resultado)
@@ -264,6 +264,7 @@ namespace SEMA
                 resp_cboxAssunto.Items.Add(new ListItem(item.assunto, item.assunto));
                 resp_cboxTopico.Items.Add(new ListItem(item.topico, item.topico));
                 resp_cboxStatus.Items.Add(new ListItem(item.status, item.status));
+                cboxUsuario.SelectedValue = Convert.ToString(item.usuario_responsavel);
                 Image1.ImageUrl = "dist/img/chamados/" + item.img;
                 imgSel.ImageUrl = "dist/img/chamados/" + item.img;
                 lblCaminhoImg.Text = item.img;
@@ -283,17 +284,18 @@ namespace SEMA
                                  a.data,
                                  a.mensagem,
                                  a.sequencia,
+                                 a.origem,
                              });
             foreach (var item in resultado)
             {
                 
-                if (item.sequencia %2 ==0)
+                if (item.origem == "cidadao")
                 {
                     sb.Append("<div class='container1'><img src ='/dist/img/cidadao.jpg' alt='Avatar'>");
                     sb.Append(item.mensagem);
                     sb.Append("<span class='time-right'>"+ item.data +"</span></div>");
                 }
-                if (item.sequencia %2 != 0)
+                if (item.origem == "agente")
                 {
                     sb.Append("<div class='container1 darker'><img src ='/dist/img/sema.jpg' alt='Avatar' class='right'>");
                     sb.Append(item.mensagem);
@@ -397,6 +399,7 @@ namespace SEMA
                 his.chamadoID = chamadoID;
                 his.mensagem = "<p>Enviada em: "+ data + "</p></br>" + descricao.Text;
                 his.sequencia = seq;
+                his.origem = "agente";
                 his.data = data;
                 ctx.historicoes.Add(his);
                 ctx.SaveChanges();

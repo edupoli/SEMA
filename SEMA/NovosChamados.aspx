@@ -6,7 +6,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Chamados Abertos
+        Chamados disponíves para Atendimento  
       </h1>
       <ol class="breadcrumb">
         <li><a href="home.aspx"><i class="fas fa-home"></i> Home</a></li>
@@ -23,9 +23,9 @@
         <div class="col-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Chamados Cadastrados</h3>
+              <h3 class="box-title"></h3>
             </div>
-              <asp:Timer ID="Timer1" OnTick="Timer1_Tick" runat="server" Interval="10000"></asp:Timer>
+              <asp:Timer ID="Timer1" OnTick="Timer1_Tick" runat="server" Interval="100000"></asp:Timer>
             <!-- /.box-header -->
               <div class="box-body">
               <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
@@ -40,7 +40,7 @@
                                       <asp:BoundField DataField="cpf" HeaderText="CPF" />
                                       <asp:BoundField DataField="telefone" HeaderText="Telefone" />
                                       <asp:BoundField DataField="assunto" HeaderText="Assunto" />
-                                      <asp:BoundField DataField="status" HeaderText="Status" />
+                                      <asp:BoundField DataField="status" HeaderText="Status" ItemStyle-HorizontalAlign="Center" ItemStyle-Font-Bold="false" />
             
                                 <asp:TemplateField HeaderText="Ações" ItemStyle-Wrap="false">
                                     <ItemTemplate>

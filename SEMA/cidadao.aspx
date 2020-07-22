@@ -109,10 +109,6 @@
                     <div class="form-group">
                       <label>Status</label>
                         <asp:DropDownList runat="server" CssClass="form-control" ID="resp_cboxStatus" Enabled="false">
-                            <asp:ListItem Text="Aberto" Value="Aberto"  />
-                            <asp:ListItem Text="Em Atendimento" Value="Em Atendimento" />
-                            <asp:ListItem Text="Finalizado" Value="Finalizado" />
-                            <asp:ListItem Text="Pendente" Value="Pendente" />
                         </asp:DropDownList>
                     </div>
                 </div>

@@ -122,6 +122,7 @@ namespace SEMA
                 his.chamadoID = chamadoID;
                 his.mensagem = "<p>Enviada em: " + data + "</p></br>" + editor1.Value;
                 his.sequencia = seq;
+                his.origem = "cidadao";
                 his.data = data;
                 ctx.historicoes.Add(his);
                 ctx.SaveChanges();

@@ -6,7 +6,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Chamados
+        Chamados Finalizados e Em Atendimento
       </h1>
       <ol class="breadcrumb">
         <li><a href="home.aspx"><i class="fas fa-home"></i> Home</a></li>
@@ -23,7 +23,7 @@
         <div class="col-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Chamados Cadastrados</h3>
+              <h3 class="box-title"></h3>
             </div>
               <asp:Timer ID="Timer1" OnTick="Timer1_Tick" runat="server" Interval="1000000"></asp:Timer>
             <!-- /.box-header -->

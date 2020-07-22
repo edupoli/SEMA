@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -15,7 +16,7 @@ namespace SEMA
         int chamadoID;
         protected void Page_Load(object sender, EventArgs e)
         {
-            Timer1.Enabled = true;
+            Timer1.Enabled = false;
             Timer1.Interval = 10000;
             Listar();
         }
@@ -35,7 +36,7 @@ namespace SEMA
                  " FROM chamado " +
                  "inner join assunto on chamado.assunto = assunto.id " +
                  "inner join topicos on chamado.topico = topicos.id " +
-                 "where chamado.status='Aberto'";
+                 "where chamado.status='Aberto' or chamado.status='Retorno Cidadao'";
 
             cmd = new MySqlCommand(sql, con);
             da.SelectCommand = cmd;
@@ -52,26 +53,31 @@ namespace SEMA
                 if (status == "Aberto")
                 {
                     string azul = "#3C8DBC";
-                    e.Row.Cells[5].BackColor = System.Drawing.ColorTranslator.FromHtml(azul);
-                    e.Row.Cells[5].ForeColor = System.Drawing.Color.White;
+                    e.Row.Cells[5].BackColor = ColorTranslator.FromHtml(azul);
+                    e.Row.Cells[5].ForeColor = Color.White;
                 }
                 if (status == "Finalizado")
                 {
                     string verde = "#478978";
-                    e.Row.Cells[5].BackColor = System.Drawing.ColorTranslator.FromHtml(verde);
-                    e.Row.Cells[5].ForeColor = System.Drawing.Color.White;
+                    e.Row.Cells[5].BackColor = ColorTranslator.FromHtml(verde);
+                    e.Row.Cells[5].ForeColor = Color.White;
                 }
                 if (status == "Em Atendimento")
                 {
                     string laranja = "#F39C12";
-                    e.Row.Cells[5].BackColor = System.Drawing.ColorTranslator.FromHtml(laranja);
-                    e.Row.Cells[5].ForeColor = System.Drawing.Color.White;
+                    e.Row.Cells[5].BackColor = ColorTranslator.FromHtml(laranja);
+                    e.Row.Cells[5].ForeColor = Color.White;
                 }
                 if (status == "Pendente")
                 {
                     string vermelho = "#DD4B39";
-                    e.Row.Cells[5].BackColor = System.Drawing.ColorTranslator.FromHtml(vermelho);
-                    e.Row.Cells[5].ForeColor = System.Drawing.Color.White;
+                    e.Row.Cells[5].BackColor = ColorTranslator.FromHtml(vermelho);
+                    e.Row.Cells[5].ForeColor = Color.White;
+                }
+                if (status == "Retorno Cidadao")
+                {
+                    e.Row.Cells[5].BackColor = Color.DarkViolet;
+                    e.Row.Cells[5].ForeColor = Color.White;
                 }
 
             }
@@ -101,7 +107,29 @@ namespace SEMA
 
         protected void btnExcluir_Click(object sender, EventArgs e)
         {
-
+            if (Session["perfil"].ToString() != "Administrador")
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
+            }
+            else
+            {
+                try
+                {
+                    chamadoID = int.Parse((sender as LinkButton).CommandArgument);
+                    semaEntities ctx = new semaEntities();
+                    chamado cha = ctx.chamadoes.First(p => p.id == chamadoID);
+                    ctx.chamadoes.Remove(cha);
+                    ctx.SaveChanges();
+                    Listar();
+                    mensagem = "Deletado com Sucesso !";
+                    ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
+                }
+                catch (Exception ex)
+                {
+                    mensagem = "Ocorreu o seguinte erro ao tentar deletar: " + ex.Message;
+                    ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+                }
+            }
         }
     }
 }
