@@ -14,6 +14,13 @@
       </ol>
     </section>
 
+      <style>
+          .col-lg-3{
+            width:20%!important;
+
+          }
+      </style>
+
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
@@ -77,10 +84,24 @@
             <div class="inner">
               <h3><asp:Label ID="qtaPendentes" runat="server" /></h3>
 
-              <p>Chamados Pendentes</p>
+              <p>Pendentes</p>
             </div>
             <div class="icon">
               <i class="fad fa-siren-on" style="font-size:74px"></i>
+            </div>
+            <a href="#" class="small-box-footer">Consultar <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box " style="background-color:#9400D3;color:white;">
+            <div class="inner">
+              <h3><asp:Label ID="qtaRetornoCidadao" runat="server" /></h3>
+
+              <p>Retorno Cidadão</p>
+            </div>
+            <div class="icon">
+              <i class="fad fa-user" style="font-size:74px"></i>
             </div>
             <a href="#" class="small-box-footer">Consultar <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -183,11 +204,11 @@
             var myChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels  : ['Abertos', 'Em Atendimento', 'Finalizados','Pendentes'],
+                    labels  : ['Abertos', 'Em Atendimento', 'Finalizados','Pendentes','Retorno Cidadao'],
                     datasets: [{
                         label: 'Abertos',
                         data: <%=Newtonsoft.Json.JsonConvert.SerializeObject(DataChamados)%>,
-                        backgroundColor: ['#00c0ef','#f39c12','#00a65a','#f56954']
+                        backgroundColor: ['#00c0ef','#f39c12','#00a65a','#f56954','#9400D3']
                     }]
                 },
                 options: {

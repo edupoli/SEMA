@@ -36,6 +36,7 @@ namespace SEMA
                 txtProtocolo.Text = numProtocolo;
 
                 getStatusColor();
+                getTopicos();
                 GetChamados(chamadoID);
             }
             

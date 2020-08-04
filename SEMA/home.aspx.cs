@@ -14,26 +14,30 @@ namespace SEMA
         string conecLocal = "SERVER=10.0.2.9;UID=ura;PWD=ask123;Database=sema;Allow User Variables=True;Pooling=False";
         
         public string[] Labels { get; set; }
-        public int[] DataChamados = new int[4];
+        public int[] DataChamados = new int[5];
         public int[] Data3 { get; set; }
         public int[] Data4 { get; set; }
         string aberto;
         string finalizado;
         string pendente;
         string atendimento;
+        string retornoCidadao;
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             Timer1.Enabled = true;
             aberto = qtaAbertos.Text;
             finalizado = qtaFinalizados.Text;
             pendente = qtaPendentes.Text;
             atendimento = qtaAtendimentos.Text;
+            retornoCidadao = qtaRetornoCidadao.Text;
             if (!Page.IsPostBack)
             {
                 abertos();
                 Pendentes();
                 Em_Atendimento();
                 finalizados();
+                retorno_cidadao();
                 getQtdaStatus();
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "graficoDonuts();", true);
             }
@@ -157,6 +161,30 @@ namespace SEMA
                 qtaAtendimentos.Text = "0";
             }
             if (atendimento != qtaAtendimentos.Text)
+            {
+                getQtdaStatus();
+                ScriptManager.RegisterStartupScript(this.UpdatePanel1, this.GetType(), "Show_Font", "graficoDonuts();", true);
+            }
+        }
+        private void retorno_cidadao()
+        {
+            MySqlConnection con = new MySqlConnection(conecLocal);
+            con.Open();
+            MySqlCommand cmd = new MySqlCommand("SELECT status, count(*) as total FROM chamado where status = 'Retorno Cidadao' group by status ", con);
+            cmd.CommandType = CommandType.Text;
+            MySqlDataReader dr;
+            dr = cmd.ExecuteReader();
+            dr.Read();
+            if (dr.HasRows)
+            {
+                string qtda = Convert.ToString(dr["total"]);
+                qtaRetornoCidadao.Text = qtda;
+            }
+            else
+            {
+                qtaRetornoCidadao.Text = "0";
+            }
+            if (retornoCidadao != qtaRetornoCidadao.Text)
             {
                 getQtdaStatus();
                 ScriptManager.RegisterStartupScript(this.UpdatePanel1, this.GetType(), "Show_Font", "graficoDonuts();", true);
