@@ -228,6 +228,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AddChamados.aspx" />
+    <Content Include="AddDepartamentos.aspx" />
     <Content Include="AddSecretarias.aspx" />
     <Content Include="AddUsuarios.aspx" />
     <Content Include="Chamados.aspx" />
@@ -663,6 +664,13 @@
     </Compile>
     <Compile Include="AddChamados.aspx.designer.cs">
       <DependentUpon>AddChamados.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddDepartamentos.aspx.cs">
+      <DependentUpon>AddDepartamentos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddDepartamentos.aspx.designer.cs">
+      <DependentUpon>AddDepartamentos.aspx</DependentUpon>
     </Compile>
     <Compile Include="AddSecretarias.aspx.cs">
       <DependentUpon>AddSecretarias.aspx</DependentUpon>
