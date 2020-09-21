@@ -5,10 +5,8 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
 namespace SEMA
 {
-    
     public partial class ViewChamados : System.Web.UI.Page
     {
         int chamadoID;
@@ -45,8 +43,6 @@ namespace SEMA
                                  a.status,
                                  a.img,
                                  d.mensagem
-
-
                              });
             foreach (var item in resultado)
             {
@@ -61,10 +57,8 @@ namespace SEMA
                 cboxAssunto.Items.Add(new ListItem(item.assunto, item.assunto));
                 cboxTopico.Items.Add(new ListItem(item.topico, item.topico));
                 cboxStatus.Items.Add(new ListItem(item.status, item.status));
-                
             }
         }
-
         protected void btnVoltar_Click(object sender, EventArgs e)
         {
             Response.Redirect("home.aspx");
@@ -85,7 +79,6 @@ namespace SEMA
                              });
             foreach (var item in resultado)
             {
-
                 if (item.origem == "cidadao")
                 {
                     sb.Append("<div class='container1'><img src ='/dist/img/cidadao.jpg' alt='Avatar'>");
@@ -102,13 +95,11 @@ namespace SEMA
             }
             return sb.ToString();
         }
-
         protected void Image1_Click(object sender, ImageClickEventArgs e)
         {
             ModalPlaceHolder.Visible = true;
             ScriptManager.RegisterStartupScript(UpdatePanel1, UpdatePanel1.GetType(), "UpdatePanel1StartupScript", "setTimeout('window.scrollTo(0,0)', 0);", true);
         }
-
         protected void btnModalCloseHeader_Click(object sender, EventArgs e)
         {
             ModalPlaceHolder.Visible = false;

@@ -230,10 +230,12 @@
     <Content Include="AddChamados.aspx" />
     <Content Include="AddDepartamentos.aspx" />
     <Content Include="AddSecretarias.aspx" />
+    <Content Include="AddTopicosChamado.aspx" />
     <Content Include="AddUsuarios.aspx" />
     <Content Include="Chamados.aspx" />
     <Content Include="cidadao.aspx" />
     <Content Include="ckeditor.net.dll" />
+    <Content Include="Configuracoes.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -260,6 +262,7 @@
     <Content Include="Scripts\ckeditor\ckeditor.asp" />
     <Content Include="Scripts\ckeditor\ckeditor.js" />
     <Content Include="Scripts\ckeditor\ckeditor.pack" />
+    <Content Include="WebForm1.aspx" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="home.aspx" />
     <Content Include="login.aspx" />
@@ -646,6 +649,7 @@
       <LastGenOutput>SEMAModel.cs</LastGenOutput>
     </Content>
     <Content Include="Site.Master" />
+    <Content Include="TemplateEmail.aspx" />
     <Content Include="Usuarios.aspx" />
     <Content Include="ViewChamados.aspx" />
     <Content Include="ViewSecretarias.aspx" />
@@ -679,6 +683,13 @@
     <Compile Include="AddSecretarias.aspx.designer.cs">
       <DependentUpon>AddSecretarias.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AddTopicosChamado.aspx.cs">
+      <DependentUpon>AddTopicosChamado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddTopicosChamado.aspx.designer.cs">
+      <DependentUpon>AddTopicosChamado.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AddUsuarios.aspx.cs">
       <DependentUpon>AddUsuarios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -707,6 +718,16 @@
     </Compile>
     <Compile Include="cidadao.aspx.designer.cs">
       <DependentUpon>cidadao.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="configuraco.cs">
+      <DependentUpon>SEMAModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracoes.aspx.cs">
+      <DependentUpon>Configuracoes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Configuracoes.aspx.designer.cs">
+      <DependentUpon>Configuracoes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Criptografia.cs" />
     <Compile Include="EditChamados.aspx.cs">
@@ -782,8 +803,8 @@
       <DependentUpon>SEMAModel.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="SEMAModel.cs">
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>SEMAModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SEMAModel.Designer.cs">
@@ -804,6 +825,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="TemplateEmail.aspx.cs">
+      <DependentUpon>TemplateEmail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TemplateEmail.aspx.designer.cs">
+      <DependentUpon>TemplateEmail.aspx</DependentUpon>
     </Compile>
     <Compile Include="topico.cs">
       <DependentUpon>SEMAModel.tt</DependentUpon>
@@ -845,6 +873,13 @@
     </Compile>
     <Compile Include="ViewUsuarios.aspx.designer.cs">
       <DependentUpon>ViewUsuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

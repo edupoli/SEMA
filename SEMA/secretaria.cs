@@ -16,12 +16,16 @@ namespace SEMA
     {
         public secretaria()
         {
+            this.configuracoes = new HashSet<configuraco>();
             this.usuarios = new HashSet<usuario>();
+            this.chamadoes = new HashSet<chamado>();
         }
     
         public int id { get; set; }
         public string nome { get; set; }
     
+        public virtual ICollection<configuraco> configuracoes { get; set; }
         public virtual ICollection<usuario> usuarios { get; set; }
+        public virtual ICollection<chamado> chamadoes { get; set; }
     }
 }

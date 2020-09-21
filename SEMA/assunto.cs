@@ -22,6 +22,7 @@ namespace SEMA
     
         public int id { get; set; }
         public string descricao { get; set; }
+        public Nullable<int> secretariaID { get; set; }
     
         public virtual ICollection<chamado> chamadoes { get; set; }
         public virtual ICollection<topico> topicos { get; set; }

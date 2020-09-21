@@ -24,6 +24,7 @@ namespace SEMA
             string targetPath = imagePath.Replace(Path.GetFileNameWithoutExtension(imagePath),
             Path.GetFileNameWithoutExtension(imagePath) + prefixo);
             thumbnailImg.Save(targetPath, System.Drawing.Imaging.ImageFormat.Jpeg);
+            thumbnailImg.Save(targetPath, System.Drawing.Imaging.ImageFormat.Png);
             thumbnailImg.Dispose();
             return targetPath;
         }

@@ -11,12 +11,14 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="descricao" Type="varchar" MaxLength="255" />
+          <Property Name="secretariaID" Type="int" />
         </EntityType>
         <EntityType Name="chamado">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="secretariaID" Type="int" />
           <Property Name="protocolo" Type="varchar" MaxLength="255" />
           <Property Name="nome" Type="varchar" MaxLength="255" />
           <Property Name="email" Type="varchar" MaxLength="255" />
@@ -28,6 +30,31 @@
           <Property Name="img" Type="varchar" MaxLength="45" />
           <Property Name="status" Type="varchar" MaxLength="45" />
         </EntityType>
+        <EntityType Name="configuracoes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="secretariaID" Type="int" />
+          <Property Name="logo" Type="varchar" MaxLength="255" />
+          <Property Name="bckColorMenu" Type="varchar" MaxLength="45" />
+          <Property Name="onHoverbckColorMenu" Type="varchar" MaxLength="45" />
+          <Property Name="textColorMenu" Type="varchar" MaxLength="45" />
+          <Property Name="onHovertexColorMenu" Type="varchar" MaxLength="45" />
+          <Property Name="bckColorSbMenu" Type="varchar" MaxLength="45" />
+          <Property Name="onHoverbckColorSbMenu" Type="varchar" MaxLength="45" />
+          <Property Name="textColorSbMenu" Type="varchar" MaxLength="45" />
+          <Property Name="onHovertextColorSbMenu" Type="varchar" MaxLength="45" />
+          <Property Name="bckColorNavbar" Type="varchar" MaxLength="45" />
+          <Property Name="smtp" Type="varchar" MaxLength="255" />
+          <Property Name="porta" Type="varchar" MaxLength="45" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
+          <Property Name="senhaEmail" Type="longtext" />
+          <Property Name="nomeRemetente" Type="varchar" MaxLength="255" />
+          <Property Name="assunto" Type="varchar" MaxLength="255" />
+          <Property Name="bodyEmailAuto" Type="longtext" />
+          <Property Name="bodyEmailResposta" Type="longtext" />
+        </EntityType>
         <EntityType Name="historico">
           <Key>
             <PropertyRef Name="id" />
@@ -37,7 +64,7 @@
           <Property Name="chamadoID" Type="int" />
           <Property Name="sequencia" Type="int" />
           <Property Name="origem" Type="varchar" MaxLength="255" />
-          <Property Name="data" Type="datetime" Precision="0" />
+          <Property Name="data" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="secretaria">
           <Key>
@@ -104,6 +131,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="secret">
+          <End Role="secretaria" Type="Self.secretaria" Multiplicity="0..1" />
+          <End Role="configuracoes" Type="Self.configuracoes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="secretaria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="configuracoes">
+              <PropertyRef Name="secretariaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="secretaria1">
           <End Role="secretaria" Type="Self.secretaria" Multiplicity="1" />
           <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
@@ -116,20 +155,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="topico">
-          <End Role="topicos" Type="Self.topicos" Multiplicity="0..1" />
+        <Association Name="secretaria_id">
+          <End Role="secretaria" Type="Self.secretaria" Multiplicity="0..1" />
           <End Role="chamado" Type="Self.chamado" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="topicos">
+            <Principal Role="secretaria">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="chamado">
-              <PropertyRef Name="topico" />
+              <PropertyRef Name="secretariaID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="topicos1">
-          <End Role="assunto" Type="Self.assunto" Multiplicity="1" />
+          <End Role="assunto" Type="Self.assunto" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="topicos" Type="Self.topicos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="assunto">
@@ -143,6 +184,7 @@
         <EntityContainer Name="semaModelStoreContainer">
           <EntitySet Name="assunto" EntityType="Self.assunto" Schema="sema" store:Type="Tables" />
           <EntitySet Name="chamado" EntityType="Self.chamado" Schema="sema" store:Type="Tables" />
+          <EntitySet Name="configuracoes" EntityType="Self.configuracoes" Schema="sema" store:Type="Tables" />
           <EntitySet Name="historico" EntityType="Self.historico" Schema="sema" store:Type="Tables" />
           <EntitySet Name="secretaria" EntityType="Self.secretaria" Schema="sema" store:Type="Tables" />
           <EntitySet Name="topicos" EntityType="Self.topicos" Schema="sema" store:Type="Tables" />
@@ -159,12 +201,16 @@
             <End Role="usuario" EntitySet="usuario" />
             <End Role="chamado" EntitySet="chamado" />
           </AssociationSet>
+          <AssociationSet Name="secret" Association="Self.secret">
+            <End Role="secretaria" EntitySet="secretaria" />
+            <End Role="configuracoes" EntitySet="configuracoes" />
+          </AssociationSet>
           <AssociationSet Name="secretaria1" Association="Self.secretaria1">
             <End Role="secretaria" EntitySet="secretaria" />
             <End Role="usuario" EntitySet="usuario" />
           </AssociationSet>
-          <AssociationSet Name="topico" Association="Self.topico">
-            <End Role="topicos" EntitySet="topicos" />
+          <AssociationSet Name="secretaria_id" Association="Self.secretaria_id">
+            <End Role="secretaria" EntitySet="secretaria" />
             <End Role="chamado" EntitySet="chamado" />
           </AssociationSet>
           <AssociationSet Name="topicos1" Association="Self.topicos1">
@@ -184,6 +230,7 @@
           <Property Name="descricao" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="chamadoes" Relationship="Self.assunto1" FromRole="assunto" ToRole="chamado" />
           <NavigationProperty Name="topicos" Relationship="Self.topicos1" FromRole="assunto" ToRole="topicos" />
+          <Property Name="secretariaID" Type="Int32" />
         </EntityType>
         <EntityType Name="chamado">
           <Key>
@@ -203,7 +250,34 @@
           <NavigationProperty Name="assunto1" Relationship="Self.assunto1" FromRole="chamado" ToRole="assunto" />
           <NavigationProperty Name="historicoes" Relationship="Self.chamado1" FromRole="chamado" ToRole="historico" />
           <NavigationProperty Name="usuario" Relationship="Self.responsavel" FromRole="chamado" ToRole="usuario" />
-          <NavigationProperty Name="topico1" Relationship="Self.topico1" FromRole="chamado" ToRole="topicos" />
+          <Property Name="secretariaID" Type="Int32" />
+          <NavigationProperty Name="secretaria" Relationship="semaModel.secretaria_id" FromRole="chamado" ToRole="secretaria" />
+        </EntityType>
+        <EntityType Name="configuraco">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="secretariaID" Type="Int32" />
+          <Property Name="logo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="bckColorMenu" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="onHoverbckColorMenu" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="textColorMenu" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="onHovertexColorMenu" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="bckColorSbMenu" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="onHoverbckColorSbMenu" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="textColorSbMenu" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="onHovertextColorSbMenu" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="bckColorNavbar" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="secretaria" Relationship="Self.secret" FromRole="configuracoes" ToRole="secretaria" />
+          <Property Name="smtp" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="porta" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="senhaEmail" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="nomeRemetente" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="assunto" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="bodyEmailAuto" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="bodyEmailResposta" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="historico">
           <Key>
@@ -213,9 +287,9 @@
           <Property Name="mensagem" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
           <Property Name="chamadoID" Type="Int32" />
           <Property Name="sequencia" Type="Int32" />
-          <Property Name="data" Type="DateTime" />
-          <NavigationProperty Name="chamado" Relationship="Self.chamado1" FromRole="historico" ToRole="chamado" />
           <Property Name="origem" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="data" Type="DateTime" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="chamado" Relationship="Self.chamado1" FromRole="historico" ToRole="chamado" />
         </EntityType>
         <EntityType Name="secretaria">
           <Key>
@@ -223,7 +297,9 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="configuracoes" Relationship="Self.secret" FromRole="secretaria" ToRole="configuracoes" />
           <NavigationProperty Name="usuarios" Relationship="Self.secretaria1" FromRole="secretaria" ToRole="usuario" />
+          <NavigationProperty Name="chamadoes" Relationship="semaModel.secretaria_id" FromRole="secretaria" ToRole="chamado" />
         </EntityType>
         <EntityType Name="topico">
           <Key>
@@ -233,7 +309,6 @@
           <Property Name="descricao" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="assuntoID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="assunto" Relationship="Self.topicos1" FromRole="topicos" ToRole="assunto" />
-          <NavigationProperty Name="chamadoes" Relationship="Self.topico1" FromRole="topicos" ToRole="chamado" />
         </EntityType>
         <EntityType Name="usuario">
           <Key>
@@ -299,15 +374,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="topico1">
-          <End Role="topicos" Type="Self.topico" Multiplicity="0..1" />
-          <End Role="chamado" Type="Self.chamado" Multiplicity="*" />
+        <Association Name="secret">
+          <End Role="secretaria" Type="Self.secretaria" Multiplicity="0..1" />
+          <End Role="configuracoes" Type="Self.configuraco" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="topicos">
+            <Principal Role="secretaria">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="chamado">
-              <PropertyRef Name="topico" />
+            <Dependent Role="configuracoes">
+              <PropertyRef Name="secretariaID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -326,6 +401,7 @@
         <EntityContainer Name="semaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="assuntoes" EntityType="Self.assunto" />
           <EntitySet Name="chamadoes" EntityType="Self.chamado" />
+          <EntitySet Name="configuracoes" EntityType="Self.configuraco" />
           <EntitySet Name="historicoes" EntityType="Self.historico" />
           <EntitySet Name="secretarias" EntityType="Self.secretaria" />
           <EntitySet Name="topicos" EntityType="Self.topico" />
@@ -346,15 +422,31 @@
             <End Role="usuario" EntitySet="usuarios" />
             <End Role="chamado" EntitySet="chamadoes" />
           </AssociationSet>
-          <AssociationSet Name="topico" Association="Self.topico1">
-            <End Role="topicos" EntitySet="topicos" />
-            <End Role="chamado" EntitySet="chamadoes" />
+          <AssociationSet Name="secret" Association="Self.secret">
+            <End Role="secretaria" EntitySet="secretarias" />
+            <End Role="configuracoes" EntitySet="configuracoes" />
           </AssociationSet>
           <AssociationSet Name="secretaria1" Association="Self.secretaria1">
             <End Role="secretaria" EntitySet="secretarias" />
             <End Role="usuario" EntitySet="usuarios" />
           </AssociationSet>
+          <AssociationSet Name="secretaria_id" Association="semaModel.secretaria_id">
+            <End Role="secretaria" EntitySet="secretarias" />
+            <End Role="chamado" EntitySet="chamadoes" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="secretaria_id">
+          <End Type="semaModel.secretaria" Role="secretaria" Multiplicity="0..1" />
+          <End Type="semaModel.chamado" Role="chamado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="secretaria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="chamado">
+              <PropertyRef Name="secretariaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -364,6 +456,7 @@
           <EntitySetMapping Name="assuntoes">
             <EntityTypeMapping TypeName="semaModel.assunto">
               <MappingFragment StoreEntitySet="assunto">
+                <ScalarProperty Name="secretariaID" ColumnName="secretariaID" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="descricao" ColumnName="descricao" />
               </MappingFragment>
@@ -372,6 +465,7 @@
           <EntitySetMapping Name="chamadoes">
             <EntityTypeMapping TypeName="semaModel.chamado">
               <MappingFragment StoreEntitySet="chamado">
+                <ScalarProperty Name="secretariaID" ColumnName="secretariaID" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="protocolo" ColumnName="protocolo" />
                 <ScalarProperty Name="nome" ColumnName="nome" />
@@ -386,14 +480,40 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="configuracoes">
+            <EntityTypeMapping TypeName="semaModel.configuraco">
+              <MappingFragment StoreEntitySet="configuracoes">
+                <ScalarProperty Name="bodyEmailResposta" ColumnName="bodyEmailResposta" />
+                <ScalarProperty Name="bodyEmailAuto" ColumnName="bodyEmailAuto" />
+                <ScalarProperty Name="assunto" ColumnName="assunto" />
+                <ScalarProperty Name="nomeRemetente" ColumnName="nomeRemetente" />
+                <ScalarProperty Name="senhaEmail" ColumnName="senhaEmail" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="porta" ColumnName="porta" />
+                <ScalarProperty Name="smtp" ColumnName="smtp" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="secretariaID" ColumnName="secretariaID" />
+                <ScalarProperty Name="logo" ColumnName="logo" />
+                <ScalarProperty Name="bckColorMenu" ColumnName="bckColorMenu" />
+                <ScalarProperty Name="onHoverbckColorMenu" ColumnName="onHoverbckColorMenu" />
+                <ScalarProperty Name="textColorMenu" ColumnName="textColorMenu" />
+                <ScalarProperty Name="onHovertexColorMenu" ColumnName="onHovertexColorMenu" />
+                <ScalarProperty Name="bckColorSbMenu" ColumnName="bckColorSbMenu" />
+                <ScalarProperty Name="onHoverbckColorSbMenu" ColumnName="onHoverbckColorSbMenu" />
+                <ScalarProperty Name="textColorSbMenu" ColumnName="textColorSbMenu" />
+                <ScalarProperty Name="onHovertextColorSbMenu" ColumnName="onHovertextColorSbMenu" />
+                <ScalarProperty Name="bckColorNavbar" ColumnName="bckColorNavbar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="historicoes">
             <EntityTypeMapping TypeName="semaModel.historico">
               <MappingFragment StoreEntitySet="historico">
-                <ScalarProperty Name="origem" ColumnName="origem" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="mensagem" ColumnName="mensagem" />
                 <ScalarProperty Name="chamadoID" ColumnName="chamadoID" />
                 <ScalarProperty Name="sequencia" ColumnName="sequencia" />
+                <ScalarProperty Name="origem" ColumnName="origem" />
                 <ScalarProperty Name="data" ColumnName="data" />
               </MappingFragment>
             </EntityTypeMapping>

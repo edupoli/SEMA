@@ -14,16 +14,10 @@ namespace SEMA
     
     public partial class topico
     {
-        public topico()
-        {
-            this.chamadoes = new HashSet<chamado>();
-        }
-    
         public int id { get; set; }
         public string descricao { get; set; }
         public int assuntoID { get; set; }
     
         public virtual assunto assunto { get; set; }
-        public virtual ICollection<chamado> chamadoes { get; set; }
     }
 }

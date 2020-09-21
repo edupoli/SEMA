@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
 namespace SEMA
 {
     public partial class ViewUsuarios : System.Web.UI.Page
@@ -18,7 +17,6 @@ namespace SEMA
                 getUsuarios(usuarioID);
             }
         }
-
         protected void btnVoltar_Click(object sender, EventArgs e)
         {
             Response.Redirect("Usuarios.aspx");

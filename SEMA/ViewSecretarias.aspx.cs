@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
 namespace SEMA
 {
     public partial class ViewSecretarias : System.Web.UI.Page
@@ -20,7 +19,6 @@ namespace SEMA
                 prevPage = Request.UrlReferrer.ToString();
             }
         }
-
         protected void btnVoltar_Click(object sender, EventArgs e)
         {
             Response.Redirect(prevPage);

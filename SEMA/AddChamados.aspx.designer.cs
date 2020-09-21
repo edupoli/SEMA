@@ -49,40 +49,40 @@ namespace SEMA {
         protected global::System.Web.UI.WebControls.TextBox txtProtocolo;
         
         /// <summary>
-        /// Controle nome.
+        /// Controle txtnome.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox nome;
+        protected global::System.Web.UI.WebControls.TextBox txtnome;
         
         /// <summary>
-        /// Controle email.
+        /// Controle txtemail.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox email;
+        protected global::System.Web.UI.WebControls.TextBox txtemail;
         
         /// <summary>
-        /// Controle telefone.
+        /// Controle txttelefone.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox telefone;
+        protected global::System.Web.UI.WebControls.TextBox txttelefone;
         
         /// <summary>
-        /// Controle cpf.
+        /// Controle txtcpf.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox cpf;
+        protected global::System.Web.UI.WebControls.TextBox txtcpf;
         
         /// <summary>
         /// Controle cboxAssunto.

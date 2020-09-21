@@ -18,8 +18,8 @@ namespace SEMA
         public string mensagem { get; set; }
         public Nullable<int> chamadoID { get; set; }
         public Nullable<int> sequencia { get; set; }
-        public Nullable<System.DateTime> data { get; set; }
         public string origem { get; set; }
+        public Nullable<System.DateTime> data { get; set; }
     
         public virtual chamado chamado { get; set; }
     }

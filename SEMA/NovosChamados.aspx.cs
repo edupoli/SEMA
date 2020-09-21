@@ -7,7 +7,6 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
 namespace SEMA
 {
     public partial class NovosChamados : System.Web.UI.Page
@@ -20,7 +19,6 @@ namespace SEMA
             Timer1.Interval = 10000;
             Listar();
         }
-
         private void Listar()
         {
             string connectionString = "SERVER=10.0.2.9;UID=ura;PWD=ask123;DATABASE=sema;Allow User Variables=True;Pooling=False";
@@ -31,19 +29,18 @@ namespace SEMA
             DataTable dt = new DataTable();
             MySqlDataAdapter da = new MySqlDataAdapter();
             sql = "SELECT chamado.id, chamado.protocolo,chamado.nome, chamado.email," +
-                "chamado.cpf,chamado.telefone,assunto.descricao as assunto," +
-                "topicos.descricao as topico, chamado.img,chamado.status" +
-                 " FROM chamado " +
-                 "inner join assunto on chamado.assunto = assunto.id " +
-                 "inner join topicos on chamado.topico = topicos.id " +
-                 "where chamado.status='Aberto' or chamado.status='Retorno Cidadao'";
-
+            "chamado.cpf,chamado.telefone,assunto.descricao as assunto," +
+            "topicos.descricao as topico, chamado.img,chamado.status" +
+            " FROM chamado " +
+            "inner join assunto on chamado.assunto = assunto.id " +
+            "inner join topicos on chamado.topico = topicos.id " +
+            "where (chamado.status='Aberto' or chamado.status='Retorno Cidadao')" +
+            "and chamado.secretariaID=" + Session["secretaria"].ToString();
             cmd = new MySqlCommand(sql, con);
             da.SelectCommand = cmd;
             da.Fill(dt);
             GridView1.DataSource = dt;
             GridView1.DataBind();
-
         }
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -79,19 +76,15 @@ namespace SEMA
                     e.Row.Cells[5].BackColor = Color.DarkViolet;
                     e.Row.Cells[5].ForeColor = Color.White;
                 }
-
             }
         }
         protected void Timer1_Tick(object sender, EventArgs e)
         {
             Listar();
         }
-
         protected void btnVisualizar_Click(object sender, EventArgs e)
         {
-
         }
-
         protected void btnResponder_Click(object sender, EventArgs e)
         {
             if (Session["perfil"].ToString() != "Administrador")
@@ -104,7 +97,6 @@ namespace SEMA
                 Response.Redirect("RespChamado.aspx?chamadoID=" + chamadoID);
             }
         }
-
         protected void btnExcluir_Click(object sender, EventArgs e)
         {
             if (Session["perfil"].ToString() != "Administrador")

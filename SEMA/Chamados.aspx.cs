@@ -39,7 +39,8 @@ namespace SEMA
                  " FROM chamado " +
                  "inner join assunto on chamado.assunto = assunto.id " +
                  "inner join topicos on chamado.topico = topicos.id " +
-                 "where chamado.status <> 'Aberto' and chamado.status <> 'Retorno Cidadao'";
+                 "where chamado.status <> 'Aberto' and chamado.status <> 'Retorno Cidadao'"+
+                 "and chamado.secretariaID="+Session["secretaria"].ToString();
  
             cmd = new MySqlCommand(sql, con);
             da.SelectCommand = cmd;

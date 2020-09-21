@@ -26,7 +26,7 @@ namespace SEMA
                 string conecLocal = "SERVER=10.0.2.9;UID=ura;PWD=ask123;Allow User Variables=True;Pooling=False";
                 MySqlConnection con = new MySqlConnection(conecLocal);
                 con.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from sema.assunto order by descricao asc", con);
+                MySqlCommand cmd = new MySqlCommand("select * from sema.assunto where sema.secretariaID="+ Session["secretaria"].ToString() +" order by descricao asc", con);
                 MySqlDataAdapter da = new MySqlDataAdapter();
                 DataTable dt = new DataTable();
                 da.SelectCommand = cmd;
@@ -37,7 +37,7 @@ namespace SEMA
 
                 getStatusColor();
                 getTopicos();
-                GetChamados(chamadoID);
+                GetChamados(chamadoID,int.Parse(Session["secretaria"].ToString()));
             }
             
         }
@@ -73,7 +73,7 @@ namespace SEMA
                 }
             }
         }
-        public void GetChamados(int cod)
+        public void GetChamados(int cod, int secretaria)
         {
             semaEntities ctx = new semaEntities();
             var resultado = (from a in ctx.chamadoes
@@ -81,9 +81,11 @@ namespace SEMA
                              join c in ctx.topicos on a.topico equals c.id
                              join d in ctx.historicoes on a.id equals d.chamadoID
                              where a.id == cod
+                             where a.secretariaID == secretaria
                              select new
                              {
                                  a.id,
+                                 a.secretariaID,
                                  a.protocolo,
                                  a.nome,
                                  a.cpf,

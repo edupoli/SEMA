@@ -6,13 +6,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
 namespace SEMA
 {
     public partial class home : System.Web.UI.Page
     {
         string conecLocal = "SERVER=10.0.2.9;UID=ura;PWD=ask123;Database=sema;Allow User Variables=True;Pooling=False";
-        
         public string[] Labels { get; set; }
         public int[] DataChamados = new int[5];
         public int[] Data3 { get; set; }
@@ -24,7 +22,6 @@ namespace SEMA
         string retornoCidadao;
         protected void Page_Load(object sender, EventArgs e)
         {
-            
             Timer1.Enabled = true;
             aberto = qtaAbertos.Text;
             finalizado = qtaFinalizados.Text;
@@ -41,18 +38,15 @@ namespace SEMA
                 getQtdaStatus();
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "graficoDonuts();", true);
             }
-
             Labels = new string[] { "Red", "Blue", "Yellow", "Green", "Purple", "Orange" };
-            Data3 = new int[] { 22, 39, 63, 45, 32, 53,25 };
-            Data4 = new int[] { 32, 59, 43, 65, 22, 73,45 };
-           
-
+            Data3 = new int[] { 22, 39, 63, 45, 32, 53, 25 };
+            Data4 = new int[] { 32, 59, 43, 65, 22, 73, 45 };
         }
         private void getQtdaStatus()
         {
             MySqlConnection con = new MySqlConnection(conecLocal);
             con.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT status,count(*) as total FROM chamado group by status", con);
+            MySqlCommand cmd = new MySqlCommand("SELECT status,count(*) as total FROM chamado where secretariaID=" + Session["secretaria"].ToString() + " group by status", con);
             cmd.CommandType = CommandType.Text;
             MySqlDataReader dr;
             DataTable dt = new DataTable();
@@ -66,13 +60,12 @@ namespace SEMA
                 int dd = Convert.ToInt32(dr["total"]);
                 DataChamados[i] = dd;
             }
-            
         }
         private void abertos()
         {
             MySqlConnection con = new MySqlConnection(conecLocal);
             con.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT status, count(*) as total FROM chamado where status = 'Aberto' group by status ", con);
+            MySqlCommand cmd = new MySqlCommand("SELECT status, count(*) as total FROM chamado where status = 'Aberto' and secretariaID=" + Session["secretaria"].ToString() + " group by status ", con);
             cmd.CommandType = CommandType.Text;
             MySqlDataReader dr;
             dr = cmd.ExecuteReader();
@@ -97,7 +90,7 @@ namespace SEMA
         {
             MySqlConnection con = new MySqlConnection(conecLocal);
             con.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT status, count(*) as total FROM chamado where status = 'Finalizado' group by status ", con);
+            MySqlCommand cmd = new MySqlCommand("SELECT status, count(*) as total FROM chamado where status = 'Finalizado' and secretariaID=" + Session["secretaria"].ToString() + " group by status ", con);
             cmd.CommandType = CommandType.Text;
             MySqlDataReader dr;
             dr = cmd.ExecuteReader();
@@ -121,7 +114,7 @@ namespace SEMA
         {
             MySqlConnection con = new MySqlConnection(conecLocal);
             con.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT status, count(*) as total FROM chamado where status = 'Pendente' group by status ", con);
+            MySqlCommand cmd = new MySqlCommand("SELECT status, count(*) as total FROM chamado where status = 'Pendente' and secretariaID=" + Session["secretaria"].ToString() + " group by status ", con);
             cmd.CommandType = CommandType.Text;
             MySqlDataReader dr;
             dr = cmd.ExecuteReader();
@@ -140,13 +133,12 @@ namespace SEMA
                 getQtdaStatus();
                 ScriptManager.RegisterStartupScript(this.UpdatePanel1, this.GetType(), "Show_Font", "graficoDonuts();", true);
             }
-            
         }
         private void Em_Atendimento()
         {
             MySqlConnection con = new MySqlConnection(conecLocal);
             con.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT status, count(*) as total FROM chamado where status = 'Em Atendimento' group by status ", con);
+            MySqlCommand cmd = new MySqlCommand("SELECT status, count(*) as total FROM chamado where status = 'Em Atendimento' and secretariaID=" + Session["secretaria"].ToString() + " group by status ", con);
             cmd.CommandType = CommandType.Text;
             MySqlDataReader dr;
             dr = cmd.ExecuteReader();
@@ -170,7 +162,7 @@ namespace SEMA
         {
             MySqlConnection con = new MySqlConnection(conecLocal);
             con.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT status, count(*) as total FROM chamado where status = 'Retorno Cidadao' group by status ", con);
+            MySqlCommand cmd = new MySqlCommand("SELECT status, count(*) as total FROM chamado where status = 'Retorno Cidadao' and secretariaID=" + Session["secretaria"].ToString() + " group by status ", con);
             cmd.CommandType = CommandType.Text;
             MySqlDataReader dr;
             dr = cmd.ExecuteReader();
@@ -190,14 +182,12 @@ namespace SEMA
                 ScriptManager.RegisterStartupScript(this.UpdatePanel1, this.GetType(), "Show_Font", "graficoDonuts();", true);
             }
         }
-
         protected void Timer1_Tick(object sender, EventArgs e)
         {
             abertos();
             Pendentes();
             Em_Atendimento();
             finalizados();
-            
         }
     }
 }

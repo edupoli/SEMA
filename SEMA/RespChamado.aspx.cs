@@ -8,7 +8,6 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
 namespace SEMA
 {
     public partial class RespChamado : System.Web.UI.Page
@@ -26,31 +25,27 @@ namespace SEMA
         protected void Page_Load(object sender, EventArgs e)
         {
             lblCaminhoImg.Visible = false;
-            prevPage = Request.UrlReferrer.ToString();
+            //prevPage = Request.UrlReferrer.ToString();
             getStatusColor();
             chamadoID = Convert.ToInt32(Request.QueryString["chamadoID"]);
             e_mail = resp_email.Text;
-
             if (Session["logado"] != null)
             {
                 if (Session["perfil"].ToString() != "Administrador")
                 {
                     Response.Redirect("login.aspx");
                 }
-
             }
             else
             {
                 Response.Redirect("login.aspx");
             }
-
             if (!IsPostBack)
             {
                 PreencherCbox();
                 GetChamados(chamadoID);
                 historicoMsg.Text = getHistorico(chamadoID);
-            } 
-
+            }
             if (IsPostBack && img.PostedFile != null)
             {
                 if (img.PostedFile.FileName.Length > 0)
@@ -65,10 +60,10 @@ namespace SEMA
                                 {
                                     //Aqui ele vai filtrar pelo tipo de arquivo
                                     if (img.PostedFile.ContentType == "image/jpeg" ||
-                                        img.PostedFile.ContentType == "image/jpg" ||
-                                        img.PostedFile.ContentType == "image/png" ||
-                                        img.PostedFile.ContentType == "image/gif" ||
-                                        img.PostedFile.ContentType == "image/bmp")
+                                    img.PostedFile.ContentType == "image/jpg" ||
+                                    img.PostedFile.ContentType == "image/png" ||
+                                    img.PostedFile.ContentType == "image/gif" ||
+                                    img.PostedFile.ContentType == "image/bmp")
                                     {
                                         try
                                         {
@@ -88,22 +83,18 @@ namespace SEMA
                                                     //Caminho a onde será salvo
                                                     hpf.SaveAs(Server.MapPath("~/dist/img/chamados/") + filename + i
                                                     + extensao);
-
                                                     //Prefixo p/ img pequena
                                                     var prefixoP = "-80x80";
                                                     //Prefixo p/ img grande
                                                     var prefixoG = "-800x600";
-
                                                     //pega o arquivo já carregado
                                                     string pth = Server.MapPath("~/dist/img/chamados/")
                                                     + filename + i + extensao;
-
                                                     //Redefine altura e largura da imagem e Salva o arquivo + prefixo
                                                     ImageResize.resizeImageAndSave(pth, 80, 80, prefixoP);
                                                     ImageResize.resizeImageAndSave(pth, 800, 600, prefixoG);
                                                     image = filename + i + prefixoG + extensao;
                                                 }
-
                                             }
                                         }
                                         catch (Exception ex)
@@ -119,8 +110,6 @@ namespace SEMA
                                         lblCaminhoImg.Text = image;
                                         mensagem = "Upload da Imagem feito com Sucesso!!!";
                                         ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
-
-
                                     }
                                     else
                                     {
@@ -128,7 +117,6 @@ namespace SEMA
                                         // as imagens definida la em cima.
                                         mensagem = "É permitido carregar apenas imagens!";
                                         ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
-
                                     }
                                 }
                                 catch (Exception ex)
@@ -136,7 +124,6 @@ namespace SEMA
                                     // Mensagem notifica quando ocorre erros
                                     mensagem = "O arquivo não pôde ser carregado. O seguinte erro ocorreu: " + ex.Message;
                                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
-
                                 }
                             }
                         }
@@ -145,7 +132,6 @@ namespace SEMA
                             // Mensagem notifica quando ocorre erros
                             mensagem = "O arquivo não pôde ser carregado. O seguinte erro ocorreu: " + ex.Message;
                             ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
-
                         }
                     }
                     else
@@ -153,12 +139,11 @@ namespace SEMA
                         // Mensagem notifica quando imagem é superior a 8 MB
                         mensagem = "Não é permitido carregar mais do que 8 MB";
                         ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
-
                     }
                 }
             }
             else
-            if(lblCaminhoImg.Text == "user-800x600.png")
+            if (lblCaminhoImg.Text == "user-800x600.png")
             {
                 ImgPath = "dist/img/chamados/user-800x600.png";
                 Image1.ImageUrl = ImgPath;
@@ -166,7 +151,6 @@ namespace SEMA
                 lblCaminhoImg.Text = "user-800x600.png";
             }
         }
-
         private void PreencherCbox()
         {
             semaEntities ctx = new semaEntities();
@@ -182,9 +166,7 @@ namespace SEMA
                 string valor = Convert.ToString(item.id);
                 cboxUsuario.Items.Add(new ListItem(item.nome, valor));
             }
-
         }
-
         public Int64 GerarID()
         {
             try
@@ -201,7 +183,6 @@ namespace SEMA
                 throw;
             }
         }
-
         private void getStatusColor()
         {
             for (int i = 0; i < cboxStatus.Items.Count; i++)
@@ -252,7 +233,6 @@ namespace SEMA
                                  a.status,
                                  a.img,
                                  a.usuario_responsavel,
-                                 
                              });
             foreach (var item in resultado)
             {
@@ -268,10 +248,8 @@ namespace SEMA
                 Image1.ImageUrl = "dist/img/chamados/" + item.img;
                 imgSel.ImageUrl = "dist/img/chamados/" + item.img;
                 lblCaminhoImg.Text = item.img;
-
             }
         }
-
         private string getHistorico(int cod)
         {
             StringBuilder sb = new StringBuilder();
@@ -288,12 +266,11 @@ namespace SEMA
                              });
             foreach (var item in resultado)
             {
-                
                 if (item.origem == "cidadao")
                 {
                     sb.Append("<div class='container1'><img src ='/dist/img/cidadao.jpg' alt='Avatar'>");
                     sb.Append(item.mensagem);
-                    sb.Append("<span class='time-right'>"+ item.data +"</span></div>");
+                    sb.Append("<span class='time-right'>" + item.data + "</span></div>");
                 }
                 if (item.origem == "agente")
                 {
@@ -305,8 +282,6 @@ namespace SEMA
             }
             return sb.ToString();
         }
-        
-
         protected void btnSalvar_Click(object sender, EventArgs e)
         {
             if (cboxUsuario.SelectedIndex == 0)
@@ -316,23 +291,19 @@ namespace SEMA
                 cboxUsuario.Focus();
             }
             else
-            
-                if (cboxStatus.SelectedIndex == 0)
-                {
-                    mensagem = "Favor atualizar o Status do Chamado";
-                    ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
-                    cboxStatus.Focus();
-                }
-            
+            if (cboxStatus.SelectedIndex == 0)
+            {
+                mensagem = "Favor atualizar o Status do Chamado";
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+                cboxStatus.Focus();
+            }
             else
-	        
-                if (descricao.Text == "")
-                {
-                    mensagem = "Favor preencher a descrição da resposta do chamado";
-                    ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
-                    descricao.Focus();
-                }
-
+            if (descricao.Text == "")
+            {
+                mensagem = "Favor preencher a descrição da resposta do chamado";
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+                descricao.Focus();
+            }
             else
             {
                 try
@@ -347,13 +318,11 @@ namespace SEMA
                     pushMensage();
                     gravaHistorico();
                     mensagem = "Gravado com Sucesso!";
-                    if (resp_email.Text !="")
+                    if (resp_email.Text != "")
                     {
                         Email();
                     }
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
-
-
                 }
                 catch (Exception ex)
                 {
@@ -365,7 +334,6 @@ namespace SEMA
         // pega o valor do sequencia da ultima mensagem na tabela historico
         private void pushMensage()
         {
-
             try
             {
                 semaEntities ctx = new semaEntities();
@@ -397,7 +365,7 @@ namespace SEMA
                 semaEntities ctx = new semaEntities();
                 historico his = new historico();
                 his.chamadoID = chamadoID;
-                his.mensagem = "<p>Enviada em: "+ data + "</p></br>" + descricao.Text;
+                his.mensagem = "<p>Enviada em: " + data + "</p></br>" + descricao.Text;
                 his.sequencia = seq;
                 his.origem = "agente";
                 his.data = data;
@@ -410,66 +378,90 @@ namespace SEMA
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
             }
         }
-
         private void Email()
         {
             try
             {
-                string assunto = "Resposta ao Protocolo Nº " + resp_txtProtocolo.Text + " Secretaria do Meio Ambiente Londrina-PR";
+                int sec = int.Parse(Session["secretaria"].ToString());
+                semaEntities ctx = new semaEntities();
+                configuraco cfg = ctx.configuracoes.First(p => p.secretariaID == sec);
+                string protocolo = resp_txtProtocolo.Text.Trim();
+                string nome = resp_nome.Text.Trim();
+                string telefone = resp_telefone.Text.Trim();
+                string email = resp_email.Text.Trim();
+                string cpf = resp_cpf.Text.Trim();
+                string assunto = resp_cboxAssunto.SelectedItem.ToString();
+                string topico = resp_cboxTopico.SelectedItem.ToString();
+                string status = resp_cboxStatus.SelectedItem.ToString();
+                string body = cfg.bodyEmailResposta.ToString();
+                if (body.Contains("[nome]"))
+                {
+                    body = body.Replace("[nome]", resp_nome.Text);
+                }
+                if (body.Contains("[protocolo]"))
+                {
+                    body = body.Replace("[protocolo]", resp_txtProtocolo.Text);
+                }
+                if (body.Contains("[telefone]"))
+                {
+                    body = body.Replace("[telefone]", resp_telefone.Text);
+                }
+                if (body.Contains("[email]"))
+                {
+                    body = body.Replace("[email]", resp_email.Text);
+                }
+                if (body.Contains("[cpf]"))
+                {
+                    body = body.Replace("[cpf]", resp_cpf.Text);
+                }
+                if (body.Contains("[assunto]"))
+                {
+                    body = body.Replace("[assunto]", resp_cboxAssunto.SelectedItem.ToString());
+                }
+                if (body.Contains("[topico]"))
+                {
+                    body = body.Replace("[topico]", resp_cboxTopico.SelectedItem.ToString());
+                }
+                if (body.Contains("[status]"))
+                {
+                    body = body.Replace("[status]", resp_cboxStatus.SelectedItem.ToString());
+                }
                 MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress(e_mail, "Secretaria do Meio Ambiente Londrina-PR");
+                mailMessage.From = new MailAddress(e_mail, cfg.nomeRemetente);
                 mailMessage.To.Add(e_mail.ToLower());
-                mailMessage.Subject = assunto;
+                mailMessage.Subject = cfg.assunto;
                 mailMessage.IsBodyHtml = true;
-                mailMessage.Body =
-                mailMessage.Body = "<html><body><img src='https://i.ibb.co/L89Y9Yt/SEMA.png' /><br><br>" + "<b>Olá " + resp_nome.Text + "</b><br><br>" +
-                            "Em Resposta a sua solicitação na qual foi registrada com protocolo Nº " + resp_txtProtocolo.Text + "<br>" +
-                           //"<br>Sua Mensagem: <br>" + //resp_descricao.Text + "<br><br>" +
-                           "Segue abaixo Resposta:<br>" + descricao.Text + "<br><br><br>" +
-                           "Caso ainda tenha dúvidas referente a esse protocolo, por favor <b><a href='http://10.0.2.15/sema/cidadao?chamadoID=" + chamadoID + "'>CLIQUE AQUI</a></b> para nos perguntar<br>" +
-                           "Obrigado por entrar em contato.<br>" +
-                           "A SEMA está a sua disposição, você também pode obter informações e serviços no site <a href='http://www1.londrina.pr.gov.br/index.php?option=com_content&view=frontpageplus&Itemid=163'> da Prefeitura </a>.<br>" +
-                           "Nosso horário de atendimento presencial é das 12h às 18h de segunda a sexta - feira.<br></body><html>";
-
+                mailMessage.Body = body;
                 mailMessage.Priority = MailPriority.High;
-
-                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                SmtpClient smtpClient = new SmtpClient(cfg.smtp, int.Parse(cfg.porta));
                 smtpClient.EnableSsl = true;
-                smtpClient.Credentials = new NetworkCredential("sercomtelcontatcenter@gmail.com", "qtrlutilrbkfgwsf");
+                smtpClient.Credentials = new NetworkCredential(cfg.email, cfg.senhaEmail);
                 smtpClient.Send(mailMessage);
-                mensagem = "Email enviado com sucesso!";
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
-                
             }
             catch (Exception ex)
             {
-                mensagem = "Erro ao enviar o Email: " + ex.Message;
+                mensagem = "Erro ao enviar e-mail: " + ex.Message;
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
             }
-
         }
-
         protected void btnVoltar_Click(object sender, EventArgs e)
         {
             Response.Redirect(prevPage);
         }
-
         protected void cboxStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
             getStatusColor();
         }
-
         protected void btnVoltar_resp_Click(object sender, EventArgs e)
         {
-            Response.Redirect(prevPage);
+            Response.Redirect("home.aspx");
         }
-
         protected void Image1_Click(object sender, ImageClickEventArgs e)
         {
             ModalPlaceHolder.Visible = true;
             ScriptManager.RegisterStartupScript(UpdatePanel1, UpdatePanel1.GetType(), "UpdatePanel1StartupScript", "setTimeout('window.scrollTo(0,0)', 0);", true);
         }
-
         protected void btnModalCloseHeader_Click(object sender, EventArgs e)
         {
             ModalPlaceHolder.Visible = false;

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
 namespace SEMA
 {
     public partial class Secretarias : System.Web.UI.Page
@@ -16,13 +15,11 @@ namespace SEMA
             GridView1.DataSource = GetSecretarias();
             GridView1.DataBind();
         }
-
         protected void btnVisualizar_Click(object sender, EventArgs e)
         {
             secretariaID = ((sender as LinkButton).CommandArgument);
             Response.Redirect("ViewSecretarias.aspx?secretariaID=" + secretariaID);
         }
-
         protected void btnEditar_Click(object sender, EventArgs e)
         {
             if (Session["perfil"].ToString() != "Administrador")
@@ -35,7 +32,6 @@ namespace SEMA
                 Response.Redirect("EditSecretarias.aspx?secretariaID=" + secretariaID);
             }
         }
-
         protected void btnExcluir_Click(object sender, EventArgs e)
         {
             if (Session["perfil"].ToString() != "Administrador")
@@ -62,12 +58,10 @@ namespace SEMA
                 }
             }
         }
-
         public List<secretaria> GetSecretarias()
         {
             var ctx = new semaEntities();
             return ctx.secretarias.ToList();
-
         }
     }
 }

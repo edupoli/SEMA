@@ -6,7 +6,6 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
 namespace SEMA
 {
     public partial class login : System.Web.UI.Page
@@ -21,7 +20,6 @@ namespace SEMA
             user = usuario.Text.Trim();
             password = senha.Text.Trim();
         }
-
         protected void btnEntrar_Click(object sender, EventArgs e)
         {
             MySqlConnection con = new MySqlConnection(conecLocal);
@@ -43,7 +41,6 @@ namespace SEMA
                     cmd = new MySqlCommand(sql, con);
                     da.SelectCommand = cmd;
                     da.Fill(dt);
-
                     if (dt.Rows.Count != 0)
                     {
                         Session.Timeout = 10;
@@ -53,9 +50,9 @@ namespace SEMA
                         Session["img"] = dt.Rows[0][7].ToString();
                         Session["cargo"] = dt.Rows[0][8].ToString();
                         Session["id"] = dt.Rows[0][0].ToString();
+                        Session["secretaria"] = dt.Rows[0][6].ToString();
                         dt.Dispose();
                         logado = 1;
-
                     }
                     else
                     {

@@ -13,6 +13,15 @@ namespace SEMA {
     public partial class SiteMaster {
         
         /// <summary>
+        /// Controle SB_Configuracao.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal SB_Configuracao;
+        
+        /// <summary>
         /// Controle imgUser1.
         /// </summary>
         /// <remarks>
@@ -65,6 +74,15 @@ namespace SEMA {
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnLogout;
+        
+        /// <summary>
+        /// Controle SB_logo.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal SB_logo;
         
         /// <summary>
         /// Controle MainContent.
