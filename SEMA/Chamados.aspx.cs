@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace SEMA
 {
+    
     public partial class Chamados : System.Web.UI.Page
     {
         public string mensagem = string.Empty;
@@ -115,7 +116,7 @@ namespace SEMA
                     mensagem = "Deletado com Sucesso !";
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     mensagem = "Ocorreu o seguinte erro ao tentar deletar: " + ex.Message;
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -160,5 +161,6 @@ namespace SEMA
         {
             Listar();
         }
+
     }
 }

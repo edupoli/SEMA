@@ -40,6 +40,15 @@ namespace SEMA {
         protected global::System.Web.UI.WebControls.Button btnVoltar;
         
         /// <summary>
+        /// Controle btnNovoChamado.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnNovoChamado;
+        
+        /// <summary>
         /// Controle txtProtocolo.
         /// </summary>
         /// <remarks>
@@ -130,12 +139,75 @@ namespace SEMA {
         protected global::System.Web.UI.WebControls.DropDownList cboxStatus;
         
         /// <summary>
+        /// Controle txtCEP.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCEP;
+        
+        /// <summary>
+        /// Controle cepNotFound.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label cepNotFound;
+        
+        /// <summary>
+        /// Controle painellEndereco.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel painellEndereco;
+        
+        /// <summary>
+        /// Controle txtRua.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRua;
+        
+        /// <summary>
+        /// Controle txtNumero.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNumero;
+        
+        /// <summary>
+        /// Controle txtBairro.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBairro;
+        
+        /// <summary>
+        /// Controle txtCidade.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCidade;
+        
+        /// <summary>
         /// Controle descricao.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::CKEditor.NET.CKEditorControl descricao;
+        protected global::System.Web.UI.WebControls.TextBox descricao;
     }
 }

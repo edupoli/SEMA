@@ -122,7 +122,7 @@ namespace SEMA
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
                     con.Close();
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     mensagem = "Ocorreu o seguinte erro ao tentar gravar: " + ex.Message;
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -156,7 +156,7 @@ namespace SEMA
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
                     con.Close();
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     mensagem = "Ocorreu o seguinte erro ao tentar gravar: " + ex.Message;
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -189,7 +189,7 @@ namespace SEMA
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
                     con.Close();
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     mensagem = "Ocorreu o seguinte erro ao tentar Excluir: " + ex.Message;
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -214,7 +214,7 @@ namespace SEMA
                 ListBox1.DataBind();
                 con.Close();
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 mensagem = "Ocorreu o seguinte erro ao tentar Atualizar os dados: " + ex.Message;
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -238,7 +238,7 @@ namespace SEMA
                 ListBox2.DataBind();
                 con.Close();
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 mensagem = "Ocorreu o seguinte erro ao tentar Atualizar os dados: " + ex.Message;
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -287,7 +287,7 @@ namespace SEMA
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
                     con.Close();
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     mensagem = "Ocorreu o seguinte erro ao tentar gravar: " + ex.Message;
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -321,7 +321,7 @@ namespace SEMA
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
                     con.Close();
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     mensagem = "Ocorreu o seguinte erro ao tentar gravar: " + ex.Message;
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -354,7 +354,7 @@ namespace SEMA
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
                     con.Close();
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     mensagem = "Ocorreu o seguinte erro ao tentar Excluir: " + ex.Message;
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);

@@ -27,7 +27,7 @@
                   <asp:AsyncPostBackTrigger ControlID="Timer1" />
                 </Triggers>
                 <ContentTemplate>
-                  <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" OnRowDataBound="GridView1_RowDataBound" emptydatatext="Não existem dados Cadastrados!!" class="table table-bordered table-hover table-sm">
+                  <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false"  OnRowDataBound="GridView1_RowDataBound" emptydatatext="Não existem dados Cadastrados!!" class="table table-bordered table-hover table-sm">
                   <Columns>
                     <asp:BoundField DataField="protocolo" HeaderText="Protocolo" />
                     <asp:BoundField DataField="nome" HeaderText="Nome" />
@@ -39,7 +39,7 @@
                     <ItemTemplate>
                       <asp:LinkButton class="btn badge-secondary" Text="" data-toggle="tooltip" title="Visualizar" data-placement="auto" ID="btnVisualizar" runat="server" CommandArgument='<%# Eval("id") %>' OnClick="btnVisualizar_Click" ><i class="far fa-eye"></i></asp:LinkButton>
                       <asp:LinkButton class="btn badge-info" Text="" data-toggle="tooltip" title="Editar" data-placement="auto" ID="btnEditar" runat="server" CommandArgument='<%# Eval("id") %>' OnClick="btnEditar_Click" ><i class="fas fa-edit"></i></asp:LinkButton>
-                      <asp:LinkButton class="btn badge-danger" Text="" data-toggle="tooltip" title="Excluir" data-placement="auto" ID="btnExcluir" runat="server" CommandArgument='<%# Eval("id") %>' OnClick="btnExcluir_Click" OnClientClick="return confirm('Tem Certeza que deseja Excluir ?')" ><i class="fas fa-trash"></i></asp:LinkButton>
+                      <asp:LinkButton class="btn badge-danger" Text="" data-toggle="tooltip" title="Excluir" data-placement="auto" ID="btnExcluir" runat="server" CommandName="Delete" CommandArgument='<%# Eval("id") %>' OnClick="btnExcluir_Click" OnClientClick="return sweetAlertConfirm(this);" ><i class="fas fa-trash"></i></asp:LinkButton>
                     </ItemTemplate>
                   </asp:TemplateField>
                 </Columns>
@@ -153,5 +153,38 @@
       }
     }) 
   };
+</script>
+<script type="text/javascript">
+
+    function sweetAlertConfirm(btnExcluir) {
+
+        if (btnExcluir.dataset.confirmed) {
+            // The action was already confirmed by the user, proceed with server event
+            btnExcluir.dataset.confirmed = false;
+            return true;
+        } else {
+            // Ask the user to confirm/cancel the action
+            event.preventDefault();
+            swal({
+                title: 'Você tem certeza que deseja deletar esse Registro?',
+                text: "Esta operação é irreversível",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ok'
+            })
+                .then(function () {
+                    // Set data-confirmed attribute to indicate that the action was confirmed
+                    btnExcluir.dataset.confirmed = true;
+                    // Trigger button click programmatically
+                    btnExcluir.click();
+                    swal({ text: 'Deletado com Sucesso', type: 'success' });
+                }).catch(function (reason) {
+                    // The action was canceled by the user
+                    return false
+                });
+        }
+    }    
 </script>
 </asp:Content>

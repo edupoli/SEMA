@@ -26,7 +26,7 @@ namespace SEMA
                 string conecLocal = "SERVER=10.0.2.9;UID=ura;PWD=ask123;Allow User Variables=True;Pooling=False";
                 MySqlConnection con = new MySqlConnection(conecLocal);
                 con.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from sema.assunto where sema.secretariaID="+ Session["secretaria"].ToString() +" order by descricao asc", con);
+                MySqlCommand cmd = new MySqlCommand("select * from sema.assunto where sema.assunto.secretariaID="+ Session["secretaria"].ToString() +" order by descricao asc", con);
                 MySqlDataAdapter da = new MySqlDataAdapter();
                 DataTable dt = new DataTable();
                 da.SelectCommand = cmd;
@@ -124,6 +124,14 @@ namespace SEMA
                 descricao.Focus();
             }
             else
+            if (descricao.Text.Length < 200)
+            {
+                valido = "nao";
+                mensagem = "A descrição do chamado esta muito curta, deve conter no mínimo 200 caracteres !";
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+                descricao.Focus();
+            }
+            else
 
                 if ((cpf.Text != "") && (ValidaCPF.IsCpf(cpf.Text) == false))
             {
@@ -164,7 +172,7 @@ namespace SEMA
                     mensagem = "Alterado com sucesso !";
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     mensagem = "Ocorreu o seguinte erro: " + ex.Message;
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);

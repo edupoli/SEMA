@@ -9,8 +9,14 @@ namespace SEMA
 {
     public partial class SiteMaster : MasterPage
     {
+        public string mensagem = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
+            Response.AppendHeader("Refresh",
+            //Session TimeOut é em minutos e o Refresh e segundos, por isso o Session.Timeout * 60
+            String.Concat((Session.Timeout * 60),
+            //Página para onde o usuário será redirecionado
+            ";URL=/Login.aspx"));
             if (Session["logado"] == null)
             {
                 Response.Redirect("login.aspx");
@@ -82,6 +88,29 @@ namespace SEMA
             configuraco conf = ctx.configuracoes.First(p => p.secretariaID == cod);
             sb.AppendLine("<img src='dist/img/logos/" + conf.logo + "' class='img-thumbnail' style='background-color: transparent'");
             return sb.ToString();
+        }
+
+        protected void secretaria_Click(object sender, EventArgs e)
+        {
+            if (Session["perfil"].ToString() != "Administrador")
+            {
+                mensagem = "Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
+                //Response.Redirect(Request.RawUrl);
+            }
+            else
+
+                if (Session["secretaria"].ToString() != "1")
+                {
+                    mensagem = "Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
+                //Response.Redirect(Request.RawUrl);
+            }
+                else
+                {
+                    Response.Redirect("Secretarias.aspx");
+                }
+            
         }
     }
 }

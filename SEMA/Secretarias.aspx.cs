@@ -51,7 +51,7 @@ namespace SEMA
                     GridView1.DataSource = GetSecretarias();
                     GridView1.DataBind();
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     mensagem = "Ocorreu o seguinte erro: " + ex.Message;
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erroGeral();", true);

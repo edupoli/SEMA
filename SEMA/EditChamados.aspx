@@ -1,5 +1,4 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EditChamados.aspx.cs" Inherits="SEMA.EditChamados" %>
-<%@ Register Assembly="CKEditor.NET" Namespace="CKEditor.NET" TagPrefix="CKEditor" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 <div class="wrapper">
@@ -103,7 +102,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <CKEditor:CKEditorControl ID="descricao" runat="server" Enabled="false" ></CKEditor:CKEditorControl>
+        <asp:TextBox runat="server" ID="descricao" TextMode="MultiLine" />
       </div>
     </div>
   </div>
@@ -113,6 +112,14 @@
 </section>
 </div>
 </div>
+<script>
+	CKEDITOR.replace( '<%=descricao.ClientID%>' );
+	extraPlugins: 'wordcount,notification,exportpdf'
+
+	CKEDITOR.on( 'instanceReady', function( ev ) {
+		ev.editor.setData('<p style="text-align:justify;"></p>');
+	});
+</script>
 <script type="text/javascript">
   function sucesso() {
     toastr.options = {

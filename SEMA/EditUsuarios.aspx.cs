@@ -152,7 +152,7 @@ namespace SEMA
 
                                     }
                                 }
-                                catch (Exception ex)
+                                catch (System.Exception ex)
                                 {
                                     mensagem = "Erro ao Fazer Upload da Imagem " + ex.Message;
                                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -174,7 +174,7 @@ namespace SEMA
 
                             }
                         }
-                        catch (Exception ex)
+                        catch (System.Exception ex)
                         {
                             // Mensagem notifica quando ocorre erros
                             mensagem = "O arquivo não pôde ser carregado. O seguinte erro ocorreu: " + ex.Message;
@@ -183,7 +183,7 @@ namespace SEMA
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     // Mensagem notifica quando ocorre erros
                     mensagem = "O arquivo não pôde ser carregado. O seguinte erro ocorreu: " + ex.Message;
@@ -208,7 +208,7 @@ namespace SEMA
                 string s = data.ToString().Replace("/", "").Replace(":", "").Replace(" ", "");
                 return Convert.ToInt64(s);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 mensagem = "Ocorreu o Seguinte erro: " + ex.Message;
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);

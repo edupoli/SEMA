@@ -71,7 +71,7 @@ namespace SEMA
                     cboxPerfil.SelectedIndex = -1;
                     cboxSecretaria.SelectedIndex = -1;
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     mensagem = "Ocorreu o seguinte erro: " + ex.Message;
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -138,7 +138,7 @@ namespace SEMA
 
                                     }
                                 }
-                                catch (Exception ex)
+                                catch (System.Exception ex)
                                 {
                                     mensagem = "Ocerreu o Seguinte erro: " + ex.Message;
                                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -160,7 +160,7 @@ namespace SEMA
 
                             }
                         }
-                        catch (Exception ex)
+                        catch (System.Exception ex)
                         {
                             // Mensagem notifica quando ocorre erros
                             mensagem = "O arquivo não pôde ser carregado. O seguinte erro ocorreu: " + ex.Message;
@@ -169,7 +169,7 @@ namespace SEMA
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     // Mensagem notifica quando ocorre erros
                     mensagem = "O arquivo não pôde ser carregado. O seguinte erro ocorreu: " + ex.Message;
@@ -194,7 +194,7 @@ namespace SEMA
                 string s = data.ToString().Replace("/", "").Replace(":", "").Replace(" ", "");
                 return Convert.ToInt64(s);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 mensagem = "Ocorreu o Seguinte erro: " + ex.Message;
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);

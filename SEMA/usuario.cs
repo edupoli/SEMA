@@ -17,6 +17,7 @@ namespace SEMA
         public usuario()
         {
             this.chamadoes = new HashSet<chamado>();
+            this.chamadoes1 = new HashSet<chamado>();
         }
     
         public int id { get; set; }
@@ -31,5 +32,6 @@ namespace SEMA
     
         public virtual ICollection<chamado> chamadoes { get; set; }
         public virtual secretaria secretaria { get; set; }
+        public virtual ICollection<chamado> chamadoes1 { get; set; }
     }
 }

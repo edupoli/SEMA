@@ -62,7 +62,7 @@ namespace SEMA
                         ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
                     }
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     mensagem = "Ocorreu o seguinte erro: " + ex.Message;
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);

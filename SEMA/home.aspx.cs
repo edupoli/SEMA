@@ -20,8 +20,14 @@ namespace SEMA
         string pendente;
         string atendimento;
         string retornoCidadao;
+        public string mensagem = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["logado"] == null)
+            {
+                Response.Redirect("login.aspx");
+            }
+
             Timer1.Enabled = true;
             aberto = qtaAbertos.Text;
             finalizado = qtaFinalizados.Text;

@@ -1,6 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RespChamado.aspx.cs" Inherits="SEMA.RespChamado" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
-<%@ Register Assembly="CKEditor.NET" Namespace="CKEditor.NET" TagPrefix="CKEditor" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>  
 <style>
@@ -89,7 +88,7 @@
             <div class="row">
               <div class="col-md-8">
                 <div class="form-group">
-                  <CKEditor:CKEditorControl ID="descricao" runat="server"></CKEditor:CKEditorControl>
+                  <asp:TextBox runat="server" ID="descricao" TextMode="MultiLine" />
                 </div>
               </div>
               <div class="col-md-4" style="height:306px;">
@@ -139,6 +138,13 @@
           </div>
         </div>
         <div class="box-body">
+            <div class="row">
+                  <div class="checkbox">
+                  <label style="margin-left:15px;">
+                      <asp:CheckBox Text="" runat="server" ID="resp_checkDenuncia" Enabled="false"/> É denuncia anonima ?
+                  </label>
+                </div>
+              </div>
           <div class="row">
             <div class="col-md-2">
               <div class="form-group">
@@ -198,6 +204,39 @@
         </div>
       </div>
     </div>
+            <div class="row">
+    <div class="col-md-2">
+      <div class="form-group">
+        <label>CEP</label>
+        <asp:TextBox runat="server" ID="resp_txtCEP" CssClass="form-control" ReadOnly="true"/>
+      </div>
+    </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Rua</label>
+          <asp:TextBox runat="server" ID="resp_txtRua" CssClass="form-control" ReadOnly="true"/>
+        </div>
+      </div>
+      <div class="col-md-1">
+        <div class="form-group">
+          <label>Número</label>
+          <asp:TextBox runat="server" ID="resp_txtNumero" CssClass="form-control" ReadOnly="true"/>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label>Bairro</label>
+          <asp:TextBox runat="server" ID="resp_txtBairro" CssClass="form-control" ReadOnly="true"/>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Cidade</label>
+          <asp:TextBox runat="server" ID="resp_txtCidade" CssClass="form-control" ReadOnly="true"/>
+        </div>
+      </div>
+  
+</div>
   </div>
 </div>        
 </div>
@@ -241,6 +280,9 @@
     float: left;
     color: #999;
   }
+  .container1 p{
+      text-align:justify!important;
+  }
 </style>                 
 <div class="tab-pane" id="tab_3">
   <asp:Literal ID="historicoMsg" runat="server" />
@@ -249,6 +291,14 @@
 </div>
 </div>
 </div>
+<script>
+	CKEDITOR.replace( '<%=descricao.ClientID%>' );
+	extraPlugins: 'wordcount,notification,exportpdf'
+
+	CKEDITOR.on( 'instanceReady', function( ev ) {
+		ev.editor.setData('<p style="text-align:justify;"></p>');
+	});
+</script>
 <script type="text/javascript">
   function sucesso() {
     toastr.options = {

@@ -85,6 +85,15 @@ namespace SEMA {
         protected global::System.Web.UI.WebControls.Literal SB_logo;
         
         /// <summary>
+        /// Controle secretaria.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton secretaria;
+        
+        /// <summary>
         /// Controle MainContent.
         /// </summary>
         /// <remarks>

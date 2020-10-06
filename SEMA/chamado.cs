@@ -31,10 +31,19 @@ namespace SEMA
         public string img { get; set; }
         public string status { get; set; }
         public Nullable<int> secretariaID { get; set; }
+        public Nullable<System.DateTime> data { get; set; }
+        public string cep { get; set; }
+        public string rua { get; set; }
+        public string bairro { get; set; }
+        public string cidade { get; set; }
+        public Nullable<int> user_cadastrou { get; set; }
+        public string anonimo { get; set; }
+        public string numero { get; set; }
     
         public virtual assunto assunto1 { get; set; }
         public virtual ICollection<historico> historicoes { get; set; }
         public virtual usuario usuario { get; set; }
         public virtual secretaria secretaria { get; set; }
+        public virtual usuario usuario1 { get; set; }
     }
 }

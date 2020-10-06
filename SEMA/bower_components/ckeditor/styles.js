@@ -1,5 +1,5 @@
 ﻿/**
- * Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (c) 2003-2020, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
@@ -13,7 +13,7 @@
 // ignore it. Otherwise it is strongly recommended to customize this file to match your
 // website requirements and design properly.
 //
-// For more information refer to: https://docs.ckeditor.com/ckeditor4/docs/#!/guide/dev_styles-section-style-rules
+// For more information refer to: https://ckeditor.com/docs/ckeditor4/latest/guide/dev_styles.html#style-rules
 
 CKEDITOR.stylesSet.add( 'default', [
 	/* Block styles */
@@ -32,6 +32,8 @@ CKEDITOR.stylesSet.add( 'default', [
 	{ name: 'Preformatted Text',element: 'pre' },
 	{ name: 'Address',			element: 'address' },
 	*/
+	{ name: 'Paragraph',		element: 'p', styles: {'text-align': 'justify'} },
+	//{ name : 'Paragraph'      , element: 'p', styles: {'text-align': 'justify'} },
 
 	{ name: 'Italic Title',		element: 'h2', styles: { 'font-style': 'italic' } },
 	{ name: 'Subtitle',			element: 'h3', styles: { 'color': '#aaa', 'font-style': 'italic' } },

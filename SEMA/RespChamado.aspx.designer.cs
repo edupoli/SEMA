@@ -73,7 +73,7 @@ namespace SEMA {
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::CKEditor.NET.CKEditorControl descricao;
+        protected global::System.Web.UI.WebControls.TextBox descricao;
         
         /// <summary>
         /// Controle lblCaminhoImg.
@@ -157,6 +157,15 @@ namespace SEMA {
         protected global::System.Web.UI.WebControls.Button btnVoltar_resp;
         
         /// <summary>
+        /// Controle resp_checkDenuncia.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox resp_checkDenuncia;
+        
+        /// <summary>
         /// Controle resp_txtProtocolo.
         /// </summary>
         /// <remarks>
@@ -227,6 +236,51 @@ namespace SEMA {
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList resp_cboxStatus;
+        
+        /// <summary>
+        /// Controle resp_txtCEP.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox resp_txtCEP;
+        
+        /// <summary>
+        /// Controle resp_txtRua.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox resp_txtRua;
+        
+        /// <summary>
+        /// Controle resp_txtNumero.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox resp_txtNumero;
+        
+        /// <summary>
+        /// Controle resp_txtBairro.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox resp_txtBairro;
+        
+        /// <summary>
+        /// Controle resp_txtCidade.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox resp_txtCidade;
         
         /// <summary>
         /// Controle historicoMsg.

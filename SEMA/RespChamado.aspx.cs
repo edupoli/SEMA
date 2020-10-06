@@ -15,31 +15,23 @@ namespace SEMA
         public string mensagem = string.Empty;
         string image;
         public string ImgPath;
-        string prevPage;
         int chamadoID;
         string e_mail;
         DateTime data = DateTime.Now;
         string historico;
-        string nome;
+        int secretariaID;
         int seq = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             lblCaminhoImg.Visible = false;
-            //prevPage = Request.UrlReferrer.ToString();
             getStatusColor();
-            chamadoID = Convert.ToInt32(Request.QueryString["chamadoID"]);
             e_mail = resp_email.Text;
-            if (Session["logado"] != null)
-            {
-                if (Session["perfil"].ToString() != "Administrador")
-                {
-                    Response.Redirect("login.aspx");
-                }
-            }
-            else
+            if (Session["logado"] == null)
             {
                 Response.Redirect("login.aspx");
             }
+            secretariaID = int.Parse(Session["secretaria"].ToString());
+            chamadoID = Convert.ToInt32(Request.QueryString["chamadoID"]);
             if (!IsPostBack)
             {
                 PreencherCbox();
@@ -97,7 +89,7 @@ namespace SEMA
                                                 }
                                             }
                                         }
-                                        catch (Exception ex)
+                                        catch (System.Exception ex)
                                         {
                                             mensagem = "Ocerreu o Seguinte erro: " + ex.Message;
                                             ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -119,7 +111,7 @@ namespace SEMA
                                         ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
                                     }
                                 }
-                                catch (Exception ex)
+                                catch (System.Exception ex)
                                 {
                                     // Mensagem notifica quando ocorre erros
                                     mensagem = "O arquivo não pôde ser carregado. O seguinte erro ocorreu: " + ex.Message;
@@ -127,7 +119,7 @@ namespace SEMA
                                 }
                             }
                         }
-                        catch (Exception ex)
+                        catch (System.Exception ex)
                         {
                             // Mensagem notifica quando ocorre erros
                             mensagem = "O arquivo não pôde ser carregado. O seguinte erro ocorreu: " + ex.Message;
@@ -155,6 +147,7 @@ namespace SEMA
         {
             semaEntities ctx = new semaEntities();
             var resultado = (from t in ctx.usuarios
+                             where t.secretariaID == secretariaID
                              select new
                              {
                                  t.id,
@@ -176,7 +169,7 @@ namespace SEMA
                 string s = data.ToString().Replace("/", "").Replace(":", "").Replace(" ", "");
                 return Convert.ToInt64(s);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 mensagem = "Ocorreu o Seguinte erro: " + ex.Message;
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -233,9 +226,18 @@ namespace SEMA
                                  a.status,
                                  a.img,
                                  a.usuario_responsavel,
+                                 a.anonimo,
+                                 a.bairro,
+                                 a.cep,
+                                 a.cidade,
+                                 a.data,
+                                 a.numero,
+                                 a.rua,
+                                 a.user_cadastrou
                              });
             foreach (var item in resultado)
             {
+
                 resp_txtProtocolo.Text = item.protocolo;
                 resp_nome.Text = item.nome;
                 resp_email.Text = item.email;
@@ -248,6 +250,19 @@ namespace SEMA
                 Image1.ImageUrl = "dist/img/chamados/" + item.img;
                 imgSel.ImageUrl = "dist/img/chamados/" + item.img;
                 lblCaminhoImg.Text = item.img;
+                resp_txtCEP.Text = item.cep;
+                resp_txtRua.Text = item.rua;
+                resp_txtNumero.Text = item.numero;
+                resp_txtBairro.Text = item.bairro;
+                resp_txtCidade.Text = item.cidade;
+                if (item.anonimo == "SIM")
+                {
+                    resp_checkDenuncia.Checked = true;
+                }
+                else
+                {
+                    resp_checkDenuncia.Checked = false;
+                }
             }
         }
         private string getHistorico(int cod)
@@ -270,7 +285,8 @@ namespace SEMA
                 {
                     sb.Append("<div class='container1'><img src ='/dist/img/cidadao.jpg' alt='Avatar'>");
                     sb.Append(item.mensagem);
-                    sb.Append("<span class='time-right'>" + item.data + "</span></div>");
+                    
+                    sb.Append("<span class='time-right' style='text-align:justify;display:block;'>" + item.data + "</span></div>");
                 }
                 if (item.origem == "agente")
                 {
@@ -305,6 +321,13 @@ namespace SEMA
                 descricao.Focus();
             }
             else
+            if (descricao.Text.Length < 200)
+            {
+                mensagem = "A descrição do chamado esta muito curta, deve conter no mínimo 200 caracteres !";
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+                descricao.Focus();
+            }
+            else
             {
                 try
                 {
@@ -324,7 +347,7 @@ namespace SEMA
                     }
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     mensagem = "Ocorreu o Seguinte erro ao tentar gravar " + ex.Message;
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -350,7 +373,7 @@ namespace SEMA
                     seq = item.sequencia.Value;
                 }
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 mensagem = "Ocorreu o seguinte erro ao tentar consultar ultima mensagem: " + ex.Message;
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -372,7 +395,7 @@ namespace SEMA
                 ctx.historicoes.Add(his);
                 ctx.SaveChanges();
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 mensagem = "Ocorreu o seguinte erro ao gravar mensagem: " + ex.Message;
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -439,7 +462,7 @@ namespace SEMA
                 smtpClient.Send(mailMessage);
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 mensagem = "Erro ao enviar e-mail: " + ex.Message;
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -447,7 +470,7 @@ namespace SEMA
         }
         protected void btnVoltar_Click(object sender, EventArgs e)
         {
-            Response.Redirect(prevPage);
+            Response.Redirect("NovosChamados.aspx");
         }
         protected void cboxStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -455,7 +478,7 @@ namespace SEMA
         }
         protected void btnVoltar_resp_Click(object sender, EventArgs e)
         {
-            Response.Redirect("home.aspx");
+            Response.Redirect("NovosChamados.aspx");
         }
         protected void Image1_Click(object sender, ImageClickEventArgs e)
         {

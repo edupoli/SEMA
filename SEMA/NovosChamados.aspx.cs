@@ -116,7 +116,7 @@ namespace SEMA
                     mensagem = "Deletado com Sucesso !";
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     mensagem = "Ocorreu o seguinte erro ao tentar deletar: " + ex.Message;
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);

@@ -54,7 +54,7 @@ namespace SEMA
                     ctx.SaveChanges();
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     mensagem = "Ocorreu o seguinte erro: " + ex.Message;
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erroGeral();", true);

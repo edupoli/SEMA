@@ -18,6 +18,8 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="data" Type="datetime" Precision="0" />
+          <Property Name="status" Type="varchar" MaxLength="45" />
           <Property Name="secretariaID" Type="int" />
           <Property Name="protocolo" Type="varchar" MaxLength="255" />
           <Property Name="nome" Type="varchar" MaxLength="255" />
@@ -26,9 +28,15 @@
           <Property Name="cpf" Type="varchar" MaxLength="45" />
           <Property Name="assunto" Type="int" />
           <Property Name="topico" Type="int" />
-          <Property Name="usuario_responsavel" Type="int" />
           <Property Name="img" Type="varchar" MaxLength="45" />
-          <Property Name="status" Type="varchar" MaxLength="45" />
+          <Property Name="cep" Type="varchar" MaxLength="45" />
+          <Property Name="rua" Type="varchar" MaxLength="255" />
+          <Property Name="numero" Type="varchar" MaxLength="255" />
+          <Property Name="bairro" Type="varchar" MaxLength="255" />
+          <Property Name="cidade" Type="varchar" MaxLength="255" />
+          <Property Name="user_cadastrou" Type="int" />
+          <Property Name="usuario_responsavel" Type="int" />
+          <Property Name="anonimo" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="configuracoes">
           <Key>
@@ -108,7 +116,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="chamado1">
-          <End Role="chamado" Type="Self.chamado" Multiplicity="0..1" />
+          <End Role="chamado" Type="Self.chamado" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="historico" Type="Self.historico" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="chamado">
@@ -181,6 +191,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="userCadastrou">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="chamado" Type="Self.chamado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="chamado">
+              <PropertyRef Name="user_cadastrou" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="semaModelStoreContainer">
           <EntitySet Name="assunto" EntityType="Self.assunto" Schema="sema" store:Type="Tables" />
           <EntitySet Name="chamado" EntityType="Self.chamado" Schema="sema" store:Type="Tables" />
@@ -217,6 +239,10 @@
             <End Role="assunto" EntitySet="assunto" />
             <End Role="topicos" EntitySet="topicos" />
           </AssociationSet>
+          <AssociationSet Name="userCadastrou" Association="Self.userCadastrou">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="chamado" EntitySet="chamado" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -252,6 +278,15 @@
           <NavigationProperty Name="usuario" Relationship="Self.responsavel" FromRole="chamado" ToRole="usuario" />
           <Property Name="secretariaID" Type="Int32" />
           <NavigationProperty Name="secretaria" Relationship="semaModel.secretaria_id" FromRole="chamado" ToRole="secretaria" />
+          <Property Name="data" Type="DateTime" />
+          <Property Name="cep" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="rua" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="bairro" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="cidade" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="user_cadastrou" Type="Int32" />
+          <Property Name="anonimo" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="usuario1" Relationship="semaModel.userCadastrou" FromRole="chamado" ToRole="usuario" />
+          <Property Name="numero" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="configuraco">
           <Key>
@@ -325,6 +360,7 @@
           <Property Name="cargo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="chamadoes" Relationship="Self.responsavel" FromRole="usuario" ToRole="chamado" />
           <NavigationProperty Name="secretaria" Relationship="Self.secretaria1" FromRole="usuario" ToRole="secretaria" />
+          <NavigationProperty Name="chamadoes1" Relationship="semaModel.userCadastrou" FromRole="usuario" ToRole="chamado" />
         </EntityType>
         <Association Name="assunto1">
           <End Role="assunto" Type="Self.assunto" Multiplicity="0..1" />
@@ -434,6 +470,10 @@
             <End Role="secretaria" EntitySet="secretarias" />
             <End Role="chamado" EntitySet="chamadoes" />
           </AssociationSet>
+          <AssociationSet Name="userCadastrou" Association="semaModel.userCadastrou">
+            <End Role="usuario" EntitySet="usuarios" />
+            <End Role="chamado" EntitySet="chamadoes" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="secretaria_id">
           <End Type="semaModel.secretaria" Role="secretaria" Multiplicity="0..1" />
@@ -444,6 +484,18 @@
             </Principal>
             <Dependent Role="chamado">
               <PropertyRef Name="secretariaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userCadastrou">
+          <End Type="semaModel.usuario" Role="usuario" Multiplicity="0..1" />
+          <End Type="semaModel.chamado" Role="chamado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="chamado">
+              <PropertyRef Name="user_cadastrou" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -465,6 +517,14 @@
           <EntitySetMapping Name="chamadoes">
             <EntityTypeMapping TypeName="semaModel.chamado">
               <MappingFragment StoreEntitySet="chamado">
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="anonimo" ColumnName="anonimo" />
+                <ScalarProperty Name="user_cadastrou" ColumnName="user_cadastrou" />
+                <ScalarProperty Name="cidade" ColumnName="cidade" />
+                <ScalarProperty Name="bairro" ColumnName="bairro" />
+                <ScalarProperty Name="rua" ColumnName="rua" />
+                <ScalarProperty Name="cep" ColumnName="cep" />
+                <ScalarProperty Name="data" ColumnName="data" />
                 <ScalarProperty Name="secretariaID" ColumnName="secretariaID" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="protocolo" ColumnName="protocolo" />

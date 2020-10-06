@@ -5,13 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f14dfacd4a55429b8b0764d797435a3e" Name="Diagram1">
-        <EntityTypeShape EntityType="semaModel.assunto" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="semaModel.assunto" Width="1.5" PointX="2.5" PointY="11.625" IsExpanded="true" />
         <EntityTypeShape EntityType="semaModel.chamado" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="semaModel.configuraco" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="semaModel.historico" Width="1.5" PointX="7.5" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="semaModel.secretaria" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="semaModel.topico" Width="1.5" PointX="5.25" PointY="10.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="semaModel.usuario" Width="1.5" PointX="2.625" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="semaModel.topico" Width="1.5" PointX="5.375" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="semaModel.usuario" Width="1.5" PointX="2.25" PointY="7.25" IsExpanded="true" />
         <AssociationConnector Association="semaModel.assunto1" ManuallyRouted="false" />
         <AssociationConnector Association="semaModel.topicos1" ManuallyRouted="false" />
         <AssociationConnector Association="semaModel.chamado1" ManuallyRouted="false" />
@@ -19,6 +19,7 @@
         <AssociationConnector Association="semaModel.secret" ManuallyRouted="false" />
         <AssociationConnector Association="semaModel.secretaria1" ManuallyRouted="false" />
         <AssociationConnector Association="semaModel.secretaria_id" />
+        <AssociationConnector Association="semaModel.userCadastrou" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

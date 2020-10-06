@@ -1,34 +1,46 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 namespace SEMA
 {
+    using ServiceCorreios;
+    using System.Web.Services;
+
     public partial class AddChamados : System.Web.UI.Page
     {
         public string mensagem = string.Empty;
         string e_mail;
         string valido;
-        public string numProtocolo;
-        string prevPage;
         DateTime data = DateTime.Now;
         int LastID;
         protected void Page_Load(object sender, EventArgs e)
         {
             LastID = 0;
-            numProtocolo = string.Format("{0:00000000000000}", GerarProtocolo());
-            prevPage = Request.UrlReferrer.ToString();
             e_mail = txtemail.Text;
+            cepNotFound.Visible = false;
+            btnNovoChamado.Visible = false;
+            if (Session["logado"] == null)
+            {
+                Response.Redirect("login.aspx");
+            }
+            
             if (!Page.IsPostBack)
             {
+                // chama a API para gerar o numero do protocolo
+                string numProtocolo;
+                var request = (HttpWebRequest)WebRequest.Create("http://10.0.2.15/ctdws/integracao/protocolo/geraProtocolo?login=ctd&senha=integraws&idchamada=0&numdea=33793300&tipomidia=ura");
+                var response = (HttpWebResponse)request.GetResponse();
+                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                response.Close();
+                numProtocolo = responseString.TrimStart('"').TrimEnd('"');
+                txtProtocolo.Text = numProtocolo.TrimStart('"').TrimEnd('"');
+
+                // Metodo para popular a combobox 
                 string conecLocal = "SERVER=10.0.2.9;UID=ura;PWD=ask123;Allow User Variables=True;Pooling=False";
                 MySqlConnection con = new MySqlConnection(conecLocal);
                 con.Open();
@@ -39,7 +51,6 @@ namespace SEMA
                 da.Fill(dt);
                 cboxAssunto.DataSource = dt;
                 cboxAssunto.DataBind();
-                txtProtocolo.Text = numProtocolo;
                 getStatusColor();
             }
             GerarProtocolo();
@@ -53,7 +64,7 @@ namespace SEMA
                 string s = data.ToString().Replace("/", "").Replace(":", "").Replace(" ", "");
                 return Convert.ToInt64(s);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 mensagem = "Ocorreu o Seguinte erro: " + ex.Message;
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -96,6 +107,14 @@ namespace SEMA
             {
                 valido = "nao";
                 mensagem = "Favor faça a descrição da solicitação !";
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+                descricao.Focus();
+            }
+            else
+            if(descricao.Text.Length < 200)
+            {
+                valido = "nao";
+                mensagem = "A descrição do chamado esta muito curta, deve conter no mínimo 200 caracteres !";
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
                 descricao.Focus();
             }
@@ -165,7 +184,6 @@ namespace SEMA
                     ch.img = "user-800x600.png";
                     ch.assunto = int.Parse(cboxAssunto.SelectedValue);
                     ch.topico = int.Parse(cboxTopico.SelectedValue);
-                    //ch.descricao = descricao.Text;
                     ch.status = cboxStatus.SelectedValue;
                     ctx.chamadoes.Add(ch);
                     ctx.SaveChanges();
@@ -174,38 +192,26 @@ namespace SEMA
                     {
                         pushMensage();
                     }
-                    int sec = int.Parse(Session["secretaria"].ToString());
-                    secretaria sr = ctx.secretarias.First(p => p.id == sec);
-                    string nomeSec = sr.nome;
-                    string numCel = txttelefone.Text.Trim();
-                    if (numCel.Length == 14)
-                    {
-                        numCel = numCel.Remove(0, 1);
-                        numCel = numCel.Remove(2, 3);
-                    }
-                    string dadosMensagem = "👏🏻👏🏻 Sua solicitação foi aberta com Sucesso e registrada com Protocolo Nº *" + txtProtocolo.Text + "* ✅ " +
-                    "A *" + nomeSec + "* irá analizar o pedido e respondera o mais breve possivel.\n" +
-                    "Voce pode acompanhar o andamento da solicitação , com o numero de protocolo em todos os " +
-                    "nossos canais de atendimento.\n\n\n" +
-                    "Agradecemos por utilzar nossos serviços.\n\n" +
-                    "👋🏼👋🏼 Ate logo.";
-                    var request = (HttpWebRequest)WebRequest.Create("http://42ffaec75924.ngrok.io/api?celular=" + numCel + "&mensagem=" + dadosMensagem);
-                    var response = (HttpWebResponse)request.GetResponse();
-                    var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                    mensagem = "Adicionado com sucesso !";
+
+                   // WhatsApp();
+
+                    
                     if (txtemail.Text != "")
                     {
                         Email();
                     }
-                    ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Click", "temporaryButtonClick();", true);
+
+
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     mensagem = "Ocorreu o seguinte erro: " + ex.Message;
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
                 }
             }
         }
+
         private void pushMensage()
         {
             try
@@ -220,7 +226,7 @@ namespace SEMA
                 ctx.historicoes.Add(his);
                 ctx.SaveChanges();
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 mensagem = "Ocorreu o seguinte erro ao tentar gravar o texto: " + ex.Message;
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -228,7 +234,7 @@ namespace SEMA
         }
         protected void btnVoltar_Click(object sender, EventArgs e)
         {
-            Response.Redirect(prevPage);
+            Response.Redirect("home.aspx");
         }
         protected void btnUpload_Click(object sender, EventArgs e)
         {
@@ -257,6 +263,38 @@ namespace SEMA
         protected void cboxStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
             getStatusColor();
+        }
+        private void WhatsApp()
+        {
+            int sec = int.Parse(Session["secretaria"].ToString());
+            semaEntities ctx = new semaEntities();
+            secretaria sr = ctx.secretarias.First(p => p.id == sec);
+            string nomeSec = sr.nome;
+            string numCel = txttelefone.Text.Trim();
+            if (numCel.Length == 14)
+            {
+                numCel = numCel.Remove(0, 1);
+                numCel = numCel.Remove(2, 3);
+            }
+            string dadosMensagem = "👏🏻👏🏻 Sua solicitação foi aberta com Sucesso e registrada com Protocolo Nº *" + txtProtocolo.Text + "* ✅ " +
+            "A *" + nomeSec + "* irá analizar o pedido e respondera o mais breve possivel.\n" +
+            "Voce pode acompanhar o andamento da solicitação , com o numero de protocolo em todos os " +
+            "nossos canais de atendimento.\n\n\n" +
+            "Agradecemos por utilzar nossos serviços.\n\n" +
+            "👋🏼👋🏼 Ate logo.";
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create("http://10.0.2.9:3000/api/" + numCel + "/" + dadosMensagem);
+                var response = (HttpWebResponse)request.GetResponse();
+                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                response.Close();
+            }
+            catch (System.Exception ex)
+            {
+                mensagem = "Não foi possivel enviar a mensagem de confirmação pelo WhatsApp: " + ex.Message;
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "info();", true);
+            }
+            
         }
         private void Email()
         {
@@ -319,7 +357,7 @@ namespace SEMA
                 smtpClient.Send(mailMessage);
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 mensagem = "Erro ao enviar e-mail: " + ex.Message;
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -384,6 +422,112 @@ namespace SEMA
                     }
                 }
                 return validEmail;
+            }
+        }
+
+        public static class ValidaCNPJ
+        {
+            public static bool IsCnpj(string cnpj)
+            {
+                int[] multiplicador1 = new int[12] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+                int[] multiplicador2 = new int[13] { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+                int soma;
+                int resto;
+                string digito;
+                string tempCnpj;
+                cnpj = cnpj.Trim();
+                cnpj = cnpj.Replace(".", "").Replace("-", "").Replace("/", "");
+                if (cnpj.Length != 14)
+                    return false;
+                tempCnpj = cnpj.Substring(0, 12);
+                soma = 0;
+                for (int i = 0; i < 12; i++)
+                    soma += int.Parse(tempCnpj[i].ToString()) * multiplicador1[i];
+                resto = (soma % 11);
+                if (resto < 2)
+                    resto = 0;
+                else
+                    resto = 11 - resto;
+                digito = resto.ToString();
+                tempCnpj = tempCnpj + digito;
+                soma = 0;
+                for (int i = 0; i < 13; i++)
+                    soma += int.Parse(tempCnpj[i].ToString()) * multiplicador2[i];
+                resto = (soma % 11);
+                if (resto < 2)
+                    resto = 0;
+                else
+                    resto = 11 - resto;
+                digito = digito + resto.ToString();
+                return cnpj.EndsWith(digito);
+            }
+        }
+
+        protected void btnNovoChamado_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void txttelefone_TextChanged(object sender, EventArgs e)
+        {
+            int tamanho = txttelefone.Text.Length;
+            if (tamanho < 16)
+            {
+                mensagem = "O Celular informado é inválido: ";
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+                txttelefone.Focus();
+            }
+        }
+
+        protected void txtCEP_TextChanged(object sender, EventArgs e)
+        {
+            getLogradouro(txtCEP.Text.Trim());
+        }
+        
+        public void getLogradouro(string cep)
+        {
+        using (var ws = new AtendeClienteClient())
+        {
+        try
+        {
+          var resposta = ws.consultaCEP(cep);
+          txtRua.Text = resposta.end;
+          txtBairro.Text = resposta.bairro;
+          txtCidade.Text = resposta.cidade +" "+ resposta.uf;
+          cepNotFound.Visible = false;
+          txtNumero.Focus();
+        }
+        catch (System.Exception)
+        {
+          cepNotFound.Visible = true;
+          cepNotFound.Text = "CEP NÃO ENCONTRADO";
+
+        }
+
+
+        }
+        }
+
+
+        protected void txtcpf_TextChanged(object sender, EventArgs e)
+        {
+            if (txtcpf.Text.Length <=14)
+            {
+                if (ValidaCPF.IsCpf(txtcpf.Text) == false)
+                {
+                    mensagem = "O CPF informado é inválido: ";
+                    ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+                    txtcpf.Focus();
+                }
+            }
+            if (txtcpf.Text.Length > 14 && txtcpf.Text.Length <= 18)
+            {
+                if (ValidaCNPJ.IsCnpj(txtcpf.Text) == false)
+                {
+                    mensagem = "O CNPJ informado é inválido: ";
+                    ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+                    txtcpf.Focus();
+                }
             }
         }
     }

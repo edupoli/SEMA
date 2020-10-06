@@ -1,5 +1,4 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ViewChamados.aspx.cs" Inherits="SEMA.ViewChamados" %>
-<%@ Register Assembly="CKEditor.NET" Namespace="CKEditor.NET" TagPrefix="CKEditor" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 <style>
@@ -113,7 +112,7 @@
             <div class="row">
               <div class="col-md-8">
                 <div class="form-group">
-                  <CKEditor:CKEditorControl ID="descricao" runat="server" Enabled="false"></CKEditor:CKEditorControl>
+                    <asp:TextBox runat="server" ID="descricao" TextMode="MultiLine"/>
                 </div>
               </div>
               <div class="col-md-4" style="height:306px;">

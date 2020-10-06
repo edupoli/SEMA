@@ -61,6 +61,12 @@ namespace SEMA
                 editor1.Focus();
             }
             else
+            if (editor1.Value.Length < 200)
+            {
+                mensagem = "A descrição do chamado esta muito curta, deve conter no mínimo 200 caracteres !";
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+                editor1.Focus();
+            }
             if (resp_cboxStatus.Text =="Aberto")
                 {
                     mensagem = "Õ Chamado esta com status ABERTO aguardando analise!";
@@ -79,7 +85,7 @@ namespace SEMA
                     mensagem = "Gravado com Sucesso!";
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     mensagem = "Ocorreu o Seguinte erro ao tentar gravar " + ex.Message;
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -105,7 +111,7 @@ namespace SEMA
                     seq = item.sequencia.Value;
                 }
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 mensagem = "Ocorreu o seguinte erro ao tentar consultar ultima mensagem: " + ex.Message;
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
@@ -127,7 +133,7 @@ namespace SEMA
                 ctx.historicoes.Add(his);
                 ctx.SaveChanges();
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 mensagem = "Ocorreu o seguinte erro ao gravar mensagem: " + ex.Message;
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
