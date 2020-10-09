@@ -8,15 +8,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link media="screen" rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.css" />
   <link media="screen" rel="stylesheet" href='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.css' />
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-  <link rel="stylesheet" href="bower_components/fontawesome-pro/css/all.min.css"/>
-  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
-  <link rel="stylesheet" href="dist/css/AdminLTE.css">
-  <link rel="stylesheet" href="dist/css/skins/_all-skins.css">
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="/bower_components/fontawesome-pro/css/all.min.css"/>
+  <link rel="stylesheet" href="/bower_components/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="/dist/css/AdminLTE.css">
+  <link rel="stylesheet" href="/dist/css/skins/_all-skins.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-  <link rel="stylesheet" href="bower_components/morris.js/morris.css">
+  <link rel="stylesheet" href="/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="/bower_components/morris.js/morris.css">
   <link rel="stylesheet" href="/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"/>
   <style>
     body{
@@ -42,14 +42,14 @@
   </style>
   <asp:Literal ID="SB_Configuracao" runat="server"></asp:Literal>
   <asp:PlaceHolder runat="server">
-  <%: Scripts.Render("~/bundles/modernizr") %>
+  
 </asp:PlaceHolder>
 </head>
 <body class="hold-transition skin-green-light sidebar-mini">
   <form runat="server">
     <div class="wrapper">
       <header class="main-header">
-        <a href="home.aspx" class="logo">
+        <a href="/home.aspx" class="logo">
           <span class="logo-mini">
             <!--<img src="imagens/arvore.png" alt="" />-->
           </span>
@@ -104,7 +104,7 @@
         <section class="sidebar">
           <div class="user-panel">
             <div class="">
-              <a href="home.aspx">
+              <a href="/home.aspx">
                 <asp:Literal ID="SB_logo" runat="server" />
               </a>
             </div>
@@ -117,9 +117,9 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="Add/WebForm1.aspx">Adicionar novo Chamado</a></li>
-                <li><a href="NovosChamados.aspx">Chamados Abertos</a></li>
-                <li><a href="Chamados.aspx">Finalizados/Em Atendimento</a></li>
+                <li><a href="/Paginas/Adicionar/AddChamados.aspx">Adicionar novo Chamado</a></li>
+                <li><a href="/Paginas/Listar/NovosChamados.aspx">Chamados Abertos</a></li>
+                <li><a href="/Paginas/Listar/Chamados.aspx">Finalizados/Em Atendimento</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -129,8 +129,8 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li> <asp:LinkButton Text="Consultar" runat="server" ID="secretaria" OnClick="secretaria_Click"/></li>
-                <li><a href="AddSecretarias.aspx">Adicionar</a></li>
+                <li><asp:LinkButton Text="Consultar" runat="server" ID="secretaria" OnClick="secretaria_Click"/></li>
+                <li><asp:LinkButton Text="Adicionar" runat="server" ID="AddSecretaria" OnClick="AddSecretaria_Click" /></li>
               </ul>
             </li>
             <li class="treeview">
@@ -140,14 +140,14 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="Configuracoes.aspx">Cores e LogoMarca</a></li>
-                <li><a href="TemplateEmail.aspx">Template E-mails</a></li>
+                  <li><asp:LinkButton Text="Cores e LogoMarca" ID="btnConfiguracoes" OnClick="btnConfiguracoes_Click" runat="server" /></li>
+                  <li><asp:LinkButton Text="Template E-mails" ID="btnTemplateEmail" OnClick="btnTemplateEmail_Click" runat="server" /></li>
               </ul>
             </li>
             <li>
             </li>
-            <li>
-              <a href="AddTopicosChamado.aspx"><i class="fad fa-comments-alt"></i> <span>Tópicos de Chamados</span>
+            <li><a href="/Paginas/Adicionar/AddTopicosChamado.aspx"><i class="fad fa-comments-alt"></i><span> Tópicos de Chamados</span>
+              <!--<asp:LinkButton Text="Tópicos de Chamados" runat="server" ></asp:LinkButton><i class="fad fa-comments-alt"></i> -->
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
@@ -160,27 +160,27 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="Usuarios.aspx">Consultar</a></li>
-                <li><a href="AddUsuarios.aspx">Adicionar</a></li>
+                <li><a href="/Paginas/Listar/Usuarios.aspx">Consultar</a></li>
+                <li><a href="/Paginas/Adicionar/AddUsuarios.aspx">Adicionar</a></li>
               </ul>
             </li>
           </ul>
         </section>
       </aside>
-      <script src="bower_components/jquery/dist/jquery.min.js"></script>
-      <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
-      <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+      <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+      <script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
+      <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
       <script type="text/javascript" src="https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.js"> </script>
-      <script src="dist/js/adminlte.min.js"></script>
+      <script src="/dist/js/adminlte.min.js"></script>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-      <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-      <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-      <script src="bower_components/morris.js/morris.min.js"></script>
+      <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+      <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+      <script src="/bower_components/morris.js/morris.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
-      <script src="bower_components/ckeditor/ckeditor.js"></script>
-      <script src="plugins/input-mask/jquery.inputmask.js"></script>
-      <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-      <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+      <script src="/bower_components/ckeditor/ckeditor.js"></script>
+      <script src="/plugins/input-mask/jquery.inputmask.js"></script>
+      <script src="/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+      <script src="/plugins/input-mask/jquery.inputmask.extensions.js"></script>
       <script src="/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
       <div class="">
         <asp:ContentPlaceHolder id="MainContent" runat="server">
@@ -197,28 +197,7 @@
 </body>
 </html>
 
-<script type="text/javascript">
-  function acessoNegado() {
-    toastr.options = {
-      "closeButton": false,
-      "debug": false,
-      "newestOnTop": false,
-      "progressBar": true,
-      "positionClass": "toast-top-full-width",
-      "preventDuplicates": false,
-      "onclick": null,
-      "showDuration": "300",
-      "hideDuration": "1000",
-      "timeOut": "5000",
-      "extendedTimeOut": "1000",
-      "showEasing": "swing",
-      "hideEasing": "linear",
-      "showMethod": "slideDown",
-      "hideMethod": "slideUp"
-    }
-    toastr["info"]("<%=mensagem%>", "Informação")
-  };
-</script>
+
         <script type="text/javascript">
             function startTimer(duration, display) {
                 var timer = duration, minutes, seconds;

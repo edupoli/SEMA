@@ -10,6 +10,7 @@ namespace SEMA
     public partial class SiteMaster : MasterPage
     {
         public string mensagem = string.Empty;
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             Response.AppendHeader("Refresh",
@@ -19,7 +20,7 @@ namespace SEMA
             ";URL=/Login.aspx"));
             if (Session["logado"] == null)
             {
-                Response.Redirect("login.aspx");
+                Response.Redirect("/login.aspx");
             }
             else
             {
@@ -36,12 +37,12 @@ namespace SEMA
         }
         protected void btnProfile_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ViewUsuarios.aspx?usuarioID=" + Session["id"].ToString());
+            Response.Redirect("/Paginas/Visualizar/ViewUsuarios.aspx?usuarioID=" + Session["id"].ToString());
         }
         protected void btnLogout_Click(object sender, EventArgs e)
         {
             Session.Abandon();
-            Response.Redirect("login.aspx");
+            Response.Redirect("/login.aspx");
         }
         public string getConfiguracao()
         {
@@ -86,7 +87,7 @@ namespace SEMA
             int cod = int.Parse(Session["secretaria"].ToString());
             semaEntities ctx = new semaEntities();
             configuraco conf = ctx.configuracoes.First(p => p.secretariaID == cod);
-            sb.AppendLine("<img src='dist/img/logos/" + conf.logo + "' class='img-thumbnail' style='background-color: transparent'");
+            sb.AppendLine("<img src='/dist/img/logos/" + conf.logo + "' class='img-thumbnail' style='background-color: transparent'");
             return sb.ToString();
         }
 
@@ -96,7 +97,6 @@ namespace SEMA
             {
                 mensagem = "Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina";
                     ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
-                //Response.Redirect(Request.RawUrl);
             }
             else
 
@@ -104,13 +104,80 @@ namespace SEMA
                 {
                     mensagem = "Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina";
                     ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
-                //Response.Redirect(Request.RawUrl);
-            }
+                }
                 else
                 {
-                    Response.Redirect("Secretarias.aspx");
+                    Response.Redirect("/Paginas/Listar/Secretarias.aspx");
                 }
             
+        }
+
+        protected void AddSecretaria_Click(object sender, EventArgs e)
+        {
+            if (Session["perfil"].ToString() != "Administrador")
+            {
+                mensagem = "Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina";
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
+                //Response.Redirect(Request.RawUrl);
+            }
+            else
+            if (Session["secretaria"].ToString() != "1")
+            {
+                mensagem = "Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina";
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
+                //Response.Redirect(Request.RawUrl);
+            }
+            else
+            {
+                Response.Redirect("Paginas/Adicionar/AddSecretarias.aspx");
+            }
+        }
+
+        protected void btnConfiguracoes_Click(object sender, EventArgs e)
+        {
+            if (Session["perfil"].ToString() != "Administrador")
+            {
+                mensagem = "Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina";
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
+                //Response.Redirect(Request.RawUrl);
+            }
+            else
+            if (Session["secretaria"].ToString() != "1")
+            {
+                mensagem = "Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina";
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
+                //Response.Redirect(Request.RawUrl);
+            }
+            else
+            {
+                Response.Redirect("Configuracoes.aspx");
+            }
+        }
+
+        protected void btnTemplateEmail_Click(object sender, EventArgs e)
+        {
+            if (Session["perfil"].ToString() != "Administrador")
+            {
+                mensagem = "Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina";
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
+                //Response.Redirect(Request.RawUrl);
+            }
+            else
+            if (Session["secretaria"].ToString() != "1")
+            {
+                mensagem = "Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina";
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
+                //Response.Redirect(Request.RawUrl);
+            }
+            else
+            {
+                Response.Redirect("TemplateEmail.aspx");
+            }
+        }
+
+        protected void btnTopicos_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

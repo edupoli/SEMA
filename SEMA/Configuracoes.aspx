@@ -7,7 +7,7 @@
       Personalizacão do Tema
     </h1>
     <ol class="breadcrumb">
-      <li><a href="home.aspx"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="/home.aspx"><i class="fas fa-home"></i> Home</a></li>
       <li class="active">Configurações</li>
     </ol>
   </section>

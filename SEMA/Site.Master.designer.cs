@@ -94,6 +94,33 @@ namespace SEMA {
         protected global::System.Web.UI.WebControls.LinkButton secretaria;
         
         /// <summary>
+        /// Controle AddSecretaria.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton AddSecretaria;
+        
+        /// <summary>
+        /// Controle btnConfiguracoes.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnConfiguracoes;
+        
+        /// <summary>
+        /// Controle btnTemplateEmail.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnTemplateEmail;
+        
+        /// <summary>
         /// Controle MainContent.
         /// </summary>
         /// <remarks>

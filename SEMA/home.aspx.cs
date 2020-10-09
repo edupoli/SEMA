@@ -25,7 +25,7 @@ namespace SEMA
         {
             if (Session["logado"] == null)
             {
-                Response.Redirect("login.aspx");
+                Response.Redirect("/login.aspx");
             }
 
             Timer1.Enabled = true;

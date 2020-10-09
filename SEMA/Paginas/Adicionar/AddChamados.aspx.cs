@@ -14,13 +14,14 @@ namespace SEMA
     using System.Net;
     using System.Net.Mail;
 
-    public partial class WebForm1 : System.Web.UI.Page
+    public partial class AddChamados : System.Web.UI.Page
     {
         public string mensagem = string.Empty;
         string e_mail;
         string valido;
         int LastID;
         DateTime data = DateTime.Now;
+        static string prevPage = String.Empty;
 
 
         protected void Page_Load(object sender, EventArgs e)
@@ -56,6 +57,9 @@ namespace SEMA
                 da.Fill(dt);
                 cboxAssunto.DataSource = dt;
                 cboxAssunto.DataBind();
+
+                prevPage = Request.UrlReferrer.ToString();
+
             }
 
         }
@@ -207,7 +211,7 @@ namespace SEMA
 
         protected void btnVoltar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/home.aspx");
+            Response.Redirect(prevPage);
         }
 
         protected void cboxAssunto_SelectedIndexChanged(object sender, EventArgs e)
@@ -589,7 +593,7 @@ namespace SEMA
             return valida;
         }
 
-    public static class ValidaEmail
+        public static class ValidaEmail
         {
             public static bool ValidarEmail(string email)
             {
