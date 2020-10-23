@@ -6,7 +6,7 @@
     <section class="content-header">
       <h1>Cadastrar Novo Chamado</h1> <div id="painel"></div>
       <ol class="breadcrumb">
-        <li><a href="/home.aspx"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="home.aspx"><i class="fas fa-home"></i> Home</a></li>
         <li class="active">Chamados</li>
       </ol>
     </section>
@@ -23,13 +23,20 @@
             </div>
           </div>
           <div class="box-body">
-              <div class="row">
-                  <div class="checkbox">
-                  <label style="margin-left:15px;">
-                      <asp:CheckBox Text="" runat="server" ID="checkDenuncia" OnCheckedChanged="checkDenuncia_CheckedChanged" AutoPostBack="true" /> É denuncia anonima ?
-                  </label>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>É denuncia anonima ?</label>
+                  <asp:CheckBox Text="" runat="server" ID="checkDenuncia" OnCheckedChanged="checkDenuncia_CheckedChanged" AutoPostBack="true" />
                 </div>
               </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Enviar Notificações pelo WhatsApp ?</label>
+                  <asp:CheckBox Text="" ID="checkWhatsapp" runat="server" />
+                </div>
+              </div>
+            </div>
             <div class="row">
               <div class="col-md-2">
                 <div class="form-group">
@@ -148,7 +155,7 @@
 <div class="row">
   <div class="col-md-12">
     <div class="form-group">
-        <asp:TextBox runat="server" ID="descricao" TextMode="MultiLine" />
+      <asp:TextBox runat="server" ID="descricao" TextMode="MultiLine" />
     </div>
   </div>
 </div>
@@ -158,18 +165,17 @@
 </section>
 </div>
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
-
 <script>
-	CKEDITOR.replace( '<%=descricao.ClientID%>' );
-	extraPlugins: 'wordcount,notification,exportpdf'
-
-	CKEDITOR.on( 'instanceReady', function( ev ) {
-		ev.editor.setData('<p style="text-align:justify;"></p>');
-	});
+  CKEDITOR.plugins.addExternal('wordcount', '/bower_components/ckeditor/plugins/wordcount/', 'plugin.js');
+  CKEDITOR.plugins.addExternal('autosave', '/bower_components/ckeditor/plugins/autosave/', 'plugin.js');
+  CKEDITOR.plugins.addExternal('placeholdertext', '/bower_components/ckeditor/plugins/placeholdertext/', 'plugin.js');
+  CKEDITOR.replace('<%=descricao.ClientID%>', { customConfig: '/bower_components/ckeditor/config.js' });
+//extraPlugins: 'wordcount,notification,exportpdf'
+CKEDITOR.on( 'instanceReady', function( ev ) {
+  ev.editor.setData('<p style="text-align:justify;"></p>');
+});
 </script>
-    
 <script>
   $('[data-mask]').inputmask()
 </script>
@@ -268,7 +274,7 @@ function erro() {
 <script type="text/javascript">
   function sweetAlertConfirm(btnConfirmNovoChamado) {
     if (btnConfirmNovoChamado.dataset.confirmed) {
-        btnConfirmNovoChamado.dataset.confirmed = false;
+      btnConfirmNovoChamado.dataset.confirmed = false;
       return true;
     } else {
       event.preventDefault();
@@ -283,13 +289,47 @@ function erro() {
         cancelButtonText: 'NÃO'
       })
       .then(function () {
-          btnConfirmNovoChamado.dataset.confirmed = true;
+        btnConfirmNovoChamado.dataset.confirmed = true;
         btnConfirmNovoChamado.click();
       }).catch(function (reason) {
-          btnCancelNovoChamado.click();
+        btnCancelNovoChamado.click();
         return false
       });
     }
   }    
+</script>
+<script type="text/javascript">
+window.onbeforeunload = ConfirmExit;
+function ConfirmExit()
+{
+    var texto = CKEDITOR.instances['<%=descricao.ClientID%>'].getData();
+    console.log(`${texto}`);
+    /*
+    if ((texto != '<p style="text-align:justify"></p>') || (texto != '')) {
+
+    event.preventDefault();
+    swal({
+      title: "Você tem certeza que quer sair?",
+      text: "As informações digitadas serão perdidas!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+          CKEDITOR.instances['<%=descricao.ClientID%>'].setData('');
+        swal("Poof! Your imaginary file has been deleted!", {
+          icon: "success",
+        });
+      } else {
+        swal("Your imaginary file is safe!");
+      }
+    });
+    
+    }
+    */
+    //Pode se utilizar um window.confirm aqui também...
+   // return "Mensagem de fechamento de janela....";
+}
 </script>
 </asp:Content>

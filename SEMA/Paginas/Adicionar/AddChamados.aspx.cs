@@ -31,7 +31,7 @@ namespace SEMA
             cepNotFound.Visible = false;
             if (Session["logado"] == null)
             {
-                Response.Redirect("/login.aspx");
+                Response.Redirect("../../login.aspx");
             }
 
             if (!Page.IsPostBack)
@@ -59,6 +59,7 @@ namespace SEMA
                 cboxAssunto.DataBind();
 
                 prevPage = Request.UrlReferrer.ToString();
+                checkWhatsapp.Checked = true;
 
             }
 
@@ -164,6 +165,15 @@ namespace SEMA
                     {
                         ch.anonimo = "NAO";
                     }
+                    if (checkWhatsapp.Checked == true)
+                    {
+                        ch.envia_whatsapp = "SIM";
+                        WhatsApp();
+                    }
+                    if (checkWhatsapp.Checked == false)
+                    {
+                        ch.envia_whatsapp = "NAO";
+                    }
                     ctx.chamadoes.Add(ch);
                     ctx.SaveChanges();
                     LastID = ch.id;
@@ -171,7 +181,6 @@ namespace SEMA
                     {
                         pushMensage();
                     }
-                    WhatsApp();
 
                     if (txtemail.Text != "")
                     {
@@ -646,7 +655,7 @@ namespace SEMA
 
         protected void btnCancelNovoChamado_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/home.aspx");
+            Response.Redirect("home.aspx");
         }
 
         protected void checkDenuncia_CheckedChanged(object sender, EventArgs e)

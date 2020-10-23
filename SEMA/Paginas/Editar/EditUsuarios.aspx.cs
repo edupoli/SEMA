@@ -24,13 +24,13 @@ namespace SEMA
                 {
                     if (Session["perfil"].ToString() != "Administrador")
                     {
-                        Response.Redirect("/login.aspx");
+                        Response.Redirect("../../login.aspx");
                     }
 
                 }
                 else
                 {
-                    Response.Redirect("/login.aspx");
+                    Response.Redirect("../../login.aspx");
                 }
                 getUsuarios(usuarioID);
                 prevPage = Request.UrlReferrer.ToString();

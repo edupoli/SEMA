@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RespChamado.aspx.cs" Inherits="SEMA.RespChamado" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-<asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>  
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>  
 <style>
   .nav-tabs>li.active>a {
     background-color: #478978 !important;
@@ -34,7 +34,7 @@
       <h1>Responder Chamado</h1>
       <br />
       <ol class="breadcrumb">
-        <li><a href="/home.aspx"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="home.aspx"><i class="fas fa-home"></i> Home</a></li>
         <li class="active">Chamados</li>
       </ol>
     </section>
@@ -88,14 +88,15 @@
             <div class="row">
               <div class="col-md-8">
                 <div class="form-group">
-                  <asp:TextBox runat="server" ID="descricao" TextMode="MultiLine" />
+                    <asp:TextBox runat="server" ID="descricao" TextMode="MultiLine" />
+                    <asp:HiddenField EnableViewState="true" runat="server"  ID="temporario"></asp:HiddenField>
                 </div>
               </div>
               <div class="col-md-4" style="height:306px;">
                 <div class="form-group">
                   <asp:Label Text="" runat="server" ID="lblCaminhoImg" />
                   <asp:ImageButton runat="server" ID="Image1" Width="294.33px" Height="280px"  OnClick="Image1_Click" />
-                  <asp:FileUpload runat="server" ID="img" ToolTip="Selecione uma Imagem" CssClass="btn btn-secondary" ClientIDMode="Static" onchange="this.form.submit()"    />
+                  <asp:FileUpload runat="server" ID="img" ToolTip="Selecione uma Imagem"  ClientIDMode="Static" onchange="this.form.submit()"    />
                   <asp:Label runat="server" id="StatusLabel" text="" ForeColor="Red" />
                 </div>
               </div>
@@ -139,12 +140,19 @@
         </div>
         <div class="box-body">
             <div class="row">
-                  <div class="checkbox">
-                  <label style="margin-left:15px;">
-                      <asp:CheckBox Text="" runat="server" ID="resp_checkDenuncia" Enabled="false"/> É denuncia anonima ?
-                  </label>
+                <div class="col-md-4">
+                <div class="form-group">
+                  <label>É denuncia anonima ?</label>
+                  <asp:CheckBox Text="" runat="server" ID="resp_checkDenuncia" Enabled="false"/>
                 </div>
               </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Enviar Notificações pelo WhatsApp ?</label>
+                  <asp:CheckBox Text="" runat="server" ID="resp_checkWhatsapp" Enabled="false" />
+                </div>
+              </div>
+            </div>
           <div class="row">
             <div class="col-md-2">
               <div class="form-group">
@@ -292,13 +300,23 @@
 </div>
 </div>
 <script>
-	CKEDITOR.replace( '<%=descricao.ClientID%>' );
-	extraPlugins: 'wordcount,notification,exportpdf'
+    CKEDITOR.plugins.addExternal('wordcount', '/bower_components/ckeditor/plugins/wordcount/', 'plugin.js');
+    CKEDITOR.plugins.addExternal( 'autosave', '/bower_components/ckeditor/plugins/autosave/', 'plugin.js' );
+	CKEDITOR.replace( '<%=descricao.ClientID%>',{ customConfig : '/bower_components/ckeditor/config.js' } );
 
 	CKEDITOR.on( 'instanceReady', function( ev ) {
 		ev.editor.setData('<p style="text-align:justify;"></p>');
 	});
 </script>
+    <script>
+        timer = setInterval(updateDiv, 1000);
+        function updateDiv() {
+            var dados = CKEDITOR.instances.<%=descricao.ClientID%>.getData();
+            if (dados != null) {
+                $("input[id$='temporario']").val(dados);
+            }   
+        }
+    </script>
 <script type="text/javascript">
   function sucesso() {
     toastr.options = {
@@ -365,6 +383,7 @@
     toastr["info"]("Acesso restrito a usuarios Administradores. ", "Erro")
   };
 </script>
+
 <script>
   $('[data-mask]').inputmask()
 </script>

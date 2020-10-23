@@ -21,13 +21,13 @@ namespace SEMA
                 {
                     if (Session["logado"] == null)
                     {
-                        Response.Redirect("/login.aspx");
+                        Response.Redirect("../../login.aspx");
                     }
                     else
                 if (Session["perfil"].ToString() != "Administrador")
                     {
                         ClientScript.RegisterStartupScript(GetType(), "Popup", "acessoNegado();", true);
-                        Response.Redirect("/login.aspx");
+                        Response.Redirect("../../login.aspx");
                     }
                     getSecretaria(int.Parse(secretariaID));
                     prevPage = Request.UrlReferrer.ToString();

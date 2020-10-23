@@ -8,7 +8,7 @@
         Chamados Finalizados e Em Atendimento
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/home.aspx"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="home.aspx"><i class="fas fa-home"></i> Home</a></li>
         <li class="active">Chamados</li>
       </ol>
     </section>

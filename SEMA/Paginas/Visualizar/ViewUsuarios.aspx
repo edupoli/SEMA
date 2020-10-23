@@ -5,7 +5,7 @@
     <section class="content-header">
       <h1>Visualizar Usuário</h1>
       <ol class="breadcrumb">
-        <li><a href="/home.aspx"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="home.aspx"><i class="fas fa-home"></i> Home</a></li>
         <li class="active">Usuários</li>
       </ol>
     </section>

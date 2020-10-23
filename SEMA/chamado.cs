@@ -39,6 +39,7 @@ namespace SEMA
         public Nullable<int> user_cadastrou { get; set; }
         public string anonimo { get; set; }
         public string numero { get; set; }
+        public string envia_whatsapp { get; set; }
     
         public virtual assunto assunto1 { get; set; }
         public virtual ICollection<historico> historicoes { get; set; }

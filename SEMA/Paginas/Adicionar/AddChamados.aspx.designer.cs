@@ -67,6 +67,15 @@ namespace SEMA {
         protected global::System.Web.UI.WebControls.CheckBox checkDenuncia;
         
         /// <summary>
+        /// Controle checkWhatsapp.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox checkWhatsapp;
+        
+        /// <summary>
         /// Controle txtProtocolo.
         /// </summary>
         /// <remarks>

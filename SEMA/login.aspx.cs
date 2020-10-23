@@ -74,7 +74,7 @@ namespace SEMA
             }
             if (logado == 1)
             {
-                Response.Redirect("/home.aspx");
+                Response.Redirect("home.aspx");
             }
         }
     }

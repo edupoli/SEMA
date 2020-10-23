@@ -20,13 +20,13 @@ namespace SEMA
             {
                 if (Session["logado"] == null)
                 {
-                    Response.Redirect("/login.aspx");
+                    Response.Redirect("../../login.aspx");
                 }
                 else
             if (Session["perfil"].ToString() != "Administrador")
                 {
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "acessoNegado();", true);
-                    Response.Redirect("/login.aspx");
+                    Response.Redirect("../../login.aspx");
                 }
                 imgSel.ImageUrl = "dist/img/users/user-160x160.png";
                 lblCaminhoImg.Text = "user-160x160.png";

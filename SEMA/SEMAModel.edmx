@@ -37,6 +37,7 @@
           <Property Name="user_cadastrou" Type="int" />
           <Property Name="usuario_responsavel" Type="int" />
           <Property Name="anonimo" Type="varchar" MaxLength="45" />
+          <Property Name="envia_whatsapp" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="configuracoes">
           <Key>
@@ -287,6 +288,7 @@
           <Property Name="anonimo" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="usuario1" Relationship="semaModel.userCadastrou" FromRole="chamado" ToRole="usuario" />
           <Property Name="numero" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="envia_whatsapp" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="configuraco">
           <Key>
@@ -517,6 +519,7 @@
           <EntitySetMapping Name="chamadoes">
             <EntityTypeMapping TypeName="semaModel.chamado">
               <MappingFragment StoreEntitySet="chamado">
+                <ScalarProperty Name="envia_whatsapp" ColumnName="envia_whatsapp" />
                 <ScalarProperty Name="numero" ColumnName="numero" />
                 <ScalarProperty Name="anonimo" ColumnName="anonimo" />
                 <ScalarProperty Name="user_cadastrou" ColumnName="user_cadastrou" />

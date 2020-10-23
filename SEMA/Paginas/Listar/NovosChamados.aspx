@@ -8,7 +8,7 @@
         Chamados disponíves para Atendimento  
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/home.aspx"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="home.aspx"><i class="fas fa-home"></i> Home</a></li>
         <li class="active">Chamados</li>
       </ol>
     </section>
@@ -32,8 +32,8 @@
                     <asp:BoundField ItemStyle-Width="80px" DataField="data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" />
                     <asp:BoundField ItemStyle-Width="100px" DataField="protocolo" HeaderText="Protocolo" />
                     <asp:BoundField DataField="nome" HeaderText="Nome" />
-                    <asp:BoundField ItemStyle-Width="100px" DataField="cpf" HeaderText="CPF / CNPJ" />
-                    <asp:BoundField ItemStyle-Width="110px" DataField="telefone" HeaderText="Telefone" />
+                    <asp:BoundField ItemStyle-Width="110px" DataField="cpf" HeaderText="CPF / CNPJ" />
+                    <asp:BoundField ItemStyle-Width="125px" DataField="telefone" HeaderText="Telefone" />
                     <asp:BoundField DataField="assunto" HeaderText="Assunto" />
                     <asp:BoundField DataField="status" HeaderText="Status" ItemStyle-HorizontalAlign="Center" ItemStyle-Font-Bold="false" />
                     <asp:TemplateField HeaderText="Ações" ItemStyle-Wrap="false">

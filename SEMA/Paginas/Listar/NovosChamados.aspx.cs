@@ -84,6 +84,8 @@ namespace SEMA
         }
         protected void btnVisualizar_Click(object sender, EventArgs e)
         {
+            chamadoID = int.Parse((sender as LinkButton).CommandArgument);
+            Response.Redirect("/Paginas/Visualizar/ViewChamados.aspx?chamadoID=" + chamadoID);
         }
         protected void btnResponder_Click(object sender, EventArgs e)
         {
@@ -94,7 +96,7 @@ namespace SEMA
             else
             {
                 chamadoID = int.Parse((sender as LinkButton).CommandArgument);
-                Response.Redirect("RespChamado.aspx?chamadoID=" + chamadoID);
+                Response.Redirect("/Paginas/Editar/RespChamado.aspx?chamadoID=" + chamadoID);
             }
         }
         protected void btnExcluir_Click(object sender, EventArgs e)

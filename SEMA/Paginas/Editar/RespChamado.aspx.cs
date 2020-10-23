@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AjaxControlToolkit;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,14 +22,21 @@ namespace SEMA
         string historico;
         int secretariaID;
         int seq = 0;
+        static string prevPage = String.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
+            
+            ViewState["Editor"] = temporario.Value;
+            descricao.Text = ViewState["Editor"].ToString();
+            //ScriptManager.RegisterStartupScript(this, this.GetType(), "myKey", "CKEDITOR.replace('MainContent_descricao');", true);
+
             lblCaminhoImg.Visible = false;
             getStatusColor();
             e_mail = resp_email.Text;
+
             if (Session["logado"] == null)
             {
-                Response.Redirect("/login.aspx");
+                Response.Redirect("../../login.aspx");
             }
             secretariaID = int.Parse(Session["secretaria"].ToString());
             chamadoID = Convert.ToInt32(Request.QueryString["chamadoID"]);
@@ -37,6 +45,7 @@ namespace SEMA
                 PreencherCbox();
                 GetChamados(chamadoID);
                 historicoMsg.Text = getHistorico(chamadoID);
+                prevPage = Request.UrlReferrer.ToString();
             }
             if (IsPostBack && img.PostedFile != null)
             {
@@ -96,7 +105,7 @@ namespace SEMA
                                         }
                                         // Mensagem se tudo ocorreu bem
                                         //imgSel.ImageUrl = "dist/img/chamados/" + image;
-                                        ImgPath = "dist/img/chamados/" + image;
+                                        ImgPath = "/dist/img/chamados/" + image;
                                         Image1.ImageUrl = ImgPath;
                                         imgSel.ImageUrl = ImgPath;
                                         lblCaminhoImg.Text = image;
@@ -137,7 +146,7 @@ namespace SEMA
             else
             if (lblCaminhoImg.Text == "user-800x600.png")
             {
-                ImgPath = "dist/img/chamados/user-800x600.png";
+                ImgPath = "/dist/img/chamados/user-800x600.png";
                 Image1.ImageUrl = ImgPath;
                 imgSel.ImageUrl = ImgPath;
                 lblCaminhoImg.Text = "user-800x600.png";
@@ -233,7 +242,8 @@ namespace SEMA
                                  a.data,
                                  a.numero,
                                  a.rua,
-                                 a.user_cadastrou
+                                 a.user_cadastrou,
+                                 a.envia_whatsapp
                              });
             foreach (var item in resultado)
             {
@@ -247,8 +257,7 @@ namespace SEMA
                 resp_cboxTopico.Items.Add(new ListItem(item.topico, item.topico));
                 resp_cboxStatus.Items.Add(new ListItem(item.status, item.status));
                 cboxUsuario.SelectedValue = Convert.ToString(item.usuario_responsavel);
-                Image1.ImageUrl = "/dist/img/chamados/" + item.img;
-                imgSel.ImageUrl = "/dist/img/chamados/" + item.img;
+                ImgPath = "/dist/img/chamados/" + item.img;
                 lblCaminhoImg.Text = item.img;
                 resp_txtCEP.Text = item.cep;
                 resp_txtRua.Text = item.rua;
@@ -262,6 +271,14 @@ namespace SEMA
                 else
                 {
                     resp_checkDenuncia.Checked = false;
+                }
+                if (item.envia_whatsapp == "SIM")
+                {
+                    resp_checkWhatsapp.Checked = true;
+                }
+                else
+                {
+                    resp_checkWhatsapp.Checked = false;
                 }
             }
         }
@@ -470,7 +487,7 @@ namespace SEMA
         }
         protected void btnVoltar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("NovosChamados.aspx");
+            Response.Redirect(prevPage);
         }
         protected void cboxStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -478,7 +495,7 @@ namespace SEMA
         }
         protected void btnVoltar_resp_Click(object sender, EventArgs e)
         {
-            Response.Redirect("NovosChamados.aspx");
+            Response.Redirect(prevPage);
         }
         protected void Image1_Click(object sender, ImageClickEventArgs e)
         {
@@ -488,6 +505,13 @@ namespace SEMA
         protected void btnModalCloseHeader_Click(object sender, EventArgs e)
         {
             ModalPlaceHolder.Visible = false;
+        }
+        //protected string UploadFolderPath = "~/dist/img/chamados/";
+        protected void FileUploadComplete(object sender, EventArgs e)
+        {
+            // string filename = System.IO.Path.GetFileName(img.FileName);
+            // img.SaveAs(Server.MapPath(this.UploadFolderPath) + filename);
+            //lblCaminhoImg.Text = image;
         }
     }
 }

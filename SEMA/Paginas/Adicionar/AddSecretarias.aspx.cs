@@ -10,17 +10,22 @@ namespace SEMA
     public partial class AddSecretarias : System.Web.UI.Page
     {
         public string mensagem = string.Empty;
+        static string prevPage = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["logado"] == null)
             {
-                Response.Redirect("/login.aspx");
+                Response.Redirect("../../login.aspx");
             }
             else
             if (Session["perfil"].ToString() != "Administrador")
             {
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "acessoNegado();", true);
-                Response.Redirect("/login.aspx");
+                Response.Redirect("../../login.aspx");
+            }
+            if (!Page.IsPostBack)
+            {
+                prevPage = Request.UrlReferrer.ToString();
             }
         }
 
@@ -53,7 +58,7 @@ namespace SEMA
 
         protected void btnVoltar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/home.aspx");
+            Response.Redirect(prevPage);
         }
     }
 }

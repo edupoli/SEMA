@@ -7,7 +7,7 @@
             Tópicos em Chamados
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/home.aspx"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="home.aspx"><i class="fas fa-home"></i> Home</a></li>
             <li class="active">Tópicos em Chamados</li>
         </ol>
     </section>

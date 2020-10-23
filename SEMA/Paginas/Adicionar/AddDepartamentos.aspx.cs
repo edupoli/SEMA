@@ -14,13 +14,13 @@ namespace SEMA
         {
             if (Session["logado"] == null)
             {
-                Response.Redirect("/login.aspx");
+                Response.Redirect("../../login.aspx");
             }
             else
             if (Session["perfil"].ToString() != "Administrador")
             {
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "acessoNegado();", true);
-                Response.Redirect("/login.aspx");
+                Response.Redirect("../../login.aspx");
             }
         }
 
@@ -53,7 +53,7 @@ namespace SEMA
 
         protected void btnVoltar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/home.aspx");
+            Response.Redirect("home.aspx");
         }
     }
 }

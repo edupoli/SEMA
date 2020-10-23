@@ -12,15 +12,15 @@ namespace SEMA
         static string prevPage = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
-            prevPage = Request.UrlReferrer.ToString();
 
             if (Session["logado"] == null)
             {
-                Response.Redirect("/login.aspx");
+                Response.Redirect("../../login.aspx");
             }
             if (!Page.IsPostBack)
             {
                 PreencherCbox();
+                prevPage = Request.UrlReferrer.ToString();
             }
         }
         protected void cboxSecretaria_SelectedIndexChanged(object sender, EventArgs e)
@@ -71,7 +71,7 @@ namespace SEMA
         }
         protected void btnVoltar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/home.aspx");
+            Response.Redirect(prevPage);
         }
         protected void ListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {

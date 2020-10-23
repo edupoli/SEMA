@@ -6,7 +6,7 @@
     <section class="content-header">
       <h1>Cadastrar Novo Chamado</h1> <div id="painel"></div>
       <ol class="breadcrumb">
-        <li><a href="/home.aspx"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="home.aspx"><i class="fas fa-home"></i> Home</a></li>
         <li class="active">Chamados</li>
       </ol>
     </section>

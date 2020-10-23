@@ -76,6 +76,15 @@ namespace SEMA {
         protected global::System.Web.UI.WebControls.TextBox descricao;
         
         /// <summary>
+        /// Controle temporario.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField temporario;
+        
+        /// <summary>
         /// Controle lblCaminhoImg.
         /// </summary>
         /// <remarks>
@@ -164,6 +173,15 @@ namespace SEMA {
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox resp_checkDenuncia;
+        
+        /// <summary>
+        /// Controle resp_checkWhatsapp.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox resp_checkWhatsapp;
         
         /// <summary>
         /// Controle resp_txtProtocolo.

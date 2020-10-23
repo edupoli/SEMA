@@ -31,6 +31,24 @@ namespace SEMA {
         protected global::System.Web.UI.WebControls.Button btnVoltar;
         
         /// <summary>
+        /// Controle checkDenuncia.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox checkDenuncia;
+        
+        /// <summary>
+        /// Controle resp_checkWhatsapp.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox resp_checkWhatsapp;
+        
+        /// <summary>
         /// Controle txtProtocolo.
         /// </summary>
         /// <remarks>
@@ -40,40 +58,40 @@ namespace SEMA {
         protected global::System.Web.UI.WebControls.TextBox txtProtocolo;
         
         /// <summary>
-        /// Controle nome.
+        /// Controle txtnome.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox nome;
+        protected global::System.Web.UI.WebControls.TextBox txtnome;
         
         /// <summary>
-        /// Controle email.
+        /// Controle txtemail.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox email;
+        protected global::System.Web.UI.WebControls.TextBox txtemail;
         
         /// <summary>
-        /// Controle telefone.
+        /// Controle txttelefone.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox telefone;
+        protected global::System.Web.UI.WebControls.TextBox txttelefone;
         
         /// <summary>
-        /// Controle cpf.
+        /// Controle txtcpf.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox cpf;
+        protected global::System.Web.UI.WebControls.TextBox txtcpf;
         
         /// <summary>
         /// Controle cboxAssunto.
@@ -101,6 +119,51 @@ namespace SEMA {
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList cboxStatus;
+        
+        /// <summary>
+        /// Controle txtCEP.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCEP;
+        
+        /// <summary>
+        /// Controle txtRua.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRua;
+        
+        /// <summary>
+        /// Controle txtNumero.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNumero;
+        
+        /// <summary>
+        /// Controle txtBairro.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBairro;
+        
+        /// <summary>
+        /// Controle txtCidade.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCidade;
         
         /// <summary>
         /// Controle descricao.

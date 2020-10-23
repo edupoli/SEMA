@@ -12,6 +12,7 @@ namespace SEMA
         int chamadoID;
         public string mensagem = string.Empty;
         string historico;
+        static string prevPage = String.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
             lblCaminhoImg.Visible = false;
@@ -20,6 +21,7 @@ namespace SEMA
             {
                 GetChamados(chamadoID);
                 historicoMsg.Text = getHistorico(chamadoID);
+                prevPage = Request.UrlReferrer.ToString();
             }
         }
         public void GetChamados(int cod)
@@ -42,15 +44,32 @@ namespace SEMA
                                  topico = c.descricao,
                                  a.status,
                                  a.img,
-                                 d.mensagem
+                                 d.mensagem,
+                                 a.anonimo,
+                                 a.cep,
+                                 a.cidade,
+                                 a.data,
+                                 a.numero,
+                                 a.rua,
+                                 a.bairro
+                                 
                              });
             foreach (var item in resultado)
             {
+                if (item.anonimo == "SIM")
+                {
+                    checkDenuncia.Checked = true;
+                }
                 txtProtocolo.Text = item.protocolo;
-                nome.Text = item.nome;
-                email.Text = item.email;
-                cpf.Text = item.cpf;
-                telefone.Text = item.telefone;
+                txtnome.Text = item.nome;
+                txtemail.Text = item.email;
+                txtcpf.Text = item.cpf;
+                txttelefone.Text = item.telefone;
+                txtBairro.Text = item.bairro;
+                txtCEP.Text = item.cep;
+                txtCidade.Text = item.cidade;
+                txtNumero.Text = item.numero;
+                txtRua.Text = item.rua;
                 Image1.ImageUrl = "/dist/img/chamados/" + item.img;
                 imgSel.ImageUrl = "/dist/img/chamados/" + item.img;
                 lblCaminhoImg.Text = item.img;
@@ -61,7 +80,7 @@ namespace SEMA
         }
         protected void btnVoltar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/home.aspx");
+            Response.Redirect(prevPage);
         }
         private string getHistorico(int cod)
         {

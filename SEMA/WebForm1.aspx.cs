@@ -30,7 +30,7 @@ namespace SEMA
             cepNotFound.Visible = false;
             if (Session["logado"] == null)
             {
-                Response.Redirect("/login.aspx");
+                Response.Redirect("../../login.aspx");
             }
 
             if (!Page.IsPostBack)
@@ -207,7 +207,7 @@ namespace SEMA
 
         protected void btnVoltar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/home.aspx");
+            Response.Redirect("home.aspx");
         }
 
         protected void cboxAssunto_SelectedIndexChanged(object sender, EventArgs e)
@@ -642,7 +642,7 @@ namespace SEMA
 
         protected void btnCancelNovoChamado_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/home.aspx");
+            Response.Redirect("home.aspx");
         }
 
         protected void checkDenuncia_CheckedChanged(object sender, EventArgs e)

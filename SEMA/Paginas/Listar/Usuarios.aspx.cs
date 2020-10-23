@@ -13,7 +13,7 @@ namespace SEMA
         {
             if (Session["logado"] == null)
             {
-                Response.Redirect("/login.aspx");
+                Response.Redirect("../../login.aspx");
             }
             if (!Page.IsPostBack)
             {

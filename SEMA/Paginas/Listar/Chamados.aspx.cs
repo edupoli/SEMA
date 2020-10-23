@@ -17,6 +17,11 @@ namespace SEMA
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //string tt = Session["logado"].ToString();
+            if (Session["logado"] == null)
+            {
+                Response.Redirect("../../login.aspx");
+            }
             Timer1.Enabled = true;
             Timer1.Interval = 1000000;
             if (!Page.IsPostBack)
@@ -27,28 +32,35 @@ namespace SEMA
 
         private void Listar()
         {
-            string connectionString = "SERVER=10.0.2.9;UID=ura;PWD=ask123;DATABASE=sema;Allow User Variables=True;Pooling=False";
-            MySqlConnection con = new MySqlConnection(connectionString);
-            string sql;
-            MySqlCommand cmd;
-            con.Open();
-            DataTable dt = new DataTable();
-            MySqlDataAdapter da = new MySqlDataAdapter();
-            sql = "SELECT chamado.id, chamado.data, chamado.protocolo,chamado.nome, chamado.email," +
-                "chamado.cpf,chamado.telefone,assunto.descricao as assunto," +
-                "topicos.descricao as topico,chamado.img,chamado.status" +
-                 " FROM chamado " +
-                 "inner join assunto on chamado.assunto = assunto.id " +
-                 "inner join topicos on chamado.topico = topicos.id " +
-                 "where chamado.status <> 'Aberto' and chamado.status <> 'Retorno Cidadao'"+
-                 "and chamado.secretariaID="+Session["secretaria"].ToString();
- 
-            cmd = new MySqlCommand(sql, con);
-            da.SelectCommand = cmd;
-            da.Fill(dt);
-            GridView1.DataSource = dt;
-            GridView1.DataBind();
+            try
+            {
+                string connectionString = "SERVER=10.0.2.9;UID=ura;PWD=ask123;DATABASE=sema;Allow User Variables=True;Pooling=False";
+                MySqlConnection con = new MySqlConnection(connectionString);
+                string sql;
+                MySqlCommand cmd;
+                con.Open();
+                DataTable dt = new DataTable();
+                MySqlDataAdapter da = new MySqlDataAdapter();
+                sql = "SELECT chamado.id, chamado.data, chamado.protocolo,chamado.nome, chamado.email," +
+                    "chamado.cpf,chamado.telefone,assunto.descricao as assunto," +
+                    "topicos.descricao as topico,chamado.img,chamado.status" +
+                     " FROM chamado " +
+                     "inner join assunto on chamado.assunto = assunto.id " +
+                     "inner join topicos on chamado.topico = topicos.id " +
+                     "where chamado.status <> 'Aberto' and chamado.status <> 'Retorno Cidadao'" +
+                     "and chamado.secretariaID=" + Session["secretaria"].ToString();
 
+                cmd = new MySqlCommand(sql, con);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                GridView1.DataSource = dt;
+                GridView1.DataBind();
+            }
+            catch (Exception ex)
+            {
+                mensagem = "Ocorreu o seguinte erro ao tentar Listar: " + ex.Message;
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
+            }
         }
 
         public void GetChamados()
