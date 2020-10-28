@@ -112,6 +112,15 @@ namespace SEMA {
         protected global::System.Web.UI.WebControls.TextBox textAssunto;
         
         /// <summary>
+        /// Controle txtAssuntoResposta.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAssuntoResposta;
+        
+        /// <summary>
         /// Controle textBodyEmailAuto.
         /// </summary>
         /// <remarks>

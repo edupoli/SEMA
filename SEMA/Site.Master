@@ -8,16 +8,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link media="screen" rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.css" />
   <link media="screen" rel="stylesheet" href='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.css' />
-  <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.css">
-  <link rel="stylesheet" href="../../bower_components/fontawesome-pro/css/all.min.css"/>
-  <link rel="stylesheet" href="../../bower_components/Ionicons/css/ionicons.min.css">
-  <link rel="stylesheet" href="../../dist/css/AdminLTE.css">
-  <link rel="stylesheet" href="../../dist/css/skins/_all-skins.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="bower_components/fontawesome-pro/css/all.min.css"/>
+  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="dist/css/AdminLTE.css">
+  <link rel="stylesheet" href="dist/css/skins/_all-skins.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-  <link rel="stylesheet" href="../../bower_components/morris.js/morris.css">
-  <link rel="stylesheet" href="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"/>
+  <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/morris.js/morris.css">
+  <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"/>
   <style>
     body{
       font-family: Arial, Helvetica, sans-serif!important;
@@ -49,11 +49,11 @@
   <form runat="server">
     <div class="wrapper">
       <header class="main-header">
-        <a href="../../home.aspx" class="logo">
+        <a href="home.aspx" class="logo">
           <span class="logo-mini">
-            <!--<img src="../../imagens/arvore.png" alt="" />-->
+            <!--<img src="imagens/arvore.png" alt="" />-->
           </span>
-          <!--<span class="logo-lg"><img src="../../imagens/arvore.png" alt="" /></span>-->
+          <!--<span class="logo-lg"><img src="imagens/arvore.png" alt="" /></span>-->
         </a>
         <nav class="navbar navbar-static-top" role="navigation">
           <a href="#" class="sidebar-toggle" data-toggle="push-menu"><i class="fas fa-bars"></i></a>
@@ -104,7 +104,7 @@
         <section class="sidebar">
           <div class="user-panel">
             <div class="">
-              <a href="../../home.aspx">
+              <a href="home.aspx">
                 <asp:Literal ID="SB_logo" runat="server" />
               </a>
             </div>
@@ -117,9 +117,9 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="../../Paginas/Adicionar/AddChamados.aspx">Adicionar novo Chamado</a></li>
-                <li><a href="../../Paginas/Listar/NovosChamados.aspx">Chamados Abertos</a></li>
-                <li><a href="../../Paginas/Listar/Chamados.aspx">Finalizados/Em Atendimento</a></li>
+                <li><a href="AddChamados.aspx">Adicionar novo Chamado</a></li>
+                <li><a href="NovosChamados.aspx">Chamados Abertos</a></li>
+                <li><a href="Chamados.aspx">Finalizados/Em Atendimento</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -151,7 +151,7 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="../../Paginas/Adicionar/AddTopicosChamado.aspx">Adicionar novo Tópico</a></li>
+                <li><a href="AddTopicosChamado.aspx">Adicionar novo Tópico</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -161,29 +161,29 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="../../Paginas/Listar/Usuarios.aspx">Consultar</a></li>
-                <li><a href="../../Paginas/Adicionar/AddUsuarios.aspx">Adicionar</a></li>
+                <li><a href="Usuarios.aspx">Consultar</a></li>
+                <li><a href="AddUsuarios.aspx">Adicionar</a></li>
               </ul>
             </li>
           </ul>
         </section>
       </aside>
-      <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-      <script src="../../bower_components/jquery-ui/jquery-ui.min.js"></script>
-      <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+      <script src="bower_components/jquery/dist/jquery.min.js"></script>
+      <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+      <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
       <script type="text/javascript" src="https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.js"> </script>
-      <script src="../../dist/js/adminlte.min.js"></script>
+      <script src="dist/js/adminlte.min.js"></script>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-      <script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-      <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-      <script src="../../bower_components/morris.js/morris.min.js"></script>
+      <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+      <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+      <script src="bower_components/morris.js/morris.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
-      <!--<script src="../../bower_components/ckeditor/ckeditor.js"></script>-->
-        <script src="https://cdn.ckeditor.com/4.15.0/full-all/ckeditor.js"></script>
-      <script src="../../plugins/input-mask/jquery.inputmask.js"></script>
-      <script src="../../plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-      <script src="../../plugins/input-mask/jquery.inputmask.extensions.js"></script>
-      <script src="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+      <script src="bower_components/ckeditor/ckeditor.js"></script>
+        <!--<script src="https://cdn.ckeditor.com/4.15.0/full-all/ckeditor.js"></script>-->
+      <script src="plugins/input-mask/jquery.inputmask.js"></script>
+      <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+      <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+      <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
       <div class="">
         <asp:ContentPlaceHolder id="MainContent" runat="server">
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>

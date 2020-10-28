@@ -12345,14 +12345,14 @@
     <Content Include="dist\js\sweetalert2.all.min.js" />
     <Content Include="dist\js\sweetalert2.js" />
     <Content Include="dist\js\sweetalert2.min.js" />
-    <Content Include="Paginas\Listar\Chamados.aspx" />
+    <Content Include="Chamados.aspx" />
     <Content Include="cidadao.aspx" />
     <Content Include="Configuracoes.aspx" />
-    <Content Include="Paginas\Adicionar\AddChamados.aspx" />
-    <Content Include="Paginas\Adicionar\AddDepartamentos.aspx" />
-    <Content Include="Paginas\Adicionar\AddSecretarias.aspx" />
-    <Content Include="Paginas\Adicionar\AddTopicosChamado.aspx" />
-    <Content Include="Paginas\Adicionar\AddUsuarios.aspx" />
+    <Content Include="AddChamados.aspx" />
+    <Content Include="AddDepartamentos.aspx" />
+    <Content Include="AddSecretarias.aspx" />
+    <Content Include="AddTopicosChamado.aspx" />
+    <Content Include="AddUsuarios.aspx" />
     <Content Include="plugins\animate\animate.css" />
     <Content Include="plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
     <Content Include="plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
@@ -14057,7 +14057,6 @@
     <Content Include="plugins\toastr\toastr.min.js" />
     <Content Include="plugins\toastr\toastr1.css" />
     <Content Include="Scripts\toastr.min.js" />
-    <Content Include="WebForm2.aspx" />
     <Content Include="bower_components\bootstrap-3-card\.bower.json" />
     <Content Include="bower_components\bootstrap-3-card\bower.json" />
     <Content Include="bower_components\bootstrap-3-card\LICENSE" />
@@ -14702,7 +14701,6 @@
     <Content Include="bower_components\select2\src\scss\_dropdown.scss" />
     <Content Include="bower_components\select2\src\scss\_multiple.scss" />
     <Content Include="bower_components\select2\src\scss\_single.scss" />
-    <Content Include="WebForm3.aspx" />
     <None Include="Connected Services\ServiceCorreios\configuration91.svcinfo" />
     <None Include="Connected Services\ServiceCorreios\configuration.svcinfo" />
     <None Include="Connected Services\ServiceCorreios\Reference.svcmap">
@@ -14714,9 +14712,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="Paginas\Editar\EditChamados.aspx" />
-    <Content Include="Paginas\Editar\EditSecretarias.aspx" />
-    <Content Include="Paginas\Editar\EditUsuarios.aspx" />
+    <Content Include="EditChamados.aspx" />
+    <Content Include="EditSecretarias.aspx" />
+    <Content Include="EditUsuarios.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -14728,9 +14726,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Paginas\Listar\NovosChamados.aspx" />
-    <Content Include="Paginas\Editar\RespChamado.aspx" />
-    <Content Include="WebForm1.aspx" />
+    <Content Include="NovosChamados.aspx" />
+    <Content Include="RespChamado.aspx" />
     <None Include="Connected Services\ServiceCorreios\AtendeClienteService.wsdl" />
     <Content Include="Connected Services\ServiceCorreios\SEMA.ServiceCorreios.atualizaPagamentoNaEntregaResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -14997,7 +14994,7 @@
     <Content Include="Scripts\WebForms\WebForms.js" />
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
-    <Content Include="Paginas\Listar\Secretarias.aspx" />
+    <Content Include="Secretarias.aspx" />
     <Content Include="SEMAModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SEMAModel.edmx</DependentUpon>
@@ -15010,11 +15007,11 @@
     </Content>
     <Content Include="Site.Master" />
     <Content Include="TemplateEmail.aspx" />
-    <Content Include="Paginas\Listar\Usuarios.aspx" />
-    <Content Include="Paginas\Visualizar\ViewChamados.aspx" />
-    <Content Include="Paginas\Visualizar\ViewSecretarias.aspx" />
+    <Content Include="Usuarios.aspx" />
+    <Content Include="ViewChamados.aspx" />
+    <Content Include="ViewSecretarias.aspx" />
     <Content Include="ViewSwitcher.ascx" />
-    <Content Include="Paginas\Visualizar\ViewUsuarios.aspx" />
+    <Content Include="ViewUsuarios.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -15030,11 +15027,11 @@
     <Compile Include="chamado.cs">
       <DependentUpon>SEMAModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Listar\Chamados.aspx.cs">
+    <Compile Include="Chamados.aspx.cs">
       <DependentUpon>Chamados.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Listar\Chamados.aspx.designer.cs">
+    <Compile Include="Chamados.aspx.designer.cs">
       <DependentUpon>Chamados.aspx</DependentUpon>
     </Compile>
     <Compile Include="cidadao.aspx.cs">
@@ -15060,30 +15057,31 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Criptografia.cs" />
-    <Compile Include="Paginas\Editar\EditChamados.aspx.cs">
+    <Compile Include="EditChamados.aspx.cs">
       <DependentUpon>EditChamados.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Editar\EditChamados.aspx.designer.cs">
+    <Compile Include="EditChamados.aspx.designer.cs">
       <DependentUpon>EditChamados.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Editar\EditSecretarias.aspx.cs">
+    <Compile Include="EditSecretarias.aspx.cs">
       <DependentUpon>EditSecretarias.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Editar\EditSecretarias.aspx.designer.cs">
+    <Compile Include="EditSecretarias.aspx.designer.cs">
       <DependentUpon>EditSecretarias.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Editar\EditUsuarios.aspx.cs">
+    <Compile Include="EditUsuarios.aspx.cs">
       <DependentUpon>EditUsuarios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Editar\EditUsuarios.aspx.designer.cs">
+    <Compile Include="EditUsuarios.aspx.designer.cs">
       <DependentUpon>EditUsuarios.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GravaChamado.cs" />
     <Compile Include="historico.cs">
       <DependentUpon>SEMAModel.tt</DependentUpon>
     </Compile>
@@ -15102,64 +15100,64 @@
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Listar\NovosChamados.aspx.cs">
+    <Compile Include="NovosChamados.aspx.cs">
       <DependentUpon>NovosChamados.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Listar\NovosChamados.aspx.designer.cs">
+    <Compile Include="NovosChamados.aspx.designer.cs">
       <DependentUpon>NovosChamados.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Adicionar\AddChamados.aspx.cs">
+    <Compile Include="AddChamados.aspx.cs">
       <DependentUpon>AddChamados.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Adicionar\AddChamados.aspx.designer.cs">
+    <Compile Include="AddChamados.aspx.designer.cs">
       <DependentUpon>AddChamados.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Adicionar\AddDepartamentos.aspx.cs">
+    <Compile Include="AddDepartamentos.aspx.cs">
       <DependentUpon>AddDepartamentos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Adicionar\AddDepartamentos.aspx.designer.cs">
+    <Compile Include="AddDepartamentos.aspx.designer.cs">
       <DependentUpon>AddDepartamentos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Adicionar\AddSecretarias.aspx.cs">
+    <Compile Include="AddSecretarias.aspx.cs">
       <DependentUpon>AddSecretarias.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Adicionar\AddSecretarias.aspx.designer.cs">
+    <Compile Include="AddSecretarias.aspx.designer.cs">
       <DependentUpon>AddSecretarias.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Adicionar\AddTopicosChamado.aspx.cs">
+    <Compile Include="AddTopicosChamado.aspx.cs">
       <DependentUpon>AddTopicosChamado.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Adicionar\AddTopicosChamado.aspx.designer.cs">
+    <Compile Include="AddTopicosChamado.aspx.designer.cs">
       <DependentUpon>AddTopicosChamado.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Adicionar\AddUsuarios.aspx.cs">
+    <Compile Include="AddUsuarios.aspx.cs">
       <DependentUpon>AddUsuarios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Adicionar\AddUsuarios.aspx.designer.cs">
+    <Compile Include="AddUsuarios.aspx.designer.cs">
       <DependentUpon>AddUsuarios.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Paginas\Editar\RespChamado.aspx.cs">
+    <Compile Include="RespChamado.aspx.cs">
       <DependentUpon>RespChamado.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Editar\RespChamado.aspx.designer.cs">
+    <Compile Include="RespChamado.aspx.designer.cs">
       <DependentUpon>RespChamado.aspx</DependentUpon>
     </Compile>
     <Compile Include="secretaria.cs">
       <DependentUpon>SEMAModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Listar\Secretarias.aspx.cs">
+    <Compile Include="Secretarias.aspx.cs">
       <DependentUpon>Secretarias.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Listar\Secretarias.aspx.designer.cs">
+    <Compile Include="Secretarias.aspx.designer.cs">
       <DependentUpon>Secretarias.aspx</DependentUpon>
     </Compile>
     <Compile Include="SEMAModel.Context.cs">
@@ -15204,25 +15202,25 @@
     <Compile Include="usuario.cs">
       <DependentUpon>SEMAModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Listar\Usuarios.aspx.cs">
+    <Compile Include="Usuarios.aspx.cs">
       <DependentUpon>Usuarios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Listar\Usuarios.aspx.designer.cs">
+    <Compile Include="Usuarios.aspx.designer.cs">
       <DependentUpon>Usuarios.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Visualizar\ViewChamados.aspx.cs">
+    <Compile Include="ViewChamados.aspx.cs">
       <DependentUpon>ViewChamados.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Visualizar\ViewChamados.aspx.designer.cs">
+    <Compile Include="ViewChamados.aspx.designer.cs">
       <DependentUpon>ViewChamados.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Visualizar\ViewSecretarias.aspx.cs">
+    <Compile Include="ViewSecretarias.aspx.cs">
       <DependentUpon>ViewSecretarias.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Visualizar\ViewSecretarias.aspx.designer.cs">
+    <Compile Include="ViewSecretarias.aspx.designer.cs">
       <DependentUpon>ViewSecretarias.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
@@ -15232,33 +15230,12 @@
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Paginas\Visualizar\ViewUsuarios.aspx.cs">
+    <Compile Include="ViewUsuarios.aspx.cs">
       <DependentUpon>ViewUsuarios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Paginas\Visualizar\ViewUsuarios.aspx.designer.cs">
+    <Compile Include="ViewUsuarios.aspx.designer.cs">
       <DependentUpon>ViewUsuarios.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WebForm2.aspx.cs">
-      <DependentUpon>WebForm2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebForm2.aspx.designer.cs">
-      <DependentUpon>WebForm2.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WebForm3.aspx.cs">
-      <DependentUpon>WebForm3.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebForm3.aspx.designer.cs">
-      <DependentUpon>WebForm3.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -15317,7 +15294,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62595</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:62595/chamados</IISUrl>
+          <IISUrl>http://localhost:62595/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

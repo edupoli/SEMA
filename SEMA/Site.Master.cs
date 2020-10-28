@@ -15,7 +15,7 @@ namespace SEMA
         {
             if (Session["logado"] == null)
             {
-                Response.Redirect("../../login.aspx");
+                Response.Redirect("login.aspx");
             }
             else
             {
@@ -32,12 +32,12 @@ namespace SEMA
         }
         protected void btnProfile_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Paginas/Visualizar/ViewUsuarios.aspx?usuarioID=" + Session["id"].ToString());
+            Response.Redirect("ViewUsuarios.aspx?usuarioID=" + Session["id"].ToString());
         }
         protected void btnLogout_Click(object sender, EventArgs e)
         {
             Session.Abandon();
-            Response.Redirect("../../login.aspx");
+            Response.Redirect("login.aspx");
         }
         public string getConfiguracao()
         {
@@ -82,7 +82,7 @@ namespace SEMA
             int cod = int.Parse(Session["secretaria"].ToString());
             semaEntities ctx = new semaEntities();
             configuraco conf = ctx.configuracoes.First(p => p.secretariaID == cod);
-            sb.AppendLine("<img src='/dist/img/logos/" + conf.logo + "' class='img-thumbnail' style='background-color: transparent'");
+            sb.AppendLine("<img src='dist/img/logos/" + conf.logo + "' class='img-thumbnail' style='background-color: transparent'");
             return sb.ToString();
         }
 
@@ -102,7 +102,7 @@ namespace SEMA
                 }
                 else
                 {
-                    Response.Redirect("Paginas/Listar/Secretarias.aspx");
+                    Response.Redirect("Secretarias.aspx");
                 }
             
         }
@@ -124,7 +124,7 @@ namespace SEMA
             }
             else
             {
-                Response.Redirect("Paginas/Adicionar/AddSecretarias.aspx");
+                Response.Redirect("AddSecretarias.aspx");
             }
         }
 

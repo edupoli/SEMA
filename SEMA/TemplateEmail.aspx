@@ -18,7 +18,7 @@
         <div class="box-header with-border">
           <h3 class="box-title"><i class="fas fa-cog"></i></h3>
           <div class="box-tools">
-            <asp:Button Text="Salvar" CssClass="btn btn-sm btn-info" runat="server" ID="btnSalvar" OnClick="btnSalvar_Click" />
+            <asp:Button Text="Salvar" CssClass="btn btn-sm btn-primary" runat="server" ID="btnSalvar" OnClick="btnSalvar_Click" />
             <asp:Button Text="Voltar" CssClass="btn btn-sm btn-secondary" runat="server" ID="btnVoltar" OnClick="btnVoltar_Click"/>
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i></button>
             <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fas fa-window-close"></i></button>
@@ -53,17 +53,21 @@
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-3">
                 <label for="textSenha">Senha do Email</label>
                 <asp:TextBox runat="server" class="form-control" ID="textSenha" placeholder="Senha do email"/>
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-3">
                 <label for="nomeRementente">Nome do Remetente</label>
                 <asp:TextBox runat="server" class="form-control" ID="textNomeRemetente" placeholder="Nome do Remetente"/>
               </div>
               <div class="form-group col-md-6">
-                <label for="assunto">Assunto</label>
+                <label for="assunto">Assunto Email de Confirmação</label>
                 <asp:TextBox runat="server" class="form-control" ID="textAssunto" placeholder="Assunto do Email"/>
+              </div>
+                <div class="form-group col-md-6">
+                <label for="assunto">Assunto Email de Resposta</label>
+                <asp:TextBox runat="server" class="form-control" ID="txtAssuntoResposta" placeholder="Assunto do Email"/>
               </div>
             </div>
             <div class="form-row">

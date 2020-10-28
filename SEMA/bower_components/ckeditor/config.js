@@ -27,8 +27,8 @@ config.toolbarGroups = [
   config.removeButtons = 'Source,Save,NewPage,ExportPdf,Preview,Templates,Replace,Find,SelectAll,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Subscript,Superscript,Outdent,Indent,Blockquote,CreateDiv,BidiLtr,BidiRtl,Language,Anchor,Flash,HorizontalRule,PageBreak,Iframe,About,ShowBlocks,Maximize';
   
   config.defaultLanguage = 'pt-br';
-  config['placeholder'] = 'some value';
-  config.extraPlugins = 'wordcount,notification,autosave'; 
+  //config.editorplaceholder = 'Type your comment…';
+  config.extraPlugins = 'wordcount,notification,autosave,editorplaceholder'; 
   
   config.wordcount = {
 
