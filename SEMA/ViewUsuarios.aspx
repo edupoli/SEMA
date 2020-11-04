@@ -16,8 +16,6 @@
             <h3 class="box-title"><i class="fas fa-user"></i></h3>
             <div class="box-tools">
               <asp:Button Text="Voltar" CssClass="btn btn-sm btn-secondary" runat="server" ID="btnVoltar" OnClick="btnVoltar_Click" />
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i></button>
-              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fas fa-window-close"></i></button>
             </div>
           </div>
           <div class="box-body">
@@ -76,7 +74,6 @@
             <asp:Label Text="" runat="server" ID="lblCaminhoImg" />
             <asp:Image runat="server" ID="imgSel" Width="160px" Height="160px" />
             <asp:FileUpload runat="server" ID="img" ToolTip="Selecione uma Imagem" CssClass="btn" Enabled="false" /><br />
-            <asp:Button runat="server" ID="btnUpload" type="submit" Text="Upload" class="btn btn-primary" Enabled="false"/>
             <asp:Label runat="server" id="StatusLabel" text="" ForeColor="Red" />
           </div>
         </div>
@@ -88,5 +85,27 @@
 </div>
 <script>
   $('[data-mask]').inputmask()
+</script>
+    <script type="text/javascript">
+  function acessoNegado() {
+    toastr.options = {
+      "closeButton": false,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-top-full-width",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "slideDown",
+      "hideMethod": "slideUp"
+    }
+    toastr["info"]("Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina", "Informação")
+  };
 </script>
 </asp:Content>

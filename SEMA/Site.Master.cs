@@ -109,7 +109,7 @@ namespace SEMA
 
         protected void AddSecretaria_Click(object sender, EventArgs e)
         {
-            if (Session["perfil"].ToString() != "Administrador")
+            if (Session["secretaria"].ToString() != "1")
             {
                 mensagem = "Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina";
                 ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
@@ -169,10 +169,53 @@ namespace SEMA
                 Response.Redirect("TemplateEmail.aspx");
             }
         }
-
-        protected void btnTopicos_Click(object sender, EventArgs e)
+        protected void btnAddTopicosChamado_Click(object sender, EventArgs e)
         {
+            if (Session["perfil"].ToString() != "Administrador")
+            {
+                mensagem = "Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina";
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
+                //Response.Redirect(Request.RawUrl);
+            }
+            else
+            if (Session["secretaria"].ToString() != "1")
+            {
+                mensagem = "Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina";
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
+                //Response.Redirect(Request.RawUrl);
+            }
+            else
+            {
+                Response.Redirect("AddTopicosChamado.aspx");
+            }
+        }
 
+        protected void btnConsultarUsuarios_Click(object sender, EventArgs e)
+        {
+            if (Session["perfil"].ToString() != "Administrador")
+            {
+                mensagem = "Acesso Permitido apenas a Usuários Administradores";
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
+                //Response.Redirect(Request.RawUrl);
+            }
+            else
+            {
+                Response.Redirect("Usuarios.aspx");
+            }
+        }
+
+        protected void btnAddUsuarios_Click(object sender, EventArgs e)
+        {
+            if (Session["perfil"].ToString() != "Administrador")
+            {
+                mensagem = "Acesso Permitido apenas a Usuários Administradores";
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "acessoNegado();", true);
+                //Response.Redirect(Request.RawUrl);
+            }
+            else
+            {
+                Response.Redirect("AddUsuarios.aspx");
+            }
         }
     }
 }

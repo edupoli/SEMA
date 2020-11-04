@@ -19,10 +19,8 @@
         <div class="box-header with-border">
           <h3 class="box-title"><i class="fas fa-cog"></i></h3>
           <div class="box-tools">
-            <asp:Button Text="Salvar" CssClass="btn btn-sm btn-info" runat="server" ID="btnSalvar" OnClick="btnSalvar_Click" />
+            <asp:Button Text="Salvar" CssClass="btn btn-sm btn-primary" runat="server" ID="btnSalvar" OnClick="btnSalvar_Click" />
             <asp:Button Text="Voltar" CssClass="btn btn-sm btn-secondary" runat="server" ID="btnVoltar" OnClick="btnVoltar_Click"/>
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fas fa-window-close"></i></button>
           </div>
         </div>
         <div class="box-body">
@@ -93,7 +91,7 @@
             <div class="form-group">
               <asp:Label Text="" runat="server" ID="lblCaminhoImg" />
               <asp:Image runat="server" ID="imgSel" Width="160px" Height="160px" />
-              <asp:FileUpload runat="server" ID="img" ToolTip="Selecione uma Imagem" CssClass="btn btn-secondary" ClientIDMode="Static" onchange="this.form.submit()"    />
+              <asp:FileUpload runat="server" ID="img" ToolTip="Selecione uma Imagem" CssClass="btn" ClientIDMode="Static" onchange="this.form.submit()"    />
               <asp:Label runat="server" id="StatusLabel" text="" ForeColor="Red" />
             </div>
           </div>
@@ -170,4 +168,26 @@
     toastr["info"]("<%= mensagem %>")
   };
 </script>
+    <script type="text/javascript">
+    function acessoNegado() {
+      toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-full-width",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "slideDown",
+        "hideMethod": "slideUp"
+      }
+      toastr["info"]("Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina", "Informação")
+    };
+  </script>
 </asp:Content>

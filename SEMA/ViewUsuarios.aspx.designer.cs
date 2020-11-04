@@ -112,15 +112,6 @@ namespace SEMA {
         protected global::System.Web.UI.WebControls.FileUpload img;
         
         /// <summary>
-        /// Controle btnUpload.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnUpload;
-        
-        /// <summary>
         /// Controle StatusLabel.
         /// </summary>
         /// <remarks>

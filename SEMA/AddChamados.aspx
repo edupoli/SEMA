@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddChamados.aspx.cs" Inherits="SEMA.AddChamados" validateRequest="false" %>
+<%@ Register Assembly="CKEditor.NET" Namespace="CKEditor.NET" TagPrefix="CKEditor" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 <div class="wrapper">
@@ -155,7 +156,7 @@
 <div class="row">
   <div class="col-md-12">
     <div class="form-group">
-      <asp:TextBox runat="server" ID="descricao" TextMode="MultiLine" />
+        <CKEditor:CKEditorControl ID="descricao" BasePath="/bower_components/ckeditor/" runat="server"></CKEditor:CKEditorControl>
     </div>
   </div>
 </div>
@@ -166,12 +167,7 @@
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
-<script>
-  CKEDITOR.replace( '<%=descricao.ClientID%>' );
-	CKEDITOR.on( 'instanceReady', function( ev ) {
-		ev.editor.setData('<p style="text-align:justify;"></p>');
-	});
-</script>
+
 <script>
   $('[data-mask]').inputmask()
 </script>
@@ -239,7 +235,7 @@ function erro() {
       "showMethod": "slideDown",
       "hideMethod": "slideUp"
     }
-    toastr["info"]("Acesso restrito a usuarios Administradores. ", "Erro")
+    toastr["info"]("Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina", "Informação")
   };
 </script>
 <script type="text/javascript">

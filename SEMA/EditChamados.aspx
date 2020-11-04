@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EditChamados.aspx.cs" Inherits="SEMA.EditChamados" %>
+<%@ Register Assembly="CKEditor.NET" Namespace="CKEditor.NET" TagPrefix="CKEditor" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 <div class="wrapper">
@@ -154,7 +155,7 @@
 <div class="row">
   <div class="col-md-12">
     <div class="form-group">
-      <asp:TextBox runat="server" ID="descricao" TextMode="MultiLine" />
+      <CKEditor:CKEditorControl ID="descricao" BasePath="/bower_components/ckeditor/" runat="server"></CKEditor:CKEditorControl>
     </div>
   </div>
 </div>
@@ -164,16 +165,7 @@
 </section>
 </div>
 </div>
-<script>
-	CKEDITOR.plugins.addExternal('wordcount', '/bower_components/ckeditor/plugins/wordcount/', 'plugin.js');
-      CKEDITOR.plugins.addExternal('autosave', '/bower_components/ckeditor/plugins/autosave/', 'plugin.js');
-      CKEDITOR.plugins.addExternal('placeholdertext', '/bower_components/ckeditor/plugins/placeholdertext/', 'plugin.js');
-      CKEDITOR.replace('<%=descricao.ClientID%>', { customConfig: '/bower_components/ckeditor/config.js' });
-    //extraPlugins: 'wordcount,notification,exportpdf'
-    CKEDITOR.on( 'instanceReady', function( ev ) {
-      ev.editor.setData('<p style="text-align:justify;"></p>');
-    });
-</script>
+
 <script type="text/javascript">
   function sucesso() {
     toastr.options = {

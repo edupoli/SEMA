@@ -121,6 +121,33 @@ namespace SEMA {
         protected global::System.Web.UI.WebControls.LinkButton btnTemplateEmail;
         
         /// <summary>
+        /// Controle btnAddTopicosChamado.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnAddTopicosChamado;
+        
+        /// <summary>
+        /// Controle btnConsultarUsuarios.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnConsultarUsuarios;
+        
+        /// <summary>
+        /// Controle btnAddUsuarios.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnAddUsuarios;
+        
+        /// <summary>
         /// Controle MainContent.
         /// </summary>
         /// <remarks>

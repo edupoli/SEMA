@@ -15,6 +15,10 @@ namespace SEMA
         int chamadoID;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["logado"] == null)
+            {
+                Response.Redirect("login.aspx");
+            }
             Timer1.Enabled = false;
             Timer1.Interval = 10000;
             Listar();
@@ -86,6 +90,11 @@ namespace SEMA
         {
             chamadoID = int.Parse((sender as LinkButton).CommandArgument);
             Response.Redirect("ViewChamados.aspx?chamadoID=" + chamadoID);
+        }
+        protected void btnEditar_Click(object sender, EventArgs e)
+        {
+            chamadoID = int.Parse((sender as LinkButton).CommandArgument);
+            Response.Redirect("EditChamados.aspx?chamadoID=" + chamadoID);
         }
         protected void btnResponder_Click(object sender, EventArgs e)
         {

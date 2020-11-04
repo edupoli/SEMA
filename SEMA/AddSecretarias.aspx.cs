@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace SEMA
 {
@@ -17,15 +13,15 @@ namespace SEMA
             {
                 Response.Redirect("login.aspx");
             }
-            else
-            if (Session["perfil"].ToString() != "Administrador")
-            {
-                ClientScript.RegisterStartupScript(GetType(), "Popup", "acessoNegado();", true);
-                Response.Redirect("login.aspx");
-            }
             if (!Page.IsPostBack)
             {
                 prevPage = Request.UrlReferrer.ToString();
+
+                if (Session["secretaria"].ToString() != "1")
+                {
+                    ClientScript.RegisterStartupScript(GetType(), "Popup", "acessoNegado();", true);
+                    Response.Redirect(prevPage);
+                }
             }
         }
 

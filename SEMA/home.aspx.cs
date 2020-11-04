@@ -27,7 +27,7 @@ namespace SEMA
             {
                 Response.Redirect("login.aspx");
             }
-
+            
             Timer1.Enabled = true;
             aberto = qtaAbertos.Text;
             finalizado = qtaFinalizados.Text;
@@ -44,12 +44,50 @@ namespace SEMA
                 getQtdaStatus();
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "graficoDonuts();", true);
             }
+            
             Labels = new string[] { "Red", "Blue", "Yellow", "Green", "Purple", "Orange" };
             Data3 = new int[] { 22, 39, 63, 45, 32, 53, 25 };
             Data4 = new int[] { 32, 59, 43, 65, 22, 73, 45 };
         }
         private void getQtdaStatus()
         {
+            int cod = int.Parse(Session["secretaria"].ToString());
+            semaEntities ctx = new semaEntities();
+            var resultado = from p in ctx.chamadoes
+                where p.secretariaID == cod
+                group p by p.status into g
+                select new {
+                    Status = g.Key,
+                    Total = g.Count()
+                };
+            int result = resultado.Count();
+            int index = 0;
+            foreach (var item in resultado)
+            {
+                switch (item.Status)
+                {
+                    case "Aberto":
+                        DataChamados[index] = item.Total;
+                        break;
+                    case "Em Atendimento":
+                        DataChamados[index] = item.Total;
+                        break;
+                    case "Finalizado":
+                        DataChamados[index] = item.Total;
+                        break;
+                    case "Pendente":
+                        DataChamados[index] = item.Total;
+                        break;
+                    case "Retorno Cidadao":
+                        DataChamados[index] = item.Total;
+                        break;
+                    default:
+                        DataChamados[index] = 0;
+                        break;
+                }
+                index++;
+            }
+            /*
             MySqlConnection con = new MySqlConnection(conecLocal);
             con.Open();
             MySqlCommand cmd = new MySqlCommand("SELECT status,count(*) as total FROM chamado where secretariaID=" + Session["secretaria"].ToString() + " group by status", con);
@@ -66,6 +104,7 @@ namespace SEMA
                 int dd = Convert.ToInt32(dr["total"]);
                 DataChamados[i] = dd;
             }
+            */
         }
         private void abertos()
         {
@@ -113,6 +152,7 @@ namespace SEMA
             if (finalizado != qtaFinalizados.Text)
             {
                 getQtdaStatus();
+                UpdatePanel2.Update();
                 ScriptManager.RegisterStartupScript(this.UpdatePanel1, this.GetType(), "Show_Font", "graficoDonuts();", true);
             }
         }
@@ -137,6 +177,7 @@ namespace SEMA
             if (pendente != qtaPendentes.Text)
             {
                 getQtdaStatus();
+                UpdatePanel2.Update();
                 ScriptManager.RegisterStartupScript(this.UpdatePanel1, this.GetType(), "Show_Font", "graficoDonuts();", true);
             }
         }
@@ -161,6 +202,7 @@ namespace SEMA
             if (atendimento != qtaAtendimentos.Text)
             {
                 getQtdaStatus();
+                UpdatePanel2.Update();
                 ScriptManager.RegisterStartupScript(this.UpdatePanel1, this.GetType(), "Show_Font", "graficoDonuts();", true);
             }
         }
@@ -185,6 +227,7 @@ namespace SEMA
             if (retornoCidadao != qtaRetornoCidadao.Text)
             {
                 getQtdaStatus();
+                UpdatePanel2.Update();
                 ScriptManager.RegisterStartupScript(this.UpdatePanel1, this.GetType(), "Show_Font", "graficoDonuts();", true);
             }
         }

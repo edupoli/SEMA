@@ -85,7 +85,7 @@
         "showMethod": "slideDown",
         "hideMethod": "slideUp"
       }
-      toastr["info"]("Acesso restrito a usuarios Administradores. ", "Erro")
+      toastr["info"]("Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina", "Informação")
     };
   </script>
 

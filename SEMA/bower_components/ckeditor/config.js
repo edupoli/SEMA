@@ -28,7 +28,7 @@ config.toolbarGroups = [
   
   config.defaultLanguage = 'pt-br';
   //config.editorplaceholder = 'Type your comment…';
-  config.extraPlugins = 'wordcount,notification,autosave,editorplaceholder'; 
+  config.extraPlugins = 'wordcount,notification,editorplaceholder'; 
   
   config.wordcount = {
 

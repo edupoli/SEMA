@@ -151,7 +151,7 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="AddTopicosChamado.aspx">Adicionar novo Tópico</a></li>
+                <li><asp:LinkButton Text="Adicionar novo Tópico" ID="btnAddTopicosChamado" OnClick="btnAddTopicosChamado_Click" runat="server" /></li>
               </ul>
             </li>
             <li class="treeview">
@@ -161,8 +161,8 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="Usuarios.aspx">Consultar</a></li>
-                <li><a href="AddUsuarios.aspx">Adicionar</a></li>
+                <li><asp:LinkButton Text="Consultar" ID="btnConsultarUsuarios" OnClick="btnConsultarUsuarios_Click" runat="server" /></li>
+                <li><asp:LinkButton Text="Adicionar" ID="btnAddUsuarios" OnClick="btnAddUsuarios_Click" runat="server" /></li>
               </ul>
             </li>
           </ul>

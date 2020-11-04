@@ -17,8 +17,6 @@
             <div class="box-tools">
               <asp:Button Text="Salvar" CssClass="btn btn-sm btn-primary" runat="server" ID="btnSalvar" OnClick="btnSalvar_Click" />
               <asp:Button Text="Voltar" CssClass="btn btn-sm btn-secondary" runat="server" ID="btnVoltar" OnClick="btnVoltar_Click" />
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i></button>
-              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fas fa-window-close"></i></button>
             </div>
           </div>
           <div class="box-body">
@@ -53,6 +51,7 @@
                 <div class="form-group">
                   <label>Perfil</label>
                   <asp:DropDownList runat="server" ID="cboxPerfil" CssClass="form-control">
+                  <asp:ListItem Text="Selecione"  Value="Selecione"/>
                   <asp:ListItem Text="Comum"  Value="comum"/>
                   <asp:ListItem Text="Administrador" Value="Administrador" />
                 </asp:DropDownList>
@@ -61,9 +60,8 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label>Secretaria</label>
-                <asp:DropDownList runat="server" ID="cboxSecretaria" CssClass="form-control" DataSourceID="SqlDataSource1" DataTextField="nome" DataValueField="id">
+                <asp:DropDownList runat="server" ID="cboxSecretaria" CssClass="form-control" DataTextField="nome" DataValueField="id">
               </asp:DropDownList>
-              <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="server=10.0.2.9;user id=ura;database=sema;password=ask123;persistsecurityinfo=True" ProviderName="MySql.Data.MySqlClient" SelectCommand="SELECT id, nome FROM secretaria ORDER BY nome"></asp:SqlDataSource>
             </div>
           </div>
           <div class="col-md-4">
@@ -77,8 +75,7 @@
           <div class="form-group">
             <asp:Label Text="" runat="server" ID="lblCaminhoImg" />
             <asp:Image runat="server" ID="imgSel" Width="160px" Height="160px" />
-            <asp:FileUpload runat="server" ID="img" ToolTip="Selecione uma Imagem" CssClass="btn" /><br />
-            <asp:Button runat="server" ID="btnUpload" type="submit" Text="Upload" class="btn btn-primary" OnClick="btnUpload_Click" />
+            <asp:FileUpload runat="server" ID="img" ToolTip="Selecione uma Imagem" ClientIDMode="Static" onchange="this.form.submit()" CssClass="btn" /><br />
             <asp:Label runat="server" id="StatusLabel" text="" ForeColor="Red" />
           </div>
         </div>
@@ -151,7 +148,7 @@
       "showMethod": "slideDown",
       "hideMethod": "slideUp"
     }
-    toastr["info"]("Acesso restrito a usuarios Administradores. ", "Erro")
+    toastr["info"]("Acesso Permitido apenas a Usuários Administradores da Companhia de Tecnologia e Desenvolvimento de Londrina", "Informação")
   };
 </script>
 <script>

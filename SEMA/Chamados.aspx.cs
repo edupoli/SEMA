@@ -105,7 +105,7 @@ namespace SEMA
             else
             {
                 chamadoID = int.Parse((sender as LinkButton).CommandArgument);
-                Response.Redirect("EditChamados.aspx?chamadoID=" + chamadoID);
+                Response.Redirect("EditRespostaChamado.aspx?chamadoID=" + chamadoID);
             }
         }
 
@@ -174,5 +174,10 @@ namespace SEMA
             Listar();
         }
 
+        protected void btnResponder_Click(object sender, EventArgs e)
+        {
+            chamadoID = int.Parse((sender as LinkButton).CommandArgument);
+            Response.Redirect("RespChamado.aspx?chamadoID=" + chamadoID);
+        }
     }
 }

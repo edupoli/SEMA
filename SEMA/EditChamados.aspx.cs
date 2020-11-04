@@ -15,12 +15,15 @@ namespace SEMA
         public string mensagem = string.Empty;
         static string prevPage = string.Empty;
         string valido;
-        string numProtocolo;
         DateTime data = DateTime.Now;
         int chamadoID;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["logado"] == null)
+            {
+                Response.Redirect("login.aspx");
+            }
             chamadoID = Convert.ToInt32(Request.QueryString["chamadoID"]);
             
             if (!Page.IsPostBack)
@@ -35,7 +38,6 @@ namespace SEMA
                 da.Fill(dt);
                 cboxAssunto.DataSource = dt;
                 cboxAssunto.DataBind();
-                txtProtocolo.Text = numProtocolo;
 
                 getStatusColor();
                 getTopicos();
@@ -103,6 +105,8 @@ namespace SEMA
                                  a.topico,
                                  a.status,
                                  a.img,
+                                 a.anonimo,
+                                 a.envia_whatsapp,
                                  d.mensagem
                                  
 
@@ -124,6 +128,14 @@ namespace SEMA
                 cboxTopico.SelectedValue = Convert.ToString(item.topico);
                 cboxStatus.SelectedValue = item.status;
                 descricao.Text = item.mensagem;
+                if (item.anonimo == "SIM")
+                {
+                    checkDenuncia.Checked = true;
+                }
+                if (item.envia_whatsapp == "SIM")
+                {
+                    checkWhatsapp.Checked = true;
+                }
             }
         }
 
@@ -144,18 +156,9 @@ namespace SEMA
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
                 descricao.Focus();
             }
-            /*
-            else
-                if ((txtcpf.Text != "") && (ValidaCPF.IsCpf(txtcpf.Text) == false))
-            {
-                valido = "nao";
-                mensagem = "O CPF informado é inválido !";
-                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
-            }
-            */
             else
 
-                    if ((txtemail.Text != "") && (ValidaEmail.ValidarEmail(txtemail.Text) == false))
+            if ((txtemail.Text != "") && (ValidaEmail.ValidarEmail(txtemail.Text) == false))
             {
                 valido = "nao";
                 mensagem = "O e-mail digitado esta incorreto !";
@@ -205,6 +208,7 @@ namespace SEMA
                         ch.envia_whatsapp = "NAO";
                     }
                     ctx.SaveChanges();
+                    pushMensage();
                     mensagem = "Alterado com sucesso !";
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "sucesso();", true);
                 }
@@ -214,6 +218,21 @@ namespace SEMA
                     ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
 
                 }
+            }
+        }
+        private void pushMensage()
+        {
+            try
+            {
+                semaEntities ctx = new semaEntities();
+                historico his = ctx.historicoes.First(p => p.chamadoID == chamadoID);
+                his.mensagem = descricao.Text;
+                ctx.SaveChanges();
+            }
+            catch (System.Exception ex)
+            {
+                mensagem = "Ocorreu o seguinte erro ao tentar gravar o texto: " + ex.Message;
+                ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
             }
         }
 
@@ -489,6 +508,8 @@ namespace SEMA
                 txtNumero.Enabled = false;
                 txtCEP.Text = string.Empty;
                 txtCEP.Enabled = false;
+                descricao.Text = string.Empty;
+                descricao.Enabled = false;
             }
             else
             {
@@ -498,6 +519,7 @@ namespace SEMA
                 txtcpf.Enabled = true;
                 txtNumero.Enabled = true;
                 txtCEP.Enabled = true;
+                descricao.Enabled = true;
                 GetChamados(chamadoID, int.Parse(Session["secretaria"].ToString()));
             }
         }

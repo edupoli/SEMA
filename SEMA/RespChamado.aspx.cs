@@ -1,13 +1,17 @@
-﻿using System;
+﻿using NUglify;
+using System;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Xml.Linq;
+
 namespace SEMA
 {
     public partial class RespChamado : System.Web.UI.Page
@@ -23,16 +27,16 @@ namespace SEMA
         int seq = 0;
         static string prevPage = String.Empty;
         Boolean GravaDB;
+        string texto;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-           // ViewState["Editor"] = temporario.Value;
-           // descricao.Text = ViewState["Editor"].ToString();
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "myKey", "getText();", true);
-
             lblCaminhoImg.Visible = false;
             ImgPathOriginal.Visible = false;
+            // extrai apenas o texto puro do CKEditor que seja usado no envio de mensagem no whatsapp
+            var result = Uglify.HtmlToText(descricao.Text);
+            texto = result.Code;
+            //descricao.EnableViewState = true;
             getStatusColor();
             e_mail = resp_email.Text;
 
@@ -258,9 +262,11 @@ namespace SEMA
                 resp_telefone.Text = item.telefone;
                 resp_cboxAssunto.Items.Add(new ListItem(item.assunto, item.assunto));
                 resp_cboxTopico.Items.Add(new ListItem(item.topico, item.topico));
+                cboxStatus.SelectedValue = item.status;
                 resp_cboxStatus.Items.Add(new ListItem(item.status, item.status));
                 cboxUsuario.SelectedValue = Convert.ToString(item.usuario_responsavel);
-                ImgPath = "/dist/img/chamados/" + item.img;
+                ImgPath = "dist/img/chamados/" + item.img;
+                Image1.ImageUrl = ImgPath;
                 lblCaminhoImg.Text = item.img;
                 resp_txtCEP.Text = item.cep;
                 resp_txtRua.Text = item.rua;
@@ -284,6 +290,7 @@ namespace SEMA
                     resp_checkWhatsapp.Checked = false;
                 }
             }
+            getStatusColor();
         }
         private string getHistorico(int cod)
         {
@@ -375,12 +382,15 @@ namespace SEMA
             {
                 GravaDB = Salvar();
             }
-            if (GravaDB == true)
+            if (GravaDB == true && resp_checkDenuncia.Checked == false)
             {
-                Thread whats = new Thread(WhatsApp);
-                whats.Start();
                 Thread mail = new Thread(Email);
                 mail.Start();
+                if (resp_checkWhatsapp.Checked == true)
+                {
+                    Thread whats = new Thread(WhatsApp);
+                    whats.Start();
+                }
             }
         }
         // pega o valor do sequencia da ultima mensagem na tabela historico
@@ -430,6 +440,7 @@ namespace SEMA
                 ClientScript.RegisterStartupScript(GetType(), "Popup", "erro();", true);
             }
         }
+
         private void WhatsApp()
         {
             int sec = int.Parse(Session["secretaria"].ToString());
@@ -442,7 +453,7 @@ namespace SEMA
                 numCel = numCel.Remove(6, 1);
             }
             string dadosMensagem = "Olá "+ resp_nome.Text + " Sua solicitação registrada com Protocolo Nº *" + resp_txtProtocolo.Text + "* " +
-            "esta *" + status + "* .\n\n" + temporario.Value + "\n\n"+
+            "esta *" + status + "* .\n\n" + texto + "\n\n"+
             
             "Agradecemos por utilzar nossos serviços.\n\n" +
             "👋🏼👋🏼 Ate logo.";

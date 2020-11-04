@@ -38,9 +38,11 @@
                     <asp:BoundField DataField="status" HeaderText="Status" ItemStyle-HorizontalAlign="Center" ItemStyle-Font-Bold="false" />
                     <asp:TemplateField HeaderText="Ações" ItemStyle-Wrap="false">
                     <ItemTemplate>
-                      <asp:LinkButton class="btn badge-secondary" Text="" data-toggle="tooltip" title="Visualizar" data-placement="auto" ID="btnVisualizar" runat="server" CommandArgument='<%# Eval("id") %>' OnClick="btnVisualizar_Click" ><i class="far fa-eye"></i></asp:LinkButton>
-                      <asp:LinkButton class="btn badge-info" Text="" data-toggle="tooltip" title="Editar" data-placement="auto" ID="btnEditar" runat="server" CommandArgument='<%# Eval("id") %>' OnClick="btnEditar_Click" ><i class="fas fa-edit"></i></asp:LinkButton>
+                      <asp:LinkButton class="btn badge-secondary" Text="" data-toggle="tooltip" title="Visualizar" data-placement="auto" ID="btnVisualizar" runat="server" CommandArgument='<%# Eval("id") %>' OnClick="btnVisualizar_Click" ><i class="fad fa-eye"></i></asp:LinkButton>
+                      <asp:LinkButton class="btn badge-info" Text="" data-toggle="tooltip" title="Editar" data-placement="auto" ID="btnEditar" runat="server" CommandArgument='<%# Eval("id") %>' OnClick="btnEditar_Click" ><i class="fad fa-edit"></i></asp:LinkButton>
+                      <asp:LinkButton class="btn badge-info" Text="" data-toggle="tooltip" title="Responder Chamado" data-placement="auto" ID="btnResponder" runat="server" CommandArgument='<%# Eval("id") %>' OnClick="btnResponder_Click" ><i class="fad fa-comments-alt"></i></asp:LinkButton>
                       <asp:LinkButton class="btn badge-danger" Text="" data-toggle="tooltip" title="Excluir" data-placement="auto" ID="btnExcluir" runat="server" CommandName="Delete" CommandArgument='<%# Eval("id") %>' OnClick="btnExcluir_Click" OnClientClick="return sweetAlertConfirm(this);" ><i class="fas fa-trash"></i></asp:LinkButton>
+                        <style>.btn{padding: 5px 5px!important;}</style>
                     </ItemTemplate>
                   </asp:TemplateField>
                 </Columns>
